@@ -1,6 +1,8 @@
 
 import React from "react";
-import {Routes, Route} from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import AdminPanel from "./components/AdminPanel";
 import Article from "./components/Article";
 import Create from "./components/Create";
@@ -14,17 +16,28 @@ import Signup from "./components/Signup";
 const App = () => {
   return (
     <main>
-      <Navbar />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        transition:Bounce
+      />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/AdminPanel" element={<AdminPanel />} />
-        <Route path="/blog/article/:id" element={<Article />} />
-        <Route path="/create" element={<Create />} />
-        <Route path="/blog" element={<Explore />} />
+        <Route path="/" element={[<Navbar />, <Home />, <Footer />]} />
+        <Route path="/AdminPanel" element={[<Navbar />, <AdminPanel />, <Footer />]} />
+        <Route path="/blog/article/:id" element={[<Navbar />, <Article />, <Footer />]} />
+        <Route path="/create" element={[<Navbar />, <Create />, <Footer />]} />
+        <Route path="/blog" element={[<Navbar />, <Explore />, <Footer />]} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
       </Routes>
-      <Footer />
     </main>
   )
 }
