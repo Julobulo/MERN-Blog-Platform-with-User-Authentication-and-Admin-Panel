@@ -10,7 +10,7 @@ const ArticleCard = ({ title, description, href, author, date, tags, imgSrc, hea
                     className="mb-5 h-48 w-full rounded-xl bg-no-repeat object-cover object-center transition-transform duration-200 ease-out hover:scale-[1.02]"
                 />
             </a>
-            <h2 className="pb-3 text-xl font-semibold tracking-tight">
+            <h2 className="pb-3 text-xl font-semibold tracking-tight text-white">
                 <a href={href}>{title}</a>
             </h2>
             <div className="flex justify-between mb-4">

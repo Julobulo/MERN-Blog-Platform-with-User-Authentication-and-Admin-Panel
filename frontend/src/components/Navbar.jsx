@@ -14,10 +14,10 @@ const NavigationBar = () => {
   return (
     <nav className="bg-gray-900 shadow-md">
         <div className="container mx-auto px-4 py-2 flex justify-between items-center">
-            <div className="flex items-center">
+            <Link to="/" className="flex items-center">
                 <img src="https://via.placeholder.com/40" alt="Logo" className="mr-3 hidden sm:block" />
                 <span className="text-2xl font-bold text-green-400">Your Blog</span>
-            </div>
+            </Link>
             <div className="hidden sm:flex space-x-6 flex-grow justify-end">
                 <Link to="/blog" className="btn btn-ghost text-green-400"><MdOutlineExplore className='inline align-middle' /> <span className='align-middle'>Explore</span></Link>
                 <Link to="/create" className="btn btn-ghost text-green-400"><MdOutlinePostAdd className='inline align-middle' /> <span className='align-middle'>New Post</span></Link>

@@ -35,7 +35,7 @@ const Article = ({ title, content, imgSrc, relatedArticles }) => {
                 {content}
             </div>
             <hr className="my-6 border-t border-gray-700" />
-            <h2 className="text-2xl font-bold mb-4 text-green-400">Related Articles</h2>
+            <h2 className="text-2xl font-bold mb-4 text-green-400">Suggested Articles</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {relatedArticles.map((article, index) => (
                     <ArticleCard
