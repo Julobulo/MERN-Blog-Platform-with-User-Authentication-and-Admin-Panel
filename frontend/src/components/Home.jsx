@@ -7,7 +7,7 @@ const HomePage = () => {
                 <div className="max-w-3xl mx-auto">
                     {/* Introduction Section */}
                     <section className="mb-8">
-                        <h1 className="text-3xl font-bold mb-4">Welcome to Your Blog</h1>
+                        <h1 className="text-3xl font-bold mb-4 text-green-400">Welcome to Your Blog</h1>
                         <p className="text-lg mb-4">
                             Your Blog is a platform for sharing articles, insights, and discussions on various topics, including technology, science, and more.
                             Whether you're a seasoned professional or just starting out, Your Blog provides a space for you to express your ideas and connect with like-minded individuals.
@@ -48,14 +48,14 @@ const HomePage = () => {
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             {/* Fake Testimony 1 */}
                             <div className="bg-gray-800 p-6 rounded-lg shadow-md">
-                                <p className="text-lg mb-4">
+                                <p className="text-lg mb-4 text-green-400">
                                     "Your Blog has been an invaluable resource for me. I've learned so much from the articles on the platform. Highly recommended!"
                                 </p>
                                 <p className="text-sm text-gray-400">- John Doe</p>
                             </div>
                             {/* Fake Testimony 2 */}
                             <div className="bg-gray-800 p-6 rounded-lg shadow-md">
-                                <p className="text-lg mb-4">
+                                <p className="text-lg mb-4 text-green-400">
                                     "I love how easy it is to navigate through Your Blog and find articles that interest me. Every time I read an article, I discover new things and grow my knowledge."
                                 </p>
                                 <p className="text-sm text-gray-400">- Jane Smith</p>
@@ -96,7 +96,7 @@ const ArticleCard = ({ title, description, href, author, date, tags, imgSrc, hea
                 <div className="flex space-x-2">
                     {tags.map(tag => (
                         <div key={tag} className="flex rounded-full border border-gray-700 bg-gray-800 px-3 py-1 badge">
-                            {<span className="text-xs uppercase leading-none text-cyan-300 text-center my-auto">{tag}</span>}
+                            {<span className="text-xs uppercase leading-none text-green-400 text-center my-auto">{tag}</span>}
                         </div>
                     ))}
                 </div>

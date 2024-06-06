@@ -59,37 +59,37 @@ const Login = () => {
         });
     };
     return (
-        <div className="flex items-center justify-center min-h-screen bg-blue-100">
-            <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-                <h2 className="text-2xl font-bold mb-6">Login</h2>
+        <div className="flex items-center justify-center min-h-screen bg-gray-900">
+            <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md">
+                <h2 className="text-2xl font-bold mb-6 text-green-400">Login</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+                        <label htmlFor="email" className="block text-sm font-medium text-green-400">Email</label>
                         <input
                             type="email"
                             name="email"
                             value={email}
                             placeholder="Enter your email"
                             onChange={handleOnChange}
-                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                            className="mt-1 block w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-green-400 focus:border-green-400 sm:text-sm bg-gray-700 text-gray-300"
                         />
                     </div>
                     <div className="mb-4">
-                        <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
+                        <label htmlFor="password" className="block text-sm font-medium text-green-400">Password</label>
                         <input
                             type="password"
                             name="password"
                             value={password}
                             placeholder="Enter your password"
                             onChange={handleOnChange}
-                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                            className="mt-1 block w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-green-400 focus:border-green-400 sm:text-sm bg-gray-700 text-gray-300"
                         />
                     </div>
-                    <button type="submit" className="w-full bg-blue-600 text-white py-2 px-4 rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Login</button>
+                    <button type="submit" className="w-full bg-green-600 text-white py-2 px-4 rounded-md shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-400">Login</button>
                 </form>
-                <hr className="my-4 border-t border-gray-300" />
-                <span className="block text-sm text-center mt-4">
-                    Don't have an account? <Link to="/signup" className="text-blue-600 hover:underline">Signup</Link>
+                <hr className="my-4 border-t border-gray-700" />
+                <span className="block text-sm text-center mt-4 text-gray-300">
+                    Don't have an account? <Link to="/signup" className="text-green-400 hover:underline">Signup</Link>
                 </span>
             </div>
         </div>
