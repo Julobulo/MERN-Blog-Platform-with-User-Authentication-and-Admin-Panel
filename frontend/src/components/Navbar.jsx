@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MdOutlineExplore } from "react-icons/md";
 import { MdOutlinePostAdd } from "react-icons/md";
+import { MdOutlineAdminPanelSettings } from "react-icons/md";
+import { CgProfile } from "react-icons/cg";
 import { SlLogin } from "react-icons/sl";
 
 const NavigationBar = () => {
@@ -21,6 +23,8 @@ const NavigationBar = () => {
             <div className="hidden sm:flex space-x-6 flex-grow justify-end">
                 <Link to="/blog" className="btn btn-ghost text-green-400"><MdOutlineExplore className='inline align-middle' /> <span className='align-middle'>Explore</span></Link>
                 <Link to="/create" className="btn btn-ghost text-green-400"><MdOutlinePostAdd className='inline align-middle' /> <span className='align-middle'>New Post</span></Link>
+                <Link to="/profile" className="btn btn-ghost text-green-400"><CgProfile className='inline align-middle' /> <span className='align-middle'>Profile</span></Link>
+                <Link to="/AdminPanel" className="btn btn-ghost text-green-400"><MdOutlineAdminPanelSettings className='inline align-middle' /> <span className='align-middle'>Admin Panel</span></Link>
                 <Link to="/login" className="btn btn-ghost text-green-400"><SlLogin className='inline align-middle' /> <span className='align-middle'>Login</span></Link>
             </div>
             <div className="sm:hidden">
