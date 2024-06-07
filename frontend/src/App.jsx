@@ -4,6 +4,8 @@ import { Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import AdminPanel from "./components/AdminPanel";
+import Articles from "./components/AdminPanel components/Articles";
+import Users from "./components/AdminPanel components/Users";
 import Article from "./components/Article";
 import Author from "./components/Author";
 import Create from "./components/Create";
@@ -34,6 +36,8 @@ const App = () => {
       <Routes>
         <Route path="/" element={[<Navbar />, <Home />, <Footer />]} />
         <Route path="/AdminPanel" element={[<Navbar />, <AdminPanel />, <Footer />]} />
+        <Route path="/AdminPanel/Articles" element={[<Navbar />, <Articles />, <Footer />]} />
+        <Route path="/AdminPanel/Users" element={[<Navbar />, <Users />, <Footer />]} />
         <Route path="/author/:author" element={[<Navbar />, <Author />, <Footer />]} />
         <Route path="/blog/article/:id" element={[<Navbar />, <Article />, <Footer />]} />
         <Route path="/create" element={[<Navbar />, <Create />, <Footer />]} />

@@ -1,10 +1,12 @@
-
-import React from "react";
+import React, { useEffect } from 'react';
+import { Routes, Route, useNavigate, Link } from 'react-router-dom';
 
 const AdminPanel = () => {
-  return (
-	<div className="bg-red-400 text-white">AdminPanel</div>
-  )
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        navigate("/AdminPanel/Articles");
+    }, [navigate]);
 }
 
-export default AdminPanel
+export default AdminPanel;

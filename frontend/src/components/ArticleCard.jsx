@@ -1,6 +1,6 @@
 import React from "react";
 
-const ArticleCard = ({ title, description, href, author, date, tags, imgSrc, hearts }) => {
+const ArticleCard = ({ title, subtitle, href, author, date, tags, imgSrc, hearts }) => {
     return (
         <div className="p-6 mb-8 bg-gray-900 rounded-xl shadow-md">
             <a href={href}>
@@ -39,7 +39,7 @@ const ArticleCard = ({ title, description, href, author, date, tags, imgSrc, hea
                     <span className='text-red-500'>{hearts}</span>
                 </div>
             </div>
-            <p className="mb-6 text-gray-400">{description}</p>
+            <p className="mb-6 text-gray-400">{subtitle}</p>
             <div className="flex items-center justify-between font-medium text-green-400">
                 <a href={href} className="flex items-center space-x-2">
                     <span>Read more</span>
