@@ -4,6 +4,7 @@ import 'react-quill/dist/quill.snow.css';
 import axios from 'axios';
 
 const Create = () => {
+    const [image, setImage] = useState('');  // New state for image URL
     const [title, setTitle] = useState('The Future of Quantum Computing');
     const [subtitle, setSubtitle] = useState('Exploring the potential and challenges of quantum technology.');
     const [tags, setTags] = useState(['Quantum Computing', 'Technology', 'Innovation', 'Future']);
@@ -76,6 +77,7 @@ const Create = () => {
             subtitle,
             tags,
             main: mainContent,
+            image,
         };
 
         try {
@@ -96,6 +98,17 @@ const Create = () => {
         <div className="bg-black p-6 text-green-400">
             <div className="my-5 max-w-3xl mx-auto p-6 bg-gray-900 rounded-lg shadow-md">
                 <h1 className="text-2xl font-bold mb-6">Create New Post</h1>
+                <div className="mb-4">
+                    <label htmlFor="image" className="block text-sm font-medium">Image URL (it will appear on the article display)</label>
+                    <input
+                        type="text"
+                        id="image"
+                        value={image}
+                        onChange={(e) => setImage(e.target.value)}
+                        placeholder="Enter image URL (ex: https://upload.wikimedia.org/wikipedia/commons/a/a7/Lorem_Ipsum_Article.png?20150528112327)"
+                        className="w-full px-3 py-2 border border-gray-700 rounded-md bg-gray-800 text-green-400 focus:outline-none focus:ring-green-500 focus:border-green-500"
+                    />
+                </div>
                 <div className="mb-4">
                     <label htmlFor="title" className="block text-sm font-medium">Title</label>
                     <input
