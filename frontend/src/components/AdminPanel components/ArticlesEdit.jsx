@@ -1,12 +1,14 @@
-import React from 'react';
-import CreateForm from './CreateForm';
+import React, { useState } from 'react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import axios from 'axios';
+import CreateForm from '../CreateForm';
 
-
-const Create = () => {
+const ArticleEdit = () => {
     return (
         CreateForm(
             {
-                pageTitle: 'Create New Post',
+                pageTitle: 'Edit Post',
                 defaultImage: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/Lorem_Ipsum_Article.png?20150528112327',
                 defaultTitle: 'The Future of Quantum Computing',
                 defaultSubtitle: 'Exploring the potential and challenges of quantum technology.',
@@ -61,8 +63,7 @@ const Create = () => {
                                     `,
             }
         )
-    )
-}
+    );
+};
 
-
-export default Create;
+export default ArticleEdit;
