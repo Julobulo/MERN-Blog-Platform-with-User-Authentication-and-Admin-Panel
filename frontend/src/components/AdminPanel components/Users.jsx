@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import ArticleCard from '../ArticleCard';
+import AuthorCard from '../AuthorCard';
 import { MdDeleteOutline } from "react-icons/md";
 import { FiEdit2 } from "react-icons/fi";
 
@@ -11,18 +12,18 @@ const users = [
         username: "john_doe",
         email: "john@example.com",
         bio: "I love peanuts",
-        profilePicture: "https://via.placeholder.com/64x64",
+        imgSrc: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYmkp9a2rrD1Sskb9HLt5mDaTt4QaIs8CcBg&s",
         date: "January 1, 2020",
-        isAdmin: 0,
+        isAdmin: false,
     },
     {
         _id: 2,
         username: "jane_smith",
         email: "jane@example.com",
         bio: "I'm a passionate critic and skeptic who always looks at things from a unique perspective. My friends often call me a 'hater,' but I prefer to think of myself as someone who values honesty and critical thinking above all else. I believe that questioning the status quo and challenging popular opinions are essential for progress and innovation. Whether it's a new tech trend, a popular movie, or the latest fashion craze, I enjoy diving deep into the details and exploring different viewpoints.",
-        profilePicture: "https://via.placeholder.com/64x64",
+        imgSrc: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYmkp9a2rrD1Sskb9HLt5mDaTt4QaIs8CcBg&s",
         date: "February 15, 2020",
-        isAdmin: 1,
+        isAdmin: true,
     },
     // Add more users as needed...
 ];
@@ -85,8 +86,8 @@ const Users = () => {
                     <div className=" w-full">
                         {filteredUsers.map(user => (
                             <div className='flex flex-row'>
-                                <div className='basis-11/12'>
-                                    <UserCard
+                                <div className='basis-11/12 m-5'>
+                                    {/* <UserCard
                                         key={user._id}
                                         _id={user._id}
                                         username={user.username}
@@ -94,6 +95,13 @@ const Users = () => {
                                         bio={user.bio}
                                         profilePicture={user.profilePicture}
                                         date={user.date}
+                                        isAdmin={user.isAdmin}
+                                    /> */}
+                                    <AuthorCard
+                                        imgSrc={user.imgSrc}
+                                        username={user.username}
+                                        date={user.date}
+                                        bio={user.bio}
                                         isAdmin={user.isAdmin}
                                     />
                                 </div>

@@ -1,11 +1,13 @@
 
 import React from 'react';
 import ArticleCard from './ArticleCard';
+import AuthorCard from './AuthorCard';
 
 // Sample data for testing
 const authorData = {
+    imgSrc: 'via.placeholder.com/64',
     username: 'john_doe',
-    joinDate: 'January 1, 2020',
+    date: 'January 1, 2020',
     bio: 'I am a tech enthusiast and a blogger. I write about AI, machine learning, and data science.'
 };
 
@@ -46,23 +48,16 @@ const Author = () => {
     return (
         <div className='bg-black p-6 text-green-400 min-h-screen'>
             <div className="my-5 max-w-3xl mx-auto p-6 bg-gray-900 rounded-lg shadow-md">
-                <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
-                    <div className="flex items-center mb-4">
-                        <img
-                            alt={authorData.username}
-                            src="https://via.placeholder.com/64"
-                            className="w-16 h-16 rounded-full mr-4"
-                        />
-                        <div>
-                            <h2 className="text-2xl font-bold">{authorData.username}</h2>
-                            <p className="text-sm text-gray-400">Joined: {authorData.joinDate}</p>
-                        </div>
-                    </div>
-                    <p className="text-gray-300">{authorData.bio}</p>
-                </div>
+                <AuthorCard
+                    imgSrc={authorData.imgSrc}
+                    username={authorData.username}
+                    date={authorData.date}
+                    bio={authorData.bio}
+                    isAdmin={true}
+                />
                 {authorArticles.length > 0 && (
                     <>
-                        <hr className='mt-6'/>
+                        <hr className='mt-6' />
                         <h1 className="text-2xl font-bold mt-7 mb-1">By {authorData.username}:</h1>
                         <div className="grid grid-cols-1 gap-4">
                             {authorArticles.map((article, index) => (
