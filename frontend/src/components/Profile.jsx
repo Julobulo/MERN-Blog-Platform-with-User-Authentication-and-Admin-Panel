@@ -6,7 +6,8 @@ const Profile = () => {
     const userData = {
         username: "john_doe",
         email: "john@example.com",
-        bio: "I am a tech enthusiast and a blogger."
+        bio: "I am a tech enthusiast and a blogger.",
+        isAdmin: true,
     };
 
     const [bio, setBio] = useState(userData.bio);
