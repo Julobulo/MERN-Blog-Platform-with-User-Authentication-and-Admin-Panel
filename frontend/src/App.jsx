@@ -7,7 +7,8 @@ import AdminPanel from "./components/AdminPanel";
 import Articles from "./components/AdminPanel components/Articles";
 import Users from "./components/AdminPanel components/Users";
 import Article from "./components/Article";
-import ArticleEdit from "./components/AdminPanel components/ArticlesEdit";
+import ArticleEdit from "./components/AdminPanel components/ArticleEdit";
+import ArticleDelete from "./components/AdminPanel components/ArticleDelete";
 import Author from "./components/Author";
 import Create from "./components/Create";
 import Explore from "./components/Explore";
@@ -39,6 +40,7 @@ const App = () => {
         <Route path="/AdminPanel" element={[<Navbar />, <AdminPanel />, <Footer />]} />
         <Route path="/AdminPanel/Articles" element={[<Navbar />, <Articles />, <Footer />]} />
         <Route path="/AdminPanel/Articles/Edit/:id" element={[<Navbar />, <ArticleEdit />, <Footer />]} />
+        <Route path="/AdminPanel/Articles/Delete/:id" element={[<Navbar />, <ArticleDelete />, <Footer />]} />
         <Route path="/AdminPanel/Users" element={[<Navbar />, <Users />, <Footer />]} />
         <Route path="/author/:author" element={[<Navbar />, <Author />, <Footer />]} />
         <Route path="/blog/article/:id" element={[<Navbar />, <Article />, <Footer />]} />

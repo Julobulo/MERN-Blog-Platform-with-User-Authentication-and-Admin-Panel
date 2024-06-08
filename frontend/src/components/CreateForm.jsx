@@ -49,7 +49,7 @@ const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, de
     return (
         <div className="bg-black p-6 text-green-400">
             <div className="my-5 max-w-3xl mx-auto p-6 bg-gray-900 rounded-lg shadow-md">
-                <h1 className="text-2xl font-bold mb-6">{pageTitle}</h1>
+                <h1 className="text-2xl font-bold mb-6">{pageTitle} Post</h1>
                 <div className="mb-4">
                     <label htmlFor="image" className="block text-sm font-medium">Image URL (it will appear on the article display)</label>
                     <input
@@ -114,7 +114,7 @@ const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, de
                     onClick={handlePost}
                     className="w-full bg-green-500 text-white py-2 px-4 rounded-md shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                 >
-                    Post
+                    {pageTitle === 'Create' ? 'Create' : 'Save'}
                 </button>
             </div>
         </div>

@@ -6,7 +6,7 @@ const Create = () => {
     return (
         CreateForm(
             {
-                pageTitle: 'Create New Post',
+                pageTitle: 'Create',
                 defaultImage: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/Lorem_Ipsum_Article.png?20150528112327',
                 defaultTitle: 'The Future of Quantum Computing',
                 defaultSubtitle: 'Exploring the potential and challenges of quantum technology.',
