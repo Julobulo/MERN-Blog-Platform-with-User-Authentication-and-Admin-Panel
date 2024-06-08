@@ -2,6 +2,8 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
+import AuthRoute from "./routes/AuthRoute.js";
+import cookieParser from "cookie-parser";
 dotenv.config();
 const { PORT, DB_URL } = process.env;
 
@@ -18,12 +20,13 @@ app.use(cors({
     allowedHeaders: ['Content-type'],
 }));
 app.use(express.json()); // Middleware to parse JSON bodies
+app.use(cookieParser()); // Middleware to parse cookies
 
 app.get('/', (request, response) => {
-   console.log("there was a get request on /");
-   return response
-       .status(200)
-       .send("Welcome to my webpage!")
+    console.log("there was a get request on /");
+    return response
+        .status(200)
+        .send("Welcome to my webpage!")
 })
 
 mongoose
@@ -37,3 +40,6 @@ mongoose
     .catch((error) => {
         console.log(error)
     })
+
+
+app.use('/', AuthRoute)
