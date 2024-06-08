@@ -44,9 +44,9 @@ const authorArticles = [
 
 const Author = () => {
     return (
-        <div className='bg-black p-6 text-green-400'>
+        <div className='bg-black p-6 text-green-400 min-h-screen'>
             <div className="my-5 max-w-3xl mx-auto p-6 bg-gray-900 rounded-lg shadow-md">
-                <div className="bg-gray-800 p-6 rounded-lg shadow-lg mb-6">
+                <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
                     <div className="flex items-center mb-4">
                         <img
                             alt={authorData.username}
@@ -60,21 +60,27 @@ const Author = () => {
                     </div>
                     <p className="text-gray-300">{authorData.bio}</p>
                 </div>
-                <div className="grid grid-cols-1 gap-4">
-                    {authorArticles.map((article, index) => (
-                        <ArticleCard
-                            key={index}
-                            title={article.title}
-                            description={article.description}
-                            href={article.href}
-                            author={article.author}
-                            date={article.date}
-                            tags={article.tags}
-                            imgSrc={article.imgSrc}
-                            hearts={article.hearts}
-                        />
-                    ))}
-                </div>
+                {authorArticles.length > 0 && (
+                    <>
+                        <hr className='mt-6'/>
+                        <h1 className="text-2xl font-bold mt-7 mb-1">By {authorData.username}:</h1>
+                        <div className="grid grid-cols-1 gap-4">
+                            {authorArticles.map((article, index) => (
+                                <ArticleCard
+                                    key={index}
+                                    title={article.title}
+                                    description={article.description}
+                                    href={article.href}
+                                    author={article.author}
+                                    date={article.date}
+                                    tags={article.tags}
+                                    imgSrc={article.imgSrc}
+                                    hearts={article.hearts}
+                                />
+                            ))}
+                        </div>
+                    </>
+                )}
             </div>
         </div>
     );
