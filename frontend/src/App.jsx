@@ -19,6 +19,7 @@ import Home from "./components/Home";
 import Login from "./components/Login";
 import Navbar from "./components/Navbar";
 import Profile from "./components/Profile";
+import ProfileEdit from "./components/ProfileEdit";
 import Signup from "./components/Signup";
 
 const App = () => {
@@ -52,6 +53,7 @@ const App = () => {
         <Route path="/blog" element={[<Navbar />, <Explore />, <Footer />]} />
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={[<Navbar />, <Profile />, <Footer />]} />
+        <Route path="/profile/edit" element={[<Navbar />, <ProfileEdit />, <Footer />]} />
         <Route path="/signup" element={<Signup />} />
       </Routes>
     </main>
