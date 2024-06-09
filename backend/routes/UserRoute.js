@@ -31,7 +31,7 @@ router.get('/', async (request, response) => {
 router.post('/update', async (request, response) => {
     try {
         const { profilePicture, bio } = request.body;
-        const maxSize = 1 * 1024 * 1024; // 1MB
+        const maxPictureSize = 1 * 1024 * 1024; // 1MB
         if (profilePicture) {
             const matches = profilePicture.match(/^data:image\/([a-zA-Z0-9]+);base64,([a-zA-Z0-9+/=]+)$/);
             if (!matches) {
@@ -40,8 +40,15 @@ router.post('/update', async (request, response) => {
 
             const base64Data = matches[2];
             const buffer = Buffer.from(base64Data, 'base64');
-            if (buffer.length > maxSize) {
+            if (buffer.length > maxPictureSize) {
                 return response.status(400).json({ message: 'File size exceeds 1MB' });
+            }
+        }
+        const minBioLength = 10;
+        const maxBioLength = 1000; // Example: 1000 characters
+        if (bio) {
+            if (bio.length < minBioLength || bio.length > maxBioLength) {
+                return response.status(400).json({ message: `Bio must be less than ${maxBioLength} characters and greater than ${minBioLength} characters` });
             }
         }
         const token = request.cookies.token;
@@ -65,8 +72,8 @@ router.post('/update', async (request, response) => {
         })
     }
     catch (error) {
-        console.log(error.message);
-        response.status(500).send({ message: error.message });
+        console.log(error);
+        response.status(500).send({ message: error });
     }
 })
 
@@ -75,7 +82,7 @@ router.get('/:author', async (request, response) => {
         const { author } = request.params;
         const user = await User.findOne({ username: author });
         if (!user) {
-            return response.status(404).json({ error: "user doesn't exist"})
+            return response.status(404).json({ error: "user doesn't exist" })
         }
         return response.status(200).json({ profilePicture: user.profilePicture, username: user.username, date: user.createdAt, bio: user.bio, isAdmin: user.isAdmin })
     }
