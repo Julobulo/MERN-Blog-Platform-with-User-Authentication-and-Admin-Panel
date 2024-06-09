@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
 import AuthRoute from "./routes/AuthRoute.js";
+import UserRoute from "./routes/UserRoute.js"
 import cookieParser from "cookie-parser";
 dotenv.config();
 const { PORT, DB_URL } = process.env;
@@ -43,3 +44,4 @@ mongoose
 
 
 app.use('/', AuthRoute)
+app.use('/user', UserRoute)

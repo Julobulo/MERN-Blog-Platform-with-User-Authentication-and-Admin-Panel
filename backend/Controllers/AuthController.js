@@ -8,7 +8,7 @@ export const Signup = async (req, res, next) => {
         if (!email || !password || !username) {
             res.status(400).json({ message: "Please include an email, a username and a password" });
         }
-        const existingUser = await UserModel.findOne({ email });
+        const existingUser = await UserModel.findOne({ email }) || UserModel.findOne({ username });
         if (existingUser) {
             return res.json({ message: "User already exists" });
         }

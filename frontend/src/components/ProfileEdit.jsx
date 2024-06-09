@@ -69,7 +69,7 @@ const ProfileEdit = () => {
             <div className="max-w-md mx-auto bg-gray-800 p-6 rounded-lg shadow-lg">
                 <h2 className="text-2xl font-bold mb-4">Edit Profile</h2>
                 <div className="mb-4">
-                    <label htmlFor="profilePicture" className="block text-sm font-medium mb-1">Profile Picture (use getavataaars.com to generate one)</label>
+                    <label htmlFor="profilePicture" className="block text-sm font-medium mb-1">Profile Picture (you can use <a href="https://getavataaars.com" className='underline'>getavataaars</a> to generate one)</label>
                     <input
                         id="profilePicture"
                         type="file"

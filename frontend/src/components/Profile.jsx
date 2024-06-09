@@ -1,28 +1,54 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import AuthorCard from "./AuthorCard";
+import Spinner from "./Spinner";
 
-// Sample data for testing
-const authorData = {
-    imgSrc: 'via.placeholder.com/64',
-    username: 'john_doe',
-    date: 'January 1, 2020',
-    bio: 'I am a tech enthusiast and a blogger. I write about AI, machine learning, and data science.'
-};
 
 const Profile = () => {
+    const [loading, setLoading] = useState(true);
+    const [authorData, setAuthorData] = useState(null);
+    useEffect(() => {
+        setLoading(true);
+        axios.get(
+            `http://localhost:5555/user/`,
+            { withCredentials: true }
+        )
+            .then((response) => {
+                setLoading(false);
+                // const { _id, email, username, isAdmin, profilePicture } = response.data;
+                setAuthorData(response.data);
+            })
+            .catch((error) => {
+                setLoading(false);
+                console.log(error);
+                // Sample data for testing
+                setAuthorData({
+                    imgSrc: 'https://via.placeholder.com/64',
+                    username: 'username',
+                    date: 'January 1, 2000',
+                    bio: 'bio',
+                    email: 'email',
+                    isAdmin: false,
+                });
+                toast.error(`Couldn't fetch the data...`);
+            }
+            )
+    }, []);
     return (
-
         <div className="min-h-screen bg-black p-6 text-white">
             <div className="max-w-3xl mx-auto bg-gray-800 p-6 rounded-lg shadow-lg">
                 <h2 className="text-2xl font-bold mb-4">Profile</h2>
-                <AuthorCard
-                    imgSrc={authorData.imgSrc}
-                    username={authorData.username}
-                    date={authorData.date}
-                    bio={authorData.bio}
-                    isAdmin={true}
-                />
+                {loading ? (<Spinner />) : (
+                    <AuthorCard
+                        imgSrc={`data:image/jpeg;base64,${authorData.profilePicture}`}
+                        username={authorData.username}
+                        date={authorData.date}
+                        bio={authorData.bio}
+                        email={authorData.email}
+                        isAdmin={authorData.isAdmin}
+                    />)}
                 <div className="text-center mt-5">
                     <Link to={'/profile/edit'}>
                         <button
