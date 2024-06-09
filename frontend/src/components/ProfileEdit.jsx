@@ -17,7 +17,7 @@ const ProfileEdit = () => {
 
     const [bio, setBio] = useState(userData.bio);
     const [message, setMessage] = useState("");
-    const [profilePicture, setProfilePicture] = useState(userData.profilePicture); // State for profile picture
+    const [profilePicture, setProfilePicture] = useState(""); // State for profile picture
 
     const handleBioChange = (event) => {
         setBio(event.target.value);

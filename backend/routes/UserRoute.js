@@ -6,18 +6,20 @@ const router = express.Router();
 
 router.get('/', async (request, response) => {
     try {
+        const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+        await delay(1000);
         const token = request.cookies.token;
         if (!token) {
-          return response.json({ error: "cookie missing" })
+            return response.status(400).json({ error: "cookie missing" })
         }
         jwt.verify(token, process.env.TOKEN_KEY, async (err, data) => {
-          if (err) {
-           return response.json({ error: "bad cookie" })
-          } else {
-            const user = await User.findById(data.id);
-            if (user) return response.json({ _id: user._id, profilePicture: user.profilePicture, username: user.username, date: user.createdAt, bio: user.bio, email: user.email, isAdmin: user.isAdmin })
-            else return response.json({ error: "user missing" })
-          }
+            if (err) {
+                return response.status(400).json({ error: "bad cookie" })
+            } else {
+                const user = await User.findById(data.id);
+                if (user) return response.status(200).json({ _id: user._id, profilePicture: user.profilePicture, username: user.username, date: user.createdAt, bio: user.bio, email: user.email, isAdmin: user.isAdmin })
+                else return response.status(404).json({ error: "user missing" })
+            }
         })
     }
     catch (error) {
@@ -35,7 +37,7 @@ router.post('/update', async (request, response) => {
             if (!matches) {
                 return response.status(400).json({ message: 'Invalid image format' });
             }
-    
+
             const base64Data = matches[2];
             const buffer = Buffer.from(base64Data, 'base64');
             if (buffer.length > maxSize) {
@@ -44,18 +46,22 @@ router.post('/update', async (request, response) => {
         }
         const token = request.cookies.token;
         if (!token) {
-          return response.status(400).json({ error: "cookie missing" })
+            return response.status(400).json({ error: "cookie missing" })
         }
         jwt.verify(token, process.env.TOKEN_KEY, async (err, data) => {
-          if (err) {
-           return response.status(400).json({ error: "bad cookie" })
-          } else {
-            const user = await User.findById(data.id);
-            user.profilePicture = profilePicture;
-            user.bio = bio;
-            user.save();
-            return response.status(204).json({ message: "updated profilePicture and bio" });
-          }
+            if (err) {
+                return response.status(400).json({ error: "bad cookie" })
+            } else {
+                const user = await User.findById(data.id);
+                if (profilePicture) {
+                    user.profilePicture = profilePicture;
+                }
+                if (bio) {
+                    user.bio = bio;
+                }
+                user.save();
+                return response.status(204).json({ message: "updated profilePicture and bio" });
+            }
         })
     }
     catch (error) {
@@ -64,9 +70,19 @@ router.post('/update', async (request, response) => {
     }
 })
 
-router.get('/:id', async (request, response) => {
-    const { id } = request.params;
-    console.log(`/:id; id:${id}`);
+router.get('/:author', async (request, response) => {
+    try {
+        const { author } = request.params;
+        const user = await User.findOne({ username: author });
+        if (!user) {
+            return response.status(404).json({ error: "user doesn't exist"})
+        }
+        return response.status(200).json({ profilePicture: user.profilePicture, username: user.username, date: user.createdAt, bio: user.bio, isAdmin: user.isAdmin })
+    }
+    catch (error) {
+        console.log(error.message);
+        response.status(500).send({ message: error.message });
+    }
 })
 
 export default router

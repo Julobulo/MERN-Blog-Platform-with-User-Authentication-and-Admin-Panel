@@ -1,15 +1,10 @@
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from "axios";
+import { toast } from 'react-toastify';
 import ArticleCard from './ArticleCard';
 import AuthorCard from './AuthorCard';
-
-// Sample data for testing
-const authorData = {
-    imgSrc: 'via.placeholder.com/64',
-    username: 'john_doe',
-    date: 'January 1, 2020',
-    bio: 'I am a tech enthusiast and a blogger. I write about AI, machine learning, and data science.'
-};
+import Spinner from "./Spinner";
 
 const authorArticles = [
     {
@@ -45,16 +40,55 @@ const authorArticles = [
 ];
 
 const Author = () => {
+    const { author } = useParams(); // gets the author from the url
+    const [loading, setLoading] = useState(true);
+    const [authorData, setAuthorData] = useState({
+        imgSrc: 'https://via.placeholder.com/64',
+        username: 'john_doe',
+        date: 'January 1, 2020',
+        bio: 'I am a tech enthusiast and a blogger. I write about AI, machine learning, and data science.',
+    });
+
+    useEffect(() => {
+        setLoading(true);
+        axios.get(
+            `http://localhost:5555/user/${author}`,
+            { withCredentials: true } // not needed as we don't need to authenticate
+        )
+            .then((response) => {
+                setLoading(false);
+                // const { _id, email, username, isAdmin, profilePicture } = response.data;
+                setAuthorData(response.data);
+            })
+            .catch((error) => {
+                setLoading(false);
+                console.log(error);
+                // Sample data for testing
+                setAuthorData({
+                    imgSrc: 'https://via.placeholder.com/64',
+                    username: 'username',
+                    date: 'January 1, 2000',
+                    bio: 'bio',
+                    email: 'email',
+                    isAdmin: false,
+                });
+                toast.error(`Couldn't fetch the data...`);
+            }
+            )
+    }, []);
+
     return (
         <div className='bg-black p-6 text-green-400 min-h-screen'>
             <div className="my-5 max-w-3xl mx-auto p-6 bg-gray-900 rounded-lg shadow-md">
-                <AuthorCard
-                    imgSrc={authorData.imgSrc}
-                    username={authorData.username}
-                    date={authorData.date}
-                    bio={authorData.bio}
-                    isAdmin={true}
-                />
+                {loading ? (<Spinner />) : (
+                    <AuthorCard
+                        imgSrc={authorData.profilePicture}
+                        username={authorData.username}
+                        date={authorData.date}
+                        bio={authorData.bio}
+                        isAdmin={authorData.isAdmin}
+                    />
+                )}
                 {authorArticles.length > 0 && (
                     <>
                         <hr className='mt-6' />
