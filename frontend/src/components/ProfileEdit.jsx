@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const ProfileEdit = () => {
+    // To be able to navigate to other pages
+    const navigate = useNavigate();
     // Example user data
     const userData = {
         profilePicture: "https://via.placeholder.com/150", // Default profile picture
@@ -19,7 +23,7 @@ const ProfileEdit = () => {
         setBio(event.target.value);
     };
 
-    const handleProfilePictureChange = (event) => {
+    const handleProfilePictureChange = async (event) => {
         const file = event.target.files[0];
         const maxSize = 1 * 1024 * 1024; // 1MB
 
@@ -43,15 +47,18 @@ const ProfileEdit = () => {
 
     const handleSave = async () => {
         try {
-            const response = await fetch('http://localhost:5555/profile/update', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ bio,  })
-            });
+            const response = await axios.post('http://localhost:5555/user/update',
+                { profilePicture, bio },
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    withCredentials: true // if you need to send cookies with the request
+                }
+            );
 
-            if (response.ok) {
+            if (response.status === 204) {
+                navigate('/profile');
                 setMessage("Profile updated successfully.");
                 toast.success('Profile updated successfully!');
             } else {

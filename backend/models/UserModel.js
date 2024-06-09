@@ -26,7 +26,6 @@ const userSchema = new mongoose.Schema({
 
 // Add pre-save middleware to hash the password before saving
 userSchema.pre('save', async function (next) {
-    console.log('balaldsqf qs');
     // Only hash the password if it has been modified (or is new)
     if (!this.isModified('password')) {
         return next();

@@ -42,7 +42,7 @@ const Profile = () => {
                 <h2 className="text-2xl font-bold mb-4">Profile</h2>
                 {loading ? (<Spinner />) : (
                     <AuthorCard
-                        imgSrc={`data:image/jpeg;base64,${authorData.profilePicture}`}
+                        imgSrc={authorData.profilePicture}
                         username={authorData.username}
                         date={authorData.date}
                         bio={authorData.bio}
