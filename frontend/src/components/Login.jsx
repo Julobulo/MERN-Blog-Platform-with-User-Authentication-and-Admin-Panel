@@ -19,15 +19,6 @@ const Login = () => {
         });
     };
 
-    const handleError = (err) =>
-        toast.error(err, {
-            position: "bottom-left",
-        });
-    const handleSuccess = (msg) =>
-        toast.success(msg, {
-            position: "bottom-left",
-        });
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -39,14 +30,14 @@ const Login = () => {
                 { withCredentials: true }
             );
             console.log(data);
-            const { success, message } = data;
+            const { success, message, isAdmin } = data;
             if (success) {
-                handleSuccess(message);
-                setTimeout(() => {
-                    navigate("/");
-                }, 1000);
+                toast.success(message, {position: "bottom-left",});
+                if (isAdmin) toast.success("You're logged in as Administrator!", {position: "bottom-left",});
+                localStorage.setItem('isAdmin', isAdmin);
+                navigate("/");
             } else {
-                handleError(message);
+                toast.error(message, {position: "bottom-left",});
             }
         } catch (error) {
             toast.error(`Couldn't login`);

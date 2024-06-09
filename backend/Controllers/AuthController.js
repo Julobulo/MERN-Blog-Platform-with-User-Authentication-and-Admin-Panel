@@ -8,8 +8,9 @@ export const Signup = async (req, res, next) => {
         if (!email || !password || !username) {
             res.status(400).json({ message: "Please include an email, a username and a password" });
         }
-        const existingUser = await UserModel.findOne({ email }) || UserModel.findOne({ username });
-        if (existingUser) {
+        const existingEmailUser = await UserModel.findOne({ email: email });
+        const existingUsernameUser = await UserModel.findOne({ username: username });
+        if (existingEmailUser || existingUsernameUser) {
             return res.json({ message: "User already exists" });
         }
         const user = await UserModel.create({ email, password, username });
@@ -20,7 +21,7 @@ export const Signup = async (req, res, next) => {
         });
         res
             .status(201)
-            .json({ message: "User signed in successfully", success: true, user });
+            .json({ message: "User successfully Signed Up!", success: true, isAdmin: user.isAdmin });
         next();
     } catch (error) {
         console.error(error);
@@ -46,7 +47,7 @@ export const Login = async (req, res, next) => {
             withCredentials: true,
             httpOnly: false,
         });
-        res.status(201).json({ message: "User logged in successfully", success: true });
+        res.status(201).json({ message: "User logged in successfully", success: true, isAdmin: user.isAdmin });
         next()
     } catch (error) {
         console.error(error);
