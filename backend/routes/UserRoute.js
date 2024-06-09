@@ -77,6 +77,64 @@ router.post('/update', async (request, response) => {
     }
 })
 
+router.get('/adminpanel', async (request, response) => {
+    try {
+        const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+        await delay(1000);
+        const token = request.cookies.token;
+        if (!token) {
+            console.log('There is no token');
+            return response.status(400).json({ message: "cookie missing" })
+        }
+        console.log('There is a token');
+        try {
+            const data = jwt.verify(token, process.env.TOKEN_KEY);
+            console.log('The token is good');
+
+            const user = await User.findById(data.id);
+            if (user) {
+                console.log('There is a user');
+                if (user.isAdmin) {
+                    console.log('The user is an admin');
+                    // The user is an administrator, so he/she can request all of the users in the database
+                    const skip = parseInt(request.query.skip) || 0; // Number of users to skip
+                    const limit = 2; // Number of users per request
+
+                    const searchQuery = request.query.search;
+                    let filter = {};
+
+                    if (searchQuery && searchQuery.trim() !== '') {
+                        filter = {
+                            $or: [
+                                { username: { $regex: searchQuery, $options: 'i' } },
+                                { email: { $regex: searchQuery, $options: 'i' } },
+                                { bio: { $regex: searchQuery, $options: 'i' } }
+                            ]
+                        };
+                    }
+
+                    const users = await User.find(filter, { password: 0 }).skip(skip).limit(limit);
+                    // const users = await User.find({}, { password: 0 }).skip(skip).limit(limit);
+                    response.status(200).json(users);
+                } else {
+                    console.log('The user is not an admin');
+                    return response.status(400).json({ message: "you are not administrator" });
+                }
+            } else {
+                console.log('There is no user');
+                return response.status(404).json({ message: "user missing" });
+            }
+        } catch (error) {
+            console.log(error.message);
+            return response.status(500).json({ message: error.message });
+        }
+    }
+    catch (error) {
+        console.log(error.message);
+        response.status(500).send({ message: error.message });
+    }
+})
+
 router.get('/:author', async (request, response) => {
     try {
         const { author } = request.params;

@@ -6,6 +6,7 @@ import { MdOutlineAdminPanelSettings } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { SlLogin } from "react-icons/sl";
 import Cookies from "js-cookie";
+import { toast } from 'react-toastify';
 
 const NavigationBar = () => {
     const tokenExists = Cookies.get('token');
@@ -29,7 +30,7 @@ const NavigationBar = () => {
                         <Link to="/create" className="btn btn-ghost text-green-400"><MdOutlinePostAdd className='inline align-middle' /> <span className='align-middle'>New Post</span></Link>
                         <Link to="/profile" className="btn btn-ghost text-green-400"><CgProfile className='inline align-middle' /> <span className='align-middle'>Profile</span></Link>
                         {localStorage.getItem('isAdmin')==="true" ? (<Link to="/AdminPanel/Articles" className="btn btn-ghost text-green-400"><MdOutlineAdminPanelSettings className='inline align-middle' /> <span className='align-middle'>Admin Panel</span></Link>):''}
-                        <button className="btn btn-ghost text-green-400" onClick={() => { Cookies.remove('token'); localStorage.removeItem('isAdmin'); navigate('/') }}><MdOutlineAdminPanelSettings className='inline align-middle' /> <span className='align-middle'>Logout</span></button>
+                        <button className="btn btn-ghost text-green-400" onClick={() => { Cookies.remove('token'); localStorage.removeItem('isAdmin'); navigate('/'); toast.success('Successfully logged out!') }}><MdOutlineAdminPanelSettings className='inline align-middle' /> <span className='align-middle'>Logout</span></button>
                     </>) : 
                     <Link to="/login" className="btn btn-ghost text-green-400"><SlLogin className='inline align-middle' /> <span className='align-middle'>Login</span></Link>
                     }
