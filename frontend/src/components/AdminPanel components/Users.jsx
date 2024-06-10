@@ -136,10 +136,10 @@ const Users = () => {
                                         />
                                     </div>
                                     <div className="basis-1/12 flex flex-col justify-evenly items-center">
-                                        <Link to={`/AdminPanel/Users/Edit/${user._id}`} className='text-yellow-400 '>
+                                        <Link to={`/AdminPanel/Users/Edit/${user.username}`} className='text-yellow-400 '>
                                             <FiEdit2 />
                                         </Link>
-                                        <Link to={`/AdminPanel/Users/Delete/${user._id}`} className='text-red-400'>
+                                        <Link to={`/AdminPanel/Users/Delete/${user.username}`} className='text-red-400'>
                                             <MdDeleteOutline />
                                         </Link>
                                     </div>

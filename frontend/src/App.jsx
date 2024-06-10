@@ -43,8 +43,8 @@ const App = () => {
         <Route path="/AdminPanel/Articles/Edit/:id" element={[<Navbar />, <ArticleEdit />, <Footer />]} />
         <Route path="/AdminPanel/Articles/Delete/:id" element={[<Navbar />, <ArticleDelete />, <Footer />]} />
         <Route path="/AdminPanel/Users" element={[<Navbar />, <Users />, <Footer />]} />
-        <Route path="/AdminPanel/Users/Edit/:id" element={[<Navbar />, <UserEdit />, <Footer />]} />
-        <Route path="/AdminPanel/Users/Delete/:id" element={[<Navbar />, <UserDelete />, <Footer />]} />
+        <Route path="/AdminPanel/Users/Edit/:author" element={[<Navbar />, <UserEdit />, <Footer />]} />
+        <Route path="/AdminPanel/Users/Delete/:author" element={[<Navbar />, <UserDelete />, <Footer />]} />
         <Route path="/author/:author" element={[<Navbar />, <Author />, <Footer />]} />
         <Route path="/blog/article/:id" element={[<Navbar />, <Article />, <Footer />]} />
         <Route path="/create" element={[<Navbar />, <Create />, <Footer />]} />
