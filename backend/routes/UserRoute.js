@@ -80,9 +80,6 @@ router.post('/update', async (request, response) => {
                     console.log('user is admin');
                     // if the user is an admin, he can change every fields of everyone (except superadmin)
                     const userToChange = await User.findById(_id); // get user by id that was passed
-                    function strip(string) {
-                        return string.replace(/^\s+|\s+$/g, '');
-                    }
                     console.log(`_id: ${_id}, user._id: ${user._id}, strip(String(_id)) === strip(String(user._id)): ${strip(String(_id)) === strip(String(user._id))}`);
                     if (String(_id) === String(user._id)) {
                         // userToChange is the same as the admin who sent the request -> admin wants to change his own info
@@ -132,6 +129,42 @@ router.post('/update', async (request, response) => {
                     }
                     user.save();
                     return response.status(200).json({ message: "updated profilePicture and bio" });
+                }
+            }
+        })
+    }
+    catch (error) {
+        console.log(error);
+        response.status(500).send({ message: error });
+    }
+})
+
+router.delete('/delete', async (request, response) => {
+    try {
+        const { _id, bio, date, email, isAdmin, profilePicture, username } = request.body;
+        const token = request.cookies.token;
+        if (!token) {
+            return response.status(400).json({ message: "cookie missing" })
+        }
+        jwt.verify(token, process.env.TOKEN_KEY, async (err, data) => {
+            if (err) {
+                return response.status(400).json({ message: "bad cookie" })
+            } else {
+                const user = await User.findById(data.id);
+                // check if user is admin
+                if (user.isSuperAdmin) {
+                    console.log('user is super admin');
+                    // if the user is an admin, he can change every fields of everyone (except superadmin)
+                    const userToDelete = await User.findById(_id); // get user by id that was passed
+                    if (userToDelete.isSuperAdmin) {
+                        return response.status(400).json({ message: "you can't delete a super admin!"})
+                    }
+                await User.deleteOne({ _id: userToDelete._id});
+                console.log('deleted user');
+                return response.status(200).json({ message: "successfully deleted user"});
+                }
+                else {
+                    return response.status(400).json({ message: "you have to be super admin to delete a user" });
                 }
             }
         })

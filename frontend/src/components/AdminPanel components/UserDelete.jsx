@@ -1,27 +1,66 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
 import AuthorCard from "../AuthorCard";
+import Spinner from "../Spinner";
+import { toast } from "react-toastify";
 
-const user = {
-    imgSrc: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYmkp9a2rrD1Sskb9HLt5mDaTt4QaIs8CcBg&s",
-    username: "john_doe",
-    date: 'January 1, 2020',
-    bio: "I am a tech enthusiast and a blogger.",
-    email: "john@example.com",
-    isAdmin: true,
-};
+// const user = {
+//     imgSrc: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYmkp9a2rrD1Sskb9HLt5mDaTt4QaIs8CcBg&s",
+//     username: "john_doe",
+//     date: 'January 1, 2020',
+//     bio: "I am a tech enthusiast and a blogger.",
+//     email: "john@example.com",
+//     isAdmin: true,
+// };
 
 const UserDelete = () => {
+    const { author } = useParams();
+    // To be able to navigate to other pages
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
+    const [userData, setUserData] = useState(null);
     const [isDeleted, setIsDeleted] = useState(false);
     const [isConfirming, setIsConfirming] = useState(false);
-    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        setLoading(true);
+        axios.get(
+            `http://localhost:5555/user/${author}`,
+            { withCredentials: true }
+        )
+            .then((response) => {
+                setLoading(false);
+                // const { _id, email, username, isAdmin, profilePicture } = response.data;
+                setUserData(response.data);
+            })
+            .catch((error) => {
+                setLoading(false);
+                console.log(error);
+                // Sample data for testing
+                setUserData({
+                    imgSrc: 'https://via.placeholder.com/64',
+                    username: 'username',
+                    date: 'January 1, 2000',
+                    bio: 'bio',
+                    email: 'email',
+                    isAdmin: false,
+                });
+                toast.error(`Couldn't fetch the data...`);
+            }
+            )
+    }, [setUserData]);
 
     const handleDelete = async () => {
         try {
-            // Mock delete operation
-            await axios.delete('http://localhost:5555/blog/delete', { data: { _id: user._id } });
+            const response = await axios.delete(`http://localhost:5555/user/delete`,
+                {data: userData,
+                withCredentials: true}
+            );
+            toast.success(response.data.message);
             setIsDeleted(true);
         } catch (error) {
-            setError('Failed to delete the user.');
+            toast.error(error.response.data.message);
         }
     };
 
@@ -48,14 +87,17 @@ const UserDelete = () => {
         <div className="min-h-screen bg-black p-6 text-green-400">
             <div className="my-5 max-w-3xl mx-auto p-6 bg-gray-900 rounded-lg shadow-md">
                 <h1 className="text-2xl font-bold mb-6">Delete User</h1>
-                <AuthorCard
-                    imgSrc={user.imgSrc}
-                    username={user.username}
-                    date={user.date}
-                    bio={user.bio}
-                    email={user.email}
-                    isAdmin={user.isAdmin}
-                />
+                {loading ? (<Spinner />) : (
+                    <AuthorCard
+                        imgSrc={userData.profilePicture}
+                        username={userData.username}
+                        date={userData.date}
+                        bio={userData.bio}
+                        email={userData.email}
+                        isAdmin={userData.isAdmin}
+                        isSuperAdmin={userData.isSuperAdmin}
+                    />
+                )}
                 <div className="mt-5 text-center">
                     {isConfirming ? (
                         <div className="text-center">
