@@ -96,8 +96,19 @@ router.post('/update', async (request, response) => {
                         return response.status(200).json({ message: "successfully changed your info!" });
                     }
                     if (userToChange.isSuperAdmin || userToChange.isAdmin) {
-                        // user is superadmin
-                        return response.status(400).json({ message: "you can't change an admin's info" });
+                        // if user is admin or super admin -> only super admin can change his info
+                        if (user.isSuperAdmin) {
+                            userToChange.bio = bio;
+                            userToChange.email = email;
+                            userToChange.isAdmin = isAdmin;
+                            userToChange.profilePicture = profilePicture;
+                            userToChange.username = username;
+                            await userToChange.save();
+                            return response.status(200).json({ message: "successfully changed the admin's info!" });
+                        }
+                        else {
+                            return response.status(400).json({ message: "you can't change an admin's info" });
+                        }
                     }
                     else {
                         // the user to change is neither the admin changing it nor him/herself an admin

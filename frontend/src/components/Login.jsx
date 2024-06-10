@@ -30,10 +30,10 @@ const Login = () => {
                 { withCredentials: true }
             );
             console.log(data);
-            const { success, message, isAdmin } = data;
+            const { success, message, isAdmin, isSuperAdmin } = data;
             if (success) {
                 toast.success(message, {position: "bottom-left",});
-                if (isAdmin) toast.success("You're logged in as Administrator!", {position: "bottom-left",});
+                if (isAdmin || isSuperAdmin ) toast.success(`You're logged in as ${isSuperAdmin?'Super Administrator':'Administrator'}!`, {position: "bottom-left",});
                 localStorage.setItem('isAdmin', isAdmin);
                 navigate("/");
             } else {
