@@ -17,7 +17,7 @@ router.get('/', async (request, response) => {
                 return response.status(400).json({ message: "bad cookie" })
             } else {
                 const user = await User.findById(data.id);
-                if (user) return response.status(200).json({ _id: user._id, profilePicture: user.profilePicture, username: user.username, date: user.createdAt, bio: user.bio, email: user.email, isAdmin: user.isAdmin })
+                if (user) return response.status(200).json({ _id: user._id, profilePicture: user.profilePicture, username: user.username, date: user.createdAt, bio: user.bio, email: user.email, isAdmin: user.isAdmin, isSuperAdmin: user.isSuperAdmin })
                 else return response.status(404).json({ message: "user missing" })
             }
         })
@@ -200,7 +200,7 @@ router.get('/:author', async (request, response) => {
         }
         const token = request.cookies.token;
         if (!token) {
-            return response.status(200).json({ profilePicture: wantedUser.profilePicture, username: wantedUser.username, date: wantedUser.createdAt, bio: wantedUser.bio, isAdmin: wantedUser.isAdmin })
+            return response.status(200).json({ profilePicture: wantedUser.profilePicture, username: wantedUser.username, date: wantedUser.createdAt, bio: wantedUser.bio, isAdmin: wantedUser.isAdmin, isSuperAdmin: wantedUser.isSuperAdmin })
         }
         console.log('There is a token');
         try {
@@ -208,10 +208,10 @@ router.get('/:author', async (request, response) => {
             const user = await User.findById(data.id);
             if (user) {
                 if (user.isAdmin) {
-                    return response.status(200).json({ _id: wantedUser._id, profilePicture: wantedUser.profilePicture, username: wantedUser.username, email: wantedUser.email, date: wantedUser.createdAt, bio: wantedUser.bio, isAdmin: wantedUser.isAdmin })
+                    return response.status(200).json({ _id: wantedUser._id, profilePicture: wantedUser.profilePicture, username: wantedUser.username, email: wantedUser.email, date: wantedUser.createdAt, bio: wantedUser.bio, isAdmin: wantedUser.isAdmin, isSuperAdmin: wantedUser.isSuperAdmin })
                 }
                 else {
-                    return response.status(200).json({ profilePicture: wantedUser.profilePicture, username: wantedUser.username, date: wantedUser.createdAt, bio: wantedUser.bio, isAdmin: wantedUser.isAdmin })
+                    return response.status(200).json({ profilePicture: wantedUser.profilePicture, username: wantedUser.username, date: wantedUser.createdAt, bio: wantedUser.bio, isAdmin: wantedUser.isAdmin, isSuperAdmin: wantedUser.isSuperAdmin })
                 }
             }
         } catch (error) {

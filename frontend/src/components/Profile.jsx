@@ -48,6 +48,7 @@ const Profile = () => {
                         bio={authorData.bio}
                         email={authorData.email}
                         isAdmin={authorData.isAdmin}
+                        isSuperAdmin={authorData.isSuperAdmin}
                     />)}
                 <div className="text-center mt-5">
                     <Link to={'/profile/edit'}>

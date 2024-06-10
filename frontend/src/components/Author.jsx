@@ -87,6 +87,7 @@ const Author = () => {
                         date={authorData.date}
                         bio={authorData.bio}
                         isAdmin={authorData.isAdmin}
+                        isSuperAdmin={authorData.isSuperAdmin}
                     />
                 )}
                 {authorArticles.length > 0 && (

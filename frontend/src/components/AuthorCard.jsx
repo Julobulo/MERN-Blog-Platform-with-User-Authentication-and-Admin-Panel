@@ -1,8 +1,9 @@
 import React from "react";
 import { MdOutlineAdminPanelSettings } from "react-icons/md";
+import { GrUserAdmin } from "react-icons/gr";
 import { formatDistanceToNow, differenceInYears, format } from 'date-fns';
 
-const AuthorCard = ({ imgSrc, username, date, bio, email, isAdmin }) => {
+const AuthorCard = ({ imgSrc, username, date, bio, email, isAdmin, isSuperAdmin }) => {
     const formatDate = (date) => {
         const parsedDate = new Date(date);
         const yearsDifference = differenceInYears(new Date(), parsedDate);
@@ -32,12 +33,20 @@ const AuthorCard = ({ imgSrc, username, date, bio, email, isAdmin }) => {
                         <p className="text-sm text-gray-400">Email: {email}</p>
                     )}
                     {isAdmin && (
-                        <div className="flex items-center mt-2 align-center text-green-400">
-                            <MdOutlineAdminPanelSettings
-                                className="w-5 h-5 mr-2"
-                            />
-                            <p className="text-sm text-green-500 font-semibold">Administrator</p>
-                        </div>
+                            <div className="flex items-center mt-2 align-center text-green-400">
+                                <MdOutlineAdminPanelSettings
+                                    className="w-5 h-5 mr-2"
+                                />
+                                <p className="text-sm text-green-500 font-semibold">Administrator</p>
+                            </div>
+                    )}
+                    {isSuperAdmin && (
+                            <div className="flex items-center mt-2 align-center text-green-400">
+                                <GrUserAdmin
+                                    className="w-5 h-5 mr-2"
+                                />
+                                <p className="text-sm text-green-500 font-semibold">Super Admin</p>
+                            </div>
                     )}
                 </div>
             </a>

@@ -133,6 +133,7 @@ const Users = () => {
                                             bio={user.bio}
                                             email={user.email}
                                             isAdmin={user.isAdmin}
+                                            isSuperAdmin={user.isSuperAdmin}
                                         />
                                     </div>
                                     <div className="basis-1/12 flex flex-col justify-evenly items-center">

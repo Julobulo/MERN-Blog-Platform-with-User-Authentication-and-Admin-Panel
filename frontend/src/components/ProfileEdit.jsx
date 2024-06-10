@@ -89,12 +89,8 @@ const ProfileEdit = () => {
                 }
             );
 
-            if (response.status === 204) {
-                navigate('/profile');
-                toast.success('Profile updated successfully!');
-            } else {
-                toast.error('Failed to update profile.');
-            }
+            navigate('/profile');
+            toast.success(response.data.message);
         } catch (error) {
             toast.error(`Error: ${error.response.data.message}`);
         }
