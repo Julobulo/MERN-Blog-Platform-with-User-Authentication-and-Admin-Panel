@@ -4,6 +4,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import AuthRoute from "./routes/AuthRoute.js";
 import UserRoute from "./routes/UserRoute.js"
+import BlogRoute from "./routes/BlogRoute.js";
 import cookieParser from "cookie-parser";
 import User from "./models/UserModel.js";
 dotenv.config();
@@ -79,3 +80,4 @@ mongoose
 
 app.use('/', AuthRoute)
 app.use('/user', UserRoute)
+app.use('/blog', BlogRoute)

@@ -54,7 +54,8 @@ const ProfileEdit = () => {
                 setUserData(() => ({
                     ...userData,
                     profilePicture: '',
-                }))
+                }));
+                event.target.value = '';
                 toast.error('Please upload an image file.');
                 return;
             }
@@ -62,7 +63,8 @@ const ProfileEdit = () => {
                 setUserData(() => ({
                     ...userData,
                     profilePicture: '',
-                }))
+                }));
+                event.target.value = '';
                 setProfilePicture();
                 toast.error('File size exceeds 1MB.');
                 return;

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Quill from 'quill';
 import 'react-quill/dist/quill.snow.css';
 import axios from 'axios';
+import { toast } from "react-toastify";
 
 const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, defaultTags, defaultMainContent }) => {
     const [image, setImage] = useState();
@@ -10,6 +11,30 @@ const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, de
     const [tags, setTags] = useState([]);
     const [mainContent, setMainContent] = useState();
     const [tagInput, setTagInput] = useState('');
+
+    const handleImageChange = async (event) => {
+        const file = event.target.files[0];
+        const maxSize = 1 * 1024 * 1024; // 1MB
+
+        if (file) {
+            if (!file.type.startsWith('image/')) {
+                setImage('');
+                event.target.value = '';
+                toast.error('Please upload an image file.');
+                return;
+            }
+            if (file.size > maxSize) {
+                setImage('');
+                event.target.value = '';
+                toast.error('File size exceeds 1MB.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onloadend = () => setImage(reader.result);
+            reader.readAsDataURL(file);
+        }
+    };
 
     const handleTagInputKeyDown = (e) => {
         if ((e.key === 'Enter' || e.key === ',') && tagInput.trim() && tags.length < 4) {
@@ -24,19 +49,20 @@ const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, de
     };
 
     const handlePost = async () => {
-        const postData = {
+        const articleData = {
+            image,
             title,
             subtitle,
             tags,
             main: mainContent,
-            image,
         };
 
         try {
-            const response = await axios.post('http://localhost:5555/blog/create', postData, {
+            const response = await axios.post('http://localhost:5555/blog/create', articleData, {
                 headers: {
                     'Content-Type': 'application/json'
-                }
+                },
+                withCredentials: true,
             });
             console.log(response.data);
             // Handle success (e.g., show a success message or redirect)
@@ -73,7 +99,7 @@ const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, de
 
         return () => {
             quill.off('text-change');
-            quill.dispose();
+            // quill.dispose();
         };
     }, []);
 
@@ -82,14 +108,13 @@ const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, de
             <div className="my-5 max-w-3xl mx-auto p-6 bg-gray-900 rounded-lg shadow-md">
                 <h1 className="text-2xl font-bold mb-6">{pageTitle} Post</h1>
                 <div className="mb-4">
-                    <label htmlFor="image" className="block text-sm font-medium mb-1">Image URL (it will appear on the article display)</label>
+                    <label htmlFor="image" className="block text-sm font-medium mb-1">Image (it will appear on the article display)</label>
                     <input
-                        type="text"
-                        id="image"
-                        value={image}
-                        onChange={(e) => setImage(e.target.value)}
-                        placeholder="Enter image URL (ex: https://images.barrons.com/im-671361)"
-                        className="w-full px-3 py-2 border border-gray-700 rounded-md bg-gray-800 text-green-400 focus:outline-none focus:ring-green-500 focus:border-green-500"
+                        id="profilePicture"
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                        className="w-full px-3 py-2 border border-gray-700 rounded-md bg-gray-800 text-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500"
                     />
                 </div>
                 <div className="mb-4">
