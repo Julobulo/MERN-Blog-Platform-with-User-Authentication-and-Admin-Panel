@@ -4,8 +4,10 @@ import 'react-quill/dist/quill.snow.css';
 import axios from 'axios';
 import { toast } from "react-toastify";
 import { MdExitToApp } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, defaultTags, defaultMainContent }) => {
+    const navigate = useNavigate();
     const [image, setImage] = useState();
     const [title, setTitle] = useState('');
     const [subtitle, setSubtitle] = useState('');
@@ -90,7 +92,8 @@ const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, de
                 },
                 withCredentials: true,
             });
-            toast.success(response.data.message)
+            navigate(`/blog/article/${title}`);
+            toast.success(response.data.message);
             console.log(response.data.message);
             // Handle success (e.g., show a success message or redirect)
         } catch (error) {

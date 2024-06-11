@@ -22,12 +22,6 @@ const ArticleSchema = new mongoose.Schema({
                 trim: true
             }
         ],
-        validate: {
-            validator: function (tags) {
-                return tags.length >= 1 && tags.length <= 4;
-            },
-            message: 'Tags array must contain between 1 and 4 tags.'
-        },
         required: [true, "At least one tag is required"],
     },
     main: {
@@ -45,7 +39,7 @@ const ArticleSchema = new mongoose.Schema({
         default: Date.now, // Sets the default value to the current date and time
     },
     author: {
-        type: String,
+        type: String, // author _id
         required: [true, "An author is required"],
     }
 })

@@ -10,7 +10,27 @@ router.get('/articles', async (request, response) => {
         const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
         await delay(1000);
         const articles = await Article.find({}).limit(20); // Fetch articles excluding the image field
-        const articlesData = articles.map(article => article.toObject()); // Convert documents to plain JavaScript objects
+        const articlesData = [];
+
+        // Iterate through each article
+        for (const article of articles) {
+            const articleObj = article.toObject(); // Convert Mongoose document to plain JavaScript object
+
+            // Assuming you have a User model and each article has an author field pointing to the user's _id
+            try {
+                const user = await User.findById(article.author); // Find the user by _id
+                if (user) {
+                    articleObj.author = user.username; // Replace author with the username
+                } else {
+                    articleObj.author = "Unknown"; // If user not found, set author to "Unknown" or handle it as needed
+                }
+            } catch (error) {
+                console.error("Error fetching user:", error);
+                articleObj.author = "Unknown"; // If error occurs, set author to "Unknown" or handle it as needed
+            }
+
+            articlesData.push(articleObj); // Push modified article object to the array
+        }
         return response.status(200).json(articlesData); // Send the plain JavaScript objects in the response
     }
     catch (error) {
@@ -64,12 +84,12 @@ router.post('/new', async (request, response) => {
                 // check user
                 const user = await User.findById(data.id);
                 if (!user) {
-                    return response.status(400).json({ message: "you need to be logged in!"})
+                    return response.status(400).json({ message: "you need to be logged in!" })
                 }
                 // check if there is an article with same title already
                 const otherArticle = await Article.findOne({ title: title })
                 if (otherArticle) {
-                    return response.status(400).json({ message: "there is already an article with the same title"})
+                    return response.status(400).json({ message: "there is already an article with the same title" })
                 }
                 // check article
                 const checkedArticle = checkArticle(image, title, subtitle, tags, main);
@@ -77,9 +97,9 @@ router.post('/new', async (request, response) => {
                     return response.status(400).json({ message: checkedArticle.message })
                 }
                 // post article
-                const newArticle = Article.create({ image, title, subtitle, tags, main });
+                const newArticle = Article.create({ image: image, title: title, subtitle: subtitle, tags: tags, main: main, author: data.id });
                 (await newArticle).save();
-                response.status(201).json({ message: "successfully posted article!"});
+                response.status(201).json({ message: "successfully posted article!" });
             }
         })
     }

@@ -3,6 +3,7 @@ import axios from "axios";
 import { toast } from 'react-toastify';
 import ArticleCard from './ArticleCard';
 import Spinner from './Spinner';
+import SkeletonLoader from './SkeletonLoader';
 
 const App = () => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -31,8 +32,8 @@ const App = () => {
     //     article.description.toLowerCase().includes(searchQuery.toLowerCase())
     // );
     return (
-        <div className="min-h-screen bg-black p-6">
-            <div className="p-6">
+        <div className="min-h-screen bg-black md:p-6 p-0">
+            <div className="md:p-6 p-2">
                 <div className="mb-6">
                     <input
                         type="text"
@@ -42,8 +43,12 @@ const App = () => {
                         className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                     />
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {loading ? (<Spinner />) : (articles.map((article, index) => (
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+                    {loading ? (
+                        Array.from({ length: 4 }).map((_, index) => (
+                            <SkeletonLoader key={index} />
+                        ))
+                    ) : (articles.map((article, index) => (
                         <ArticleCard
                             key={index}
                             title={article.title}
