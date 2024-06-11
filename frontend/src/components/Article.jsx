@@ -1,18 +1,99 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ArticleCard from "./ArticleCard";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
+import Spinner from "./Spinner";
+import formatDate from "../utils/formatDate";
 
 
 const App = () => {
+    const { title } = useParams();
+    const [loading, setLoading] = useState(true);
+    const [articleData, setArticleData] = useState({});
+    useEffect(() => {
+        setLoading(true);
+        axios.get(`http://localhost:5555/blog/article/${title}`)
+            .then((response) => {
+                setArticleData(response.data);
+                setLoading(false);
+            })
+            .catch((error) => {
+                toast.error(error.response.data);
+                setLoading(false);
+            })
+    }, []);
     return (
         <div className="bg-black text-white">
             <div className="container mx-auto px-4 py-8">
                 <div className="max-w-3xl mx-auto">
-                    <Article
-                        title="The Rise of Artificial Intelligence in Modern Society"
-                        content={articleContent}
-                        imgSrc="https://via.placeholder.com/800x400"
+                    {/* <Article
+                        title={articleData.title}
+                        subtitle={articleData.subtitle}
+                        author={articleData.author}
+                        content={articleData.main}
+                        imgSrc={articleData.image}
+                        tags={articleData.tags}
+                        likes={articleData.likes}
+                        date={articleData.date}
                         relatedArticles={relatedArticles}
-                    />
+                    /> */}
+                    <div className="p-6 mb-8 bg-gray-900 rounded-xl shadow-md">
+                        {loading ? (<Spinner />) : (
+                            <>
+                                <h1 className="text-3xl font-bold mb-4 text-green-400">{articleData.title}</h1>
+                                <div className="flex justify-between mb-4">
+                                    <a href={`/author/${articleData.author}`} className="font-medium text-green-400">
+                                        <div className="flex items-center space-x-2">
+                                            <img
+                                                alt={articleData.author}
+                                                src="https://via.placeholder.com/32"
+                                                className="w-8 h-8 rounded-full"
+                                            />
+                                            <div className="flex flex-col">
+                                                <span>{articleData.author}</span>
+                                                <span className="text-sm text-gray-400">{formatDate(articleData.date)}</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <div className="flex items-center space-x-2">
+                                        <svg className="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                            <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.344l1.172-1.172a4 4 0 015.656 5.656l-1.172 1.172L10 17.828l-5.656-5.656L3.172 10.83a4 4 0 010-5.656zM10 16.172l4.656-4.656a2 2 0 10-2.828-2.828L10 9.344l-1.828-1.828a2 2 0 00-2.828 2.828L10 16.172z" clipRule="evenodd" />
+                                        </svg>
+                                        <span className='text-red-500'>{articleData.likes}</span>
+                                    </div>
+                                </div>
+                                <img
+                                    alt={articleData.title}
+                                    src={articleData.image}
+                                    className="mb-5 w-full rounded-xl bg-no-repeat object-cover object-center"
+                                />
+                                <div>
+                                    {articleData.subtitle}
+                                </div>
+                                <hr className="my-10" />
+                                <div className="text-gray-300">
+                                    {articleData.main}
+                                </div>
+                            </>)}
+                        <hr className="my-6 border-t border-gray-700" />
+                        <h2 className="text-2xl font-bold mb-4 text-green-400">Suggested Articles</h2>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            {relatedArticles.map((article, index) => (
+                                <ArticleCard
+                                    key={index}
+                                    title={article.title}
+                                    description={article.description}
+                                    href={article.href}
+                                    author={article.author}
+                                    date={article.date}
+                                    tags={article.tags}
+                                    imgSrc={article.imgSrc}
+                                    hearts={article.hearts}
+                                />
+                            ))}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -20,40 +101,6 @@ const App = () => {
 }
 
 export default App;
-
-
-const Article = ({ title, content, imgSrc, relatedArticles }) => {
-    return (
-        <div className="p-6 mb-8 bg-gray-900 rounded-xl shadow-md">
-            <h1 className="text-3xl font-bold mb-4 text-green-400">{title}</h1>
-            <img
-                alt={title}
-                src={imgSrc}
-                className="mb-5 w-full rounded-xl bg-no-repeat object-cover object-center"
-            />
-            <div className="text-gray-300">
-                {content}
-            </div>
-            <hr className="my-6 border-t border-gray-700" />
-            <h2 className="text-2xl font-bold mb-4 text-green-400">Suggested Articles</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {relatedArticles.map((article, index) => (
-                    <ArticleCard
-                        key={index}
-                        title={article.title}
-                        description={article.description}
-                        href={article.href}
-                        author={article.author}
-                        date={article.date}
-                        tags={article.tags}
-                        imgSrc={article.imgSrc}
-                        hearts={article.hearts}
-                    />
-                ))}
-            </div>
-        </div>
-    );
-};
 
 const articleContent = (
     <>

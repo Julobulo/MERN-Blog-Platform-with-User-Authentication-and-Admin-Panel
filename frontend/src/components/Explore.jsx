@@ -53,7 +53,7 @@ const App = () => {
                             key={index}
                             title={article.title}
                             description={article.subtitle}
-                            href={`http://localhost:5173/blog/${article.title}`}
+                            href={`http://localhost:5173/blog/article/${article.title}`}
                             author={article.author}
                             date={article.date}
                             tags={article.tags}

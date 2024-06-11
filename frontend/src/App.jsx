@@ -46,7 +46,7 @@ const App = () => {
         <Route path="/AdminPanel/Users/Edit/:author" element={[<Navbar />, <UserEdit />, <Footer />]} />
         <Route path="/AdminPanel/Users/Delete/:author" element={[<Navbar />, <UserDelete />, <Footer />]} />
         <Route path="/author/:author" element={[<Navbar />, <Author />, <Footer />]} />
-        <Route path="/blog/article/:id" element={[<Navbar />, <Article />, <Footer />]} />
+        <Route path="/blog/article/:title" element={[<Navbar />, <Article />, <Footer />]} />
         <Route path="/create" element={[<Navbar />, <Create />, <Footer />]} />
         <Route path="/blog" element={[<Navbar />, <Explore />, <Footer />]} />
         <Route path="/login" element={<Login />} />

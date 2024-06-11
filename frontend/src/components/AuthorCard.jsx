@@ -1,19 +1,9 @@
 import React from "react";
 import { MdOutlineAdminPanelSettings } from "react-icons/md";
 import { GrUserAdmin } from "react-icons/gr";
-import { formatDistanceToNow, differenceInYears, format } from 'date-fns';
+import formatDate from "../utils/formatDate";
 
 const AuthorCard = ({ imgSrc, username, date, bio, email, isAdmin, isSuperAdmin }) => {
-    const formatDate = (date) => {
-        const parsedDate = new Date(date);
-        const yearsDifference = differenceInYears(new Date(), parsedDate);
-
-        if (yearsDifference >= 1) {
-            return format(parsedDate, 'MMMM d, yyyy'); // Display exact date
-        } else {
-            return formatDistanceToNow(parsedDate, { addSuffix: true }); // Relative date
-        }
-    };
     return (
         <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
             <a className="flex flex-row items-center mb-4" href={`/author/${username}`}>

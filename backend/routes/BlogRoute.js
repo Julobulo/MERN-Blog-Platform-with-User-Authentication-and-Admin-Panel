@@ -9,7 +9,7 @@ router.get('/articles', async (request, response) => {
     try {
         const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
         await delay(1000);
-        const articles = await Article.find({}).limit(20); // Fetch articles excluding the image field
+        const articles = await Article.find({}).limit(20); // Fetch articles
         const articlesData = [];
 
         // Iterate through each article
@@ -32,6 +32,29 @@ router.get('/articles', async (request, response) => {
             articlesData.push(articleObj); // Push modified article object to the array
         }
         return response.status(200).json(articlesData); // Send the plain JavaScript objects in the response
+    }
+    catch (error) {
+        console.log(error);
+        return response.status(500).json({ message: error });
+    }
+});
+
+router.get('/article/:title', async (request, response) => {
+    try {
+        const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+        await delay(1000);
+        const { title } = request.params;
+        const article = await Article.findOne({ title: title });
+        if (!article) {
+            return response.status(404).json({ message: "article not found" })
+        }
+        const user = await User.findById(article.author); // Find the user by _id
+        if (user) {
+            article.author = user.username; // Replace author with the username
+        } else {
+            article.author = "Unknown"; // If user not found, set author to "Unknown" or handle it as needed
+        }
+        return response.status(200).json(article);
     }
     catch (error) {
         console.log(error);

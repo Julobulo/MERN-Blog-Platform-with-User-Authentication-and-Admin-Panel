@@ -1,17 +1,7 @@
 import React from "react";
-import { formatDistanceToNow, differenceInYears, format } from 'date-fns';
+import formatDate from "../utils/formatDate";
 
 const ArticleCard = ({ title, subtitle, href, author, date, tags, imgSrc, hearts }) => {
-    const formatDate = (date) => {
-        const parsedDate = new Date(date);
-        const yearsDifference = differenceInYears(new Date(), parsedDate);
-
-        if (yearsDifference >= 1) {
-            return format(parsedDate, 'MMMM d, yyyy'); // Display exact date
-        } else {
-            return formatDistanceToNow(parsedDate, { addSuffix: true }); // Relative date
-        }
-    };
     return (
         <div className="p-6 mb-8 bg-gray-900 rounded-xl shadow-md">
             <a href={href}>
