@@ -1,4 +1,6 @@
 import express, { response } from "express";
+import User from "../models/UserModel.js";
+import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
@@ -18,29 +20,39 @@ function checkArticle(image, title, subtitle, tags, main) {
         return { allowed: false, message: 'File size exceeds 1MB' };
     }
     // checking title and subtitle
-    if (title.length > 70 || title.length < 10 || subtitle.length > 150 || subtitle.length < 30) {
+    if (title.length > 100 || title.length < 10 || subtitle.length > 150 || subtitle.length < 30) {
         return { allowed: false, message: "The title has to be between 10 and 70 characters, and the subtitle has to be between 30 and 150 characters." };
     }
     // checking tags
-    tags.forEach(tag => {
-        if (tag.length < 2 || tag.length > 20) {
-            return { allowed: false, message: "tags have to be between 2 and 20 characters" };
-        }
-    });
+    const invalidTag = tags.find(tag => tag.length < 2 || tag.length > 20);
+    if (invalidTag) {
+        return { allowed: false, message: "Tags have to be between 2 and 20 characters" };
+    }
     // checking main
     if (main.length < 300 || main.length > 10000) {
-        return { allowed: false, message: "the main article has to be between 300 and 10000 characters"};
+        return { allowed: false, message: "the main article has to be between 300 and 10000 characters" };
     }
     return { allowed: true };
 }
 
 router.post('/new', async (request, response) => {
     try {
-        const { image, title, subtitle, tags, main } = request.body;
-        const checkedArticle = checkArticle(image, title, subtitle, tags, main);
-        if (!checkArticle.allowed) {
-            return response.status(400).json({ message: checkedArticle.message})
+        const token = request.cookies.token;
+        if (!token) {
+            return response.status(400).json({ message: "cookie missing" })
         }
+        jwt.verify(token, process.env.TOKEN_KEY, async (err, data) => {
+            if (err) {
+                return response.status(400).json({ message: "bad cookie" })
+            } else {
+                const { image, title, subtitle, tags, main } = request.body;
+                const checkedArticle = checkArticle(image, title, subtitle, tags, main);
+                if (!checkArticle.allowed) {
+                    return response.status(400).json({ message: checkedArticle.message })
+                }
+                const user = await User.findById(data.id);
+            }
+        })
     }
     catch (error) {
         console.log(error)

@@ -3,13 +3,14 @@ import Quill from 'quill';
 import 'react-quill/dist/quill.snow.css';
 import axios from 'axios';
 import { toast } from "react-toastify";
+import { MdExitToApp } from "react-icons/md";
 
 const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, defaultTags, defaultMainContent }) => {
     const [image, setImage] = useState();
-    const [title, setTitle] = useState();
-    const [subtitle, setSubtitle] = useState();
+    const [title, setTitle] = useState('');
+    const [subtitle, setSubtitle] = useState('');
     const [tags, setTags] = useState([]);
-    const [mainContent, setMainContent] = useState();
+    const [mainContent, setMainContent] = useState('');
     const [tagInput, setTagInput] = useState('');
 
     const handleImageChange = async (event) => {
@@ -39,7 +40,12 @@ const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, de
     const handleTagInputKeyDown = (e) => {
         if ((e.key === 'Enter' || e.key === ',') && tagInput.trim() && tags.length < 4) {
             e.preventDefault();
-            setTags([...tags, tagInput.trim()]);
+            const newTag = tagInput.trim();
+            if (newTag.length < 2 || newTag.length > 20) {
+                toast.error('Tags have to be between 2 and 20 characters.');
+                return; // Exit early if the tag is invalid
+            }
+            setTags([...tags, newTag]);
             setTagInput('');
         }
     };
@@ -49,6 +55,26 @@ const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, de
     };
 
     const handlePost = async () => {
+        if (!image) {
+            toast.error('You have to upload an image.');
+            return;
+        }
+        if (title.length < 10 || title.length > 100) {
+            toast.error('Title has to be between 10 and 100 characters.');
+            return;
+        }
+        if (subtitle.length < 30 || subtitle.length > 150) {
+            toast.error('Subtitle has to be between 30 and 150 characters.');
+            return;
+        }
+        if (!tags[0]) {
+            toast.error('You have to include at least one tag.');
+            return;
+        }
+        if (mainContent.length > 10000 || mainContent.length < 300) {
+            toast.error('Article has to be between 300 and 10,000 characters.');
+            return;
+        }
         const articleData = {
             image,
             title,
@@ -58,15 +84,17 @@ const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, de
         };
 
         try {
-            const response = await axios.post('http://localhost:5555/blog/create', articleData, {
+            const response = await axios.post('http://localhost:5555/blog/new', articleData, {
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 withCredentials: true,
             });
+            toast.success(response.data)
             console.log(response.data);
             // Handle success (e.g., show a success message or redirect)
         } catch (error) {
+            toast.error(error.response.data.message);
             console.error(error);
             // Handle error (e.g., show an error message)
         }
@@ -123,6 +151,8 @@ const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, de
                         type="text"
                         id="title"
                         value={title}
+                        minLength={10}
+                        maxLength={100}
                         onChange={(e) => setTitle(e.target.value)}
                         placeholder={`The Future of Quantum Computing`}
                         className="w-full px-3 py-2 border border-gray-700 rounded-md bg-gray-800 text-green-400 focus:outline-none focus:ring-green-500 focus:border-green-500"
@@ -134,6 +164,8 @@ const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, de
                         type="text"
                         id="subtitle"
                         value={subtitle}
+                        minLength={30}
+                        maxLength={150}
                         onChange={(e) => setSubtitle(e.target.value)}
                         placeholder={`Curious about the future of Quantum Computing? Check out this article!`}
                         className="w-full px-3 py-2 border border-gray-700 rounded-md bg-gray-800 text-green-400 focus:outline-none focus:ring-green-500 focus:border-green-500"

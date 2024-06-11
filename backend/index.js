@@ -7,10 +7,13 @@ import UserRoute from "./routes/UserRoute.js"
 import BlogRoute from "./routes/BlogRoute.js";
 import cookieParser from "cookie-parser";
 import User from "./models/UserModel.js";
+import bodyParser from "body-parser";
 dotenv.config();
 const { PORT, DB_URL } = process.env;
 
 const app = express();
+app.use(bodyParser.json({ limit: '1mb' }));
+app.use(bodyParser.urlencoded({ limit: '1mb', extended: true }));
 
 // Middleware for handling CORS POLICY
 // Option 1: Allow ALL Origins with Default of cors(*)
