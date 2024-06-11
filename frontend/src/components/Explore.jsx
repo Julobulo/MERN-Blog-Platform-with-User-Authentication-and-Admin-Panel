@@ -1,18 +1,35 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from "axios";
+import { toast } from 'react-toastify';
 import ArticleCard from './ArticleCard';
+import Spinner from './Spinner';
 
 const App = () => {
     const [searchQuery, setSearchQuery] = useState('');
+    const [articles, setArticles] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const handleSearchChange = (event) => {
         setSearchQuery(event.target.value);
     };
 
-    const filteredArticles = articles.filter(article =>
-        article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        article.description.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    useEffect(() => {
+        setLoading(true);
+        axios.get('http://localhost:5555/blog/articles')
+            .then((response) => {
+                setArticles(response.data);
+                setLoading(false);
+            })
+            .catch((error) => {
+                toast.error(error.response.data);
+                setLoading(false);
+            })
+    }, [])
+
+    // const filteredArticles = articles.filter(article =>
+    //     article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    //     article.description.toLowerCase().includes(searchQuery.toLowerCase())
+    // );
     return (
         <div className="min-h-screen bg-black p-6">
             <div className="p-6">
@@ -26,19 +43,20 @@ const App = () => {
                     />
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {filteredArticles.map((article, index) => (
+                    {loading ? (<Spinner />) : (articles.map((article, index) => (
                         <ArticleCard
                             key={index}
                             title={article.title}
-                            description={article.description}
-                            href={article.href}
+                            description={article.subtitle}
+                            href={`http://localhost:5173/blog/${article.title}`}
                             author={article.author}
                             date={article.date}
                             tags={article.tags}
-                            imgSrc={article.imgSrc}
-                            hearts={article.hearts}
+                            imgSrc={article.image}
+                            hearts={article.likes}
                         />
-                    ))}
+                    )))
+                    }
                 </div>
             </div>
         </div>

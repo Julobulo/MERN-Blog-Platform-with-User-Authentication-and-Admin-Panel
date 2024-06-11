@@ -1,6 +1,17 @@
 import React from "react";
+import { formatDistanceToNow, differenceInYears, format } from 'date-fns';
 
 const ArticleCard = ({ title, subtitle, href, author, date, tags, imgSrc, hearts }) => {
+    const formatDate = (date) => {
+        const parsedDate = new Date(date);
+        const yearsDifference = differenceInYears(new Date(), parsedDate);
+
+        if (yearsDifference >= 1) {
+            return format(parsedDate, 'MMMM d, yyyy'); // Display exact date
+        } else {
+            return formatDistanceToNow(parsedDate, { addSuffix: true }); // Relative date
+        }
+    };
     return (
         <div className="p-6 mb-8 bg-gray-900 rounded-xl shadow-md">
             <a href={href}>
@@ -21,17 +32,19 @@ const ArticleCard = ({ title, subtitle, href, author, date, tags, imgSrc, hearts
                 ))}
             </div>
             <div className="flex justify-between mb-4">
-                <div className="flex items-center space-x-2">
-                    <img
-                        alt={author}
-                        src="https://via.placeholder.com/32"
-                        className="w-8 h-8 rounded-full"
-                    />
-                    <div className="flex flex-col">
-                        <a href="/author/john-doe" className="font-medium text-green-400">{author}</a>
-                        <span className="text-sm text-gray-400">{date}</span>
+                <a href={`/author/${author}`} className="font-medium text-green-400">
+                    <div className="flex items-center space-x-2">
+                        <img
+                            alt={author}
+                            src="https://via.placeholder.com/32"
+                            className="w-8 h-8 rounded-full"
+                        />
+                        <div className="flex flex-col">
+                            <span>{author}</span>
+                            <span className="text-sm text-gray-400">{formatDate(date)}</span>
+                        </div>
                     </div>
-                </div>
+                </a>
                 <div className="flex items-center space-x-2">
                     <svg className="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.344l1.172-1.172a4 4 0 015.656 5.656l-1.172 1.172L10 17.828l-5.656-5.656L3.172 10.83a4 4 0 010-5.656zM10 16.172l4.656-4.656a2 2 0 10-2.828-2.828L10 9.344l-1.828-1.828a2 2 0 00-2.828 2.828L10 16.172z" clipRule="evenodd" />

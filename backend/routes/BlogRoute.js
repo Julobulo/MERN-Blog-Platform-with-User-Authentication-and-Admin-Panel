@@ -5,6 +5,20 @@ import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
+router.get('/articles', async (request, response) => {
+    try {
+        const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+        await delay(1000);
+        const articles = await Article.find({}).limit(20); // Fetch articles excluding the image field
+        const articlesData = articles.map(article => article.toObject()); // Convert documents to plain JavaScript objects
+        return response.status(200).json(articlesData); // Send the plain JavaScript objects in the response
+    }
+    catch (error) {
+        console.log(error);
+        return response.status(500).json({ message: error });
+    }
+});
+
 function checkArticle(image, title, subtitle, tags, main) {
     const maxPictureSize = 1 * 1024 * 1024; // 1MB
     if (!image || !title || !subtitle || !tags || tags.length < 1 || !main) {

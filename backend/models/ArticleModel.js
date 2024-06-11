@@ -38,6 +38,15 @@ const ArticleSchema = new mongoose.Schema({
     },
     likes: {
         type: Number,
+        default: 0,
+    },
+    date: {
+        type: Date,
+        default: Date.now, // Sets the default value to the current date and time
+    },
+    author: {
+        type: String,
+        required: [true, "An author is required"],
     }
 })
 
