@@ -1,5 +1,6 @@
 import express, { response } from "express";
 import User from "../models/UserModel.js";
+import Article from "../models/ArticleModel.js";
 import jwt from "jsonwebtoken";
 
 const router = express.Router();
@@ -46,11 +47,25 @@ router.post('/new', async (request, response) => {
                 return response.status(400).json({ message: "bad cookie" })
             } else {
                 const { image, title, subtitle, tags, main } = request.body;
+                // check user
+                const user = await User.findById(data.id);
+                if (!user) {
+                    return response.status(400).json({ message: "you need to be logged in!"})
+                }
+                // check if there is an article with same title already
+                const otherArticle = await Article.findOne({ title: title })
+                if (otherArticle) {
+                    return response.status(400).json({ message: "there is already an article with the same title"})
+                }
+                // check article
                 const checkedArticle = checkArticle(image, title, subtitle, tags, main);
-                if (!checkArticle.allowed) {
+                if (!checkedArticle.allowed) {
                     return response.status(400).json({ message: checkedArticle.message })
                 }
-                const user = await User.findById(data.id);
+                // post article
+                const newArticle = Article.create({ image, title, subtitle, tags, main });
+                (await newArticle).save();
+                response.status(201).json({ message: "successfully posted article!"});
             }
         })
     }

@@ -90,8 +90,8 @@ const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, de
                 },
                 withCredentials: true,
             });
-            toast.success(response.data)
-            console.log(response.data);
+            toast.success(response.data.message)
+            console.log(response.data.message);
             // Handle success (e.g., show a success message or redirect)
         } catch (error) {
             toast.error(error.response.data.message);
