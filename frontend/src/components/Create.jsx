@@ -10,7 +10,7 @@ const Create = () => {
                 defaultImage: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/Lorem_Ipsum_Article.png?20150528112327',
                 defaultTitle: 'The Future of Quantum Computing',
                 defaultSubtitle: 'Exploring the potential and challenges of quantum technology.',
-                defaultTags: ['Quantum Computing', 'Technology', 'Innovation', 'Future'],
+                defaultTags: ['Quantum Computing', 'Technology', 'Innovation'],
                 defaultMainContent: `
             <h1>The Future of Quantum Computing</h1>
             <h2>Introduction</h2>

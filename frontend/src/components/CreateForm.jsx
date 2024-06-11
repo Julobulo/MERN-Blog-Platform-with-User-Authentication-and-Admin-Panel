@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import ReactQuill from 'react-quill';
+import React, { useState, useEffect } from "react";
+import Quill from 'quill';
 import 'react-quill/dist/quill.snow.css';
 import axios from 'axios';
 
 const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, defaultTags, defaultMainContent }) => {
-    const [image, setImage] = useState(defaultImage);
-    const [title, setTitle] = useState(defaultTitle);
-    const [subtitle, setSubtitle] = useState(defaultSubtitle);
-    const [tags, setTags] = useState(defaultTags);
-    const [mainContent, setMainContent] = useState(defaultMainContent);
+    const [image, setImage] = useState();
+    const [title, setTitle] = useState();
+    const [subtitle, setSubtitle] = useState();
+    const [tags, setTags] = useState([]);
+    const [mainContent, setMainContent] = useState();
     const [tagInput, setTagInput] = useState('');
 
     const handleTagInputKeyDown = (e) => {
@@ -46,52 +46,83 @@ const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, de
         }
     };
 
+    const toolbarOptions = [
+        [{ header: [1, 2, 3, false] }],
+        ["bold", "italic", "underline", "strike", "blockquote"],
+        [{ list: "ordered" }, { list: "bullet" }],
+        ["link", "image"],
+        [{ align: [] }],
+        [{ color: [] }],
+        ["code-block"],
+        ["clean"],
+    ];
+
+    useEffect(() => {
+        const quill = new Quill('#editor', {
+            modules: {
+                toolbar: {
+                    container: toolbarOptions,
+                },
+            },
+            theme: 'snow',
+        });
+
+        quill.on('text-change', () => {
+            setMainContent(quill.root.innerHTML);
+        });
+
+        return () => {
+            quill.off('text-change');
+            quill.dispose();
+        };
+    }, []);
+
     return (
         <div className="bg-black p-6 text-green-400">
             <div className="my-5 max-w-3xl mx-auto p-6 bg-gray-900 rounded-lg shadow-md">
                 <h1 className="text-2xl font-bold mb-6">{pageTitle} Post</h1>
                 <div className="mb-4">
-                    <label htmlFor="image" className="block text-sm font-medium">Image URL (it will appear on the article display)</label>
+                    <label htmlFor="image" className="block text-sm font-medium mb-1">Image URL (it will appear on the article display)</label>
                     <input
                         type="text"
                         id="image"
                         value={image}
                         onChange={(e) => setImage(e.target.value)}
-                        placeholder="Enter image URL (ex: https://upload.wikimedia.org/wikipedia/commons/a/a7/Lorem_Ipsum_Article.png?20150528112327)"
+                        placeholder="Enter image URL (ex: https://images.barrons.com/im-671361)"
                         className="w-full px-3 py-2 border border-gray-700 rounded-md bg-gray-800 text-green-400 focus:outline-none focus:ring-green-500 focus:border-green-500"
                     />
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="title" className="block text-sm font-medium">Title</label>
+                    <label htmlFor="title" className="block text-sm font-medium mb-1">Title</label>
                     <input
                         type="text"
                         id="title"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
-                        placeholder={`How to make banana shakes`}
+                        placeholder={`The Future of Quantum Computing`}
                         className="w-full px-3 py-2 border border-gray-700 rounded-md bg-gray-800 text-green-400 focus:outline-none focus:ring-green-500 focus:border-green-500"
                     />
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="subtitle" className="block text-sm font-medium">Subtitle</label>
+                    <label htmlFor="subtitle" className="block text-sm font-medium mb-1">Subtitle</label>
                     <input
                         type="text"
                         id="subtitle"
                         value={subtitle}
                         onChange={(e) => setSubtitle(e.target.value)}
-                        placeholder={`Hey everybody! Ever wanted to learn how to make banana shakes? This guide is for you!`}
+                        placeholder={`Curious about the future of Quantum Computing? Check out this article!`}
                         className="w-full px-3 py-2 border border-gray-700 rounded-md bg-gray-800 text-green-400 focus:outline-none focus:ring-green-500 focus:border-green-500"
                     />
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="tags" className="block text-sm font-medium">Tags (up to 4)</label>
+                    <label htmlFor="tags" className="block text-sm font-medium mb-1">Tags (up to 4)</label>
                     <input
                         type="text"
                         id="tags"
                         value={tagInput}
                         onChange={(e) => setTagInput(e.target.value)}
                         onKeyDown={handleTagInputKeyDown}
-                        placeholder={`Press Enter or comma to add tag (ex: "banana", "recipe", "shake", ...)`}
+                        placeholder={`Press Enter or comma to add tag (ex: "Quantum Computing", "Science", "Future", ...)`}
                         className="w-full px-3 py-2 border border-gray-700 rounded-md bg-gray-800 text-green-400 focus:outline-none focus:ring-green-500 focus:border-green-500"
                     />
                     <div className="mt-2 flex flex-wrap">
@@ -102,13 +133,9 @@ const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, de
                         ))}
                     </div>
                 </div>
-                <div className="mb-4">
-                    <label htmlFor="mainContent" className="block text-sm font-medium">Content</label>
-                    <ReactQuill
-                        value={mainContent}
-                        onChange={setMainContent}
-                        className="bg-gray-800 text-white"
-                    />
+                <div className="mb-4 text-white">
+                    <label htmlFor="mainContent" className="text-green-400 block text-sm font-medium mb-1">Content</label>
+                    <div id="editor" style={{ height: "300px" }}></div>
                 </div>
                 <button
                     onClick={handlePost}
