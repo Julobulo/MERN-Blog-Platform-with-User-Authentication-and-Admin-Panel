@@ -24,7 +24,7 @@ const NavigationBar = () => {
                     <img src="https://via.placeholder.com/40" alt="Logo" className="mr-3 hidden sm:block" />
                     <span className="text-2xl font-bold text-green-400">Your Blog</span>
                 </Link>
-                <div className="hidden sm:flex space-x-6 flex-grow justify-end">
+                <div className="hidden lg:flex space-x-6 flex-grow justify-end">
                     <Link to="/blog" className="btn btn-ghost text-green-400"><MdOutlineExplore className='inline align-middle' /> <span className='align-middle'>Explore</span></Link>
                     {Cookies.get('token') ? (<>
                         <Link to="/create" className="btn btn-ghost text-green-400"><MdOutlinePostAdd className='inline align-middle' /> <span className='align-middle'>New Post</span></Link>
@@ -35,7 +35,7 @@ const NavigationBar = () => {
                     <Link to="/login" className="btn btn-ghost text-green-400"><SlLogin className='inline align-middle' /> <span className='align-middle'>Login</span></Link>
                     }
                 </div>
-                <div className="sm:hidden">
+                <div className="lg:hidden">
                     <button
                         onClick={toggleMenu}
                         className="text-green-400 focus:outline-none"

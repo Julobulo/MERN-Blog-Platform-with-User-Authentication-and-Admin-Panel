@@ -72,8 +72,8 @@ const App = () => {
                                     {articleData.subtitle}
                                 </div>
                                 <hr className="my-10" />
-                                <div className="text-gray-300">
-                                    {articleData.main}
+                                <div dangerouslySetInnerHTML={{ __html: articleData.main }} className="text-gray-300">
+                                    {/* {articleData.main} */}
                                 </div>
                             </>)}
                         <hr className="my-6 border-t border-gray-700" />

@@ -74,7 +74,7 @@ const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, de
             return;
         }
         if (mainContent.length > 10000 || mainContent.length < 300) {
-            toast.error('Article has to be between 300 and 10,000 characters.');
+            toast.error('Article has to be between 300 and 10,000 characters. (you can\'t upload images)');
             return;
         }
         const articleData = {
@@ -105,12 +105,13 @@ const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, de
 
     const toolbarOptions = [
         [{ header: [1, 2, 3, false] }],
-        ["bold", "italic", "underline", "strike", "blockquote"],
-        [{ list: "ordered" }, { list: "bullet" }],
-        ["link", "image"],
-        [{ align: [] }],
+        ["bold", "italic", "underline", "strike",
+        // "blockquote"
+        ],
+        // [{ list: "ordered" }, { list: "bullet" }],
+        ["link"],
         [{ color: [] }],
-        ["code-block"],
+        // ["code-block"],
         ["clean"],
     ];
 
