@@ -12,7 +12,8 @@ const HomePage = () => {
     useEffect(() => {
         setLikedLoading(true);
         setRecentLoading(true);
-        axios.get(`http://localhost:5555/blog/most-liked`)
+        axios.get(`http://localhost:5555/blog/most-liked`,
+            { withCredentials: true })
             .then((response) => {
                 setMostLikedArticle(response.data);
                 setLikedLoading(false);
@@ -22,7 +23,8 @@ const HomePage = () => {
                 console.log(error);
                 setLikedLoading(false);
             });
-        axios.get(`http://localhost:5555/blog/most-recent`)
+        axios.get(`http://localhost:5555/blog/most-recent`,
+            { withCredentials: true })
             .then((response) => {
                 setMostRecentArticle(response.data);
                 setRecentLoading(false);
@@ -56,7 +58,8 @@ const HomePage = () => {
                             date={mostLikedArticle.date}
                             tags={mostLikedArticle.tags}
                             imgSrc={mostLikedArticle.image}
-                            hearts={mostLikedArticle.likes}
+                            likes={mostLikedArticle.likes}
+                            liked={mostLikedArticle.liked}
                         />)}
                     </section>
 
@@ -70,7 +73,8 @@ const HomePage = () => {
                             date={mostRecentArticle.date}
                             tags={mostRecentArticle.tags}
                             imgSrc={mostRecentArticle.image}
-                            hearts={mostRecentArticle.likes}
+                            likes={mostRecentArticle.likes}
+                            liked={mostRecentArticle.liked}
                         />)}
                     </section>
 

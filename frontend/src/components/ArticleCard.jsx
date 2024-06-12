@@ -1,7 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import formatDate from "../utils/formatDate";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
+import Cookies from "js-cookie";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
-const ArticleCard = ({ title, subtitle, href, author, date, tags, imgSrc, hearts }) => {
+const ArticleCard = ({ title, subtitle, href, author, date, tags, imgSrc, likes, liked }) => {
+    const [wasLiked, setWasLiked] = useState(liked);
+    const [likesNumber, setLikesNumber] = useState(likes);
+    const navigate = useNavigate();
+    function handleLike() {
+        if (!Cookies.get('token')) {
+            navigate('/login');
+        }
+        else {
+            axios.post(`http://localhost:5555/blog/article/${title}`, {},
+                { withCredentials: true })
+                .then((response) => {
+                    setWasLiked(!wasLiked);
+                    if (wasLiked) {
+                        setLikesNumber(likesNumber - 1);
+                    }
+                    else {
+                        setLikesNumber(likesNumber + 1);
+                    }
+                    console.log(response.data.message);
+                })
+                .catch((error) => {
+                    toast.error(error.response.data.message);
+                    console.log(error.response.data.message);
+                })
+        }
+    }
     return (
         <div className="p-6 mb-8 bg-gray-900 rounded-xl shadow-md">
             <a href={href}>
@@ -36,10 +67,14 @@ const ArticleCard = ({ title, subtitle, href, author, date, tags, imgSrc, hearts
                     </div>
                 </a>
                 <div className="flex items-center space-x-2">
-                    <svg className="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.344l1.172-1.172a4 4 0 015.656 5.656l-1.172 1.172L10 17.828l-5.656-5.656L3.172 10.83a4 4 0 010-5.656zM10 16.172l4.656-4.656a2 2 0 10-2.828-2.828L10 9.344l-1.828-1.828a2 2 0 00-2.828 2.828L10 16.172z" clipRule="evenodd" />
-                    </svg>
-                    <span className='text-red-500'>{hearts}</span>
+                    <button className="text-red-500" onClick={() => handleLike()}>
+                        {wasLiked ?
+                            (<FaHeart />)
+                            :
+                            (<FaRegHeart />)
+                        }
+                    </button>
+                    <span className='text-red-500'>{likesNumber}</span>
                 </div>
             </div>
             <p className="mb-6 text-gray-400">{subtitle}</p>

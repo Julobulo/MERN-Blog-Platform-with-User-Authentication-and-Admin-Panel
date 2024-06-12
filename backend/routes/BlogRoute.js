@@ -10,7 +10,7 @@ router.get('/most-liked', async (request, response) => {
     try {
         const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
         await delay(1000);
-        const mostLovedArticle = await Article.findOne({}).sort({ likes: -1 });
+        let mostLovedArticle = await Article.findOne({}).sort({ likes: -1 });
         try {
             const user = await User.findById(mostLovedArticle.author); // Find the user by _id
             if (user) {
@@ -18,7 +18,25 @@ router.get('/most-liked', async (request, response) => {
                 } else {
                 mostLovedArticle.author = "Unknown"; // If user not found, set author to "Unknown" or handle it as needed
             }
-            return response.status(200).json(mostLovedArticle);
+            // send "liked" field
+            const token = request.cookies.token;
+            if (token) {
+                jwt.verify(token, process.env.TOKEN_KEY, async (err, data) => {
+                    if (err) {
+                        // return response.status(400).json({ message: "bad cookie" })
+                        // in this case, if there is an error, we don't need to return
+                    } else {
+                        const userRequesting = await User.findById(data.id);
+                        if (userRequesting.articlesLiked.includes(mostLovedArticle._id)) {
+                            mostLovedArticle = { ...mostLovedArticle.toObject(), liked: true };
+                        }
+                        return response.status(200).json(mostLovedArticle);
+                    }
+                })
+            }
+            else {
+                return response.status(200).json(mostLovedArticle);
+            }
         } catch (error) {
             console.error("Error fetching user:", error);
             mostLovedArticle.author = "Unknown"; // If error occurs, set author to "Unknown" or handle it as needed
@@ -35,8 +53,8 @@ router.get('/most-liked', async (request, response) => {
 router.get('/most-recent', async (request, response) => {
     try {
         const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
-        await delay(3000);
-        const mostRecentArticle = await Article.findOne({}).sort({ date: -1 });
+        await delay(1000);
+        let mostRecentArticle = await Article.findOne({}).sort({ date: -1 });
         try {
             const user = await User.findById(mostRecentArticle.author); // Find the user by _id
             if (user) {
@@ -44,13 +62,30 @@ router.get('/most-recent', async (request, response) => {
                 } else {
                     mostRecentArticle.author = "Unknown"; // If user not found, set author to "Unknown" or handle it as needed
             }
-            return response.status(200).json(mostRecentArticle);
+            // send "liked" field
+            const token = request.cookies.token;
+            if (token) {
+                jwt.verify(token, process.env.TOKEN_KEY, async (err, data) => {
+                    if (err) {
+                        // return response.status(400).json({ message: "bad cookie" })
+                        // in this case, if there is an error, we don't need to return
+                    } else {
+                        const userRequesting = await User.findById(data.id);
+                        if (userRequesting.articlesLiked.includes(mostRecentArticle._id)) {
+                            mostRecentArticle = { ...mostRecentArticle.toObject(), liked: true };
+                        }
+                        return response.status(200).json(mostRecentArticle);
+                    }
+                })
+            }
+            else {
+                return response.status(200).json(mostRecentArticle);
+            }
         } catch (error) {
             console.error("Error fetching user:", error);
             mostRecentArticle.author = "Unknown"; // If error occurs, set author to "Unknown" or handle it as needed
             return response.status(200).json(mostRecentArticle);
         }
-        return response.status(200).json(mostRecentArticle);
     }
     catch (error) {
         console.log(error);
