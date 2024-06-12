@@ -1,21 +1,27 @@
 import React, { useEffect, useState } from "react";
 import ArticleCard from "./ArticleCard";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Spinner from "./Spinner";
 import formatDate from "../utils/formatDate";
-
+import { FaRegHeart } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
+import Cookies from "js-cookie";
 
 const App = () => {
     const { title } = useParams();
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [articleData, setArticleData] = useState({});
+    const [liked, setLiked] = useState(false);
     useEffect(() => {
         setLoading(true);
-        axios.get(`http://localhost:5555/blog/article/${title}`)
+        axios.get(`http://localhost:5555/blog/article/${title}`,
+            { withCredentials: true })
             .then((response) => {
                 setArticleData(response.data);
+                setLiked(response.data.liked);
                 setLoading(false);
             })
             .catch((error) => {
@@ -23,6 +29,30 @@ const App = () => {
                 setLoading(false);
             })
     }, []);
+
+    function handleLike() {
+        if (!Cookies.get('token')) {
+            navigate('/login');
+        }
+        else {
+            axios.post(`http://localhost:5555/blog/article/${title}`, {},
+                { withCredentials: true })
+                .then((response) => {
+                    setLiked(!liked);
+                    if (liked) {
+                        articleData.likes -= 1;
+                    }
+                    else {
+                        articleData.likes += 1;
+                    }
+                    console.log(response.data.message);
+                })
+                .catch((error) => {
+                    toast.error(error.response.data.message);
+                    console.log(error.response.data.message);
+                })
+        }
+    }
     return (
         <div className="bg-black text-white">
             <div className="container mx-auto px-4 py-8">
@@ -57,9 +87,13 @@ const App = () => {
                                         </div>
                                     </a>
                                     <div className="flex items-center space-x-2">
-                                        <svg className="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                            <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.344l1.172-1.172a4 4 0 015.656 5.656l-1.172 1.172L10 17.828l-5.656-5.656L3.172 10.83a4 4 0 010-5.656zM10 16.172l4.656-4.656a2 2 0 10-2.828-2.828L10 9.344l-1.828-1.828a2 2 0 00-2.828 2.828L10 16.172z" clipRule="evenodd" />
-                                        </svg>
+                                        <button className="text-red-500" onClick={() => handleLike()}>
+                                            {liked ?
+                                                (<FaHeart />)
+                                                :
+                                                (<FaRegHeart />)
+                                            }
+                                        </button>
                                         <span className='text-red-500'>{articleData.likes}</span>
                                     </div>
                                 </div>

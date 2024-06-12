@@ -44,7 +44,7 @@ router.get('/article/:title', async (request, response) => {
         const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
         await delay(1000);
         const { title } = request.params;
-        const article = await Article.findOne({ title: title });
+        let article = await Article.findOne({ title: title });
         if (!article) {
             return response.status(404).json({ message: "article not found" })
         }
@@ -54,7 +54,62 @@ router.get('/article/:title', async (request, response) => {
         } else {
             article.author = "Unknown"; // If user not found, set author to "Unknown" or handle it as needed
         }
-        return response.status(200).json(article);
+        const token = request.cookies.token;
+        if (token) {
+            jwt.verify(token, process.env.TOKEN_KEY, async (err, data) => {
+                if (err) {
+                    return response.status(400).json({ message: "bad cookie" })
+                } else {
+                    const userRequesting = await User.findById(data.id);
+                    if (userRequesting.articlesLiked.includes(article._id)) {
+                        article = { ...article.toObject(), liked: true };
+                    }
+                    return response.status(200).json(article);
+                }
+            })
+        }
+        else {
+            return response.status(200).json(article);
+        }
+    }
+    catch (error) {
+        console.log(error);
+        return response.status(500).json({ message: error });
+    }
+});
+
+// this route allows users to like an article
+router.post('/article/:title', async (request, response) => {
+    try {
+        const { title } = request.params;
+        const article = await Article.findOne({ title: title });
+        if (!article) {
+            return response.status(404).json({ message: "article not found" })
+        }
+        const token = request.cookies.token;
+        if (!token) {
+            return response.status(400).json({ message: "cookie missing" })
+        }
+        jwt.verify(token, process.env.TOKEN_KEY, async (err, data) => {
+            if (err) {
+                return response.status(400).json({ message: "bad cookie" })
+            } else {
+                const user = await User.findById(data.id);
+                // add article title to user's articlesLiked
+                if (user.articlesLiked.includes(article._id)) {
+                    user.articlesLiked.pull(article._id);
+                    user.save();
+                    article.likes -= 1;
+                    article.save();
+                    return response.status(200).json({ message: "un-liked this article" })
+                }
+                user.articlesLiked.push(article._id);
+                user.save();
+                article.likes += 1;
+                article.save();
+                return response.status(200).json({ message: "liked article" })
+            }
+        })
     }
     catch (error) {
         console.log(error);
