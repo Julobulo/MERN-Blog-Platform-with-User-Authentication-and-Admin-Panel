@@ -1,7 +1,38 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ArticleCard from './ArticleCard';
+import axios from "axios";
+import { toast } from 'react-toastify';
+import ArticleCardSkeleton from './SkeletonLoader';
 
 const HomePage = () => {
+    const [mostLikedArticle, setMostLikedArticle] = useState({});
+    const [mostRecentArticle, setMostRecentArticle] = useState({});
+    const [likedLoading, setLikedLoading] = useState(true);
+    const [recentLoading, setRecentLoading] = useState(true);
+    useEffect(() => {
+        setLikedLoading(true);
+        setRecentLoading(true);
+        axios.get(`http://localhost:5555/blog/most-liked`)
+            .then((response) => {
+                setMostLikedArticle(response.data);
+                setLikedLoading(false);
+            })
+            .catch((error) => {
+                toast.error(error);
+                console.log(error);
+                setLikedLoading(false);
+            });
+        axios.get(`http://localhost:5555/blog/most-recent`)
+            .then((response) => {
+                setMostRecentArticle(response.data);
+                setRecentLoading(false);
+            })
+            .catch((error) => {
+                toast.error(error);
+                console.log(error);
+                setRecentLoading(false);
+            });
+    }, [])
     return (
         <div className="bg-black text-white">
             <div className="container mx-auto px-4 py-8">
@@ -17,30 +48,30 @@ const HomePage = () => {
 
                     {/* Best Article Section */}
                     <section className="mb-8">
-                        <ArticleCard
-                            title="The Future of Artificial Intelligence"
-                            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus non enim nec libero dictum malesuada."
-                            href="#"
-                            author="John Doe"
-                            date="May 30, 2023"
-                            tags={["Technology", "AI"]}
-                            imgSrc="https://via.placeholder.com/2800x400"
-                            hearts={120}
-                        />
+                        {likedLoading ? (<ArticleCardSkeleton />) : (<ArticleCard
+                            title={mostLikedArticle.title}
+                            description={mostLikedArticle.subtitle}
+                            href={`http://localhost:5173/blog/article/${mostLikedArticle.title}`}
+                            author={mostLikedArticle.author}
+                            date={mostLikedArticle.date}
+                            tags={mostLikedArticle.tags}
+                            imgSrc={mostLikedArticle.image}
+                            hearts={mostLikedArticle.likes}
+                        />)}
                     </section>
 
                     {/* Recent Article Section */}
                     <section className="mb-8">
-                        <ArticleCard
-                            title="The Rise of Quantum Computing"
-                            description="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam."
-                            href="#"
-                            author="Jane Smith"
-                            date="June 5, 2023"
-                            tags={["Technology", "Quantum Computing"]}
-                            imgSrc="https://via.placeholder.com/2800x400"
-                            hearts={10}
-                        />
+                        {recentLoading ? (<ArticleCardSkeleton />) : (<ArticleCard
+                            title={mostRecentArticle.title}
+                            description={mostRecentArticle.subtitle}
+                            href={`http://localhost:5173/blog/article/${mostRecentArticle.title}`}
+                            author={mostRecentArticle.author}
+                            date={mostRecentArticle.date}
+                            tags={mostRecentArticle.tags}
+                            imgSrc={mostRecentArticle.image}
+                            hearts={mostRecentArticle.likes}
+                        />)}
                     </section>
 
                     {/* Testimonies Section */}

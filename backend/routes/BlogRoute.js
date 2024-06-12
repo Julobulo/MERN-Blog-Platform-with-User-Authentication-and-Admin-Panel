@@ -5,6 +5,59 @@ import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
+// gets most liked article
+router.get('/most-liked', async (request, response) => {
+    try {
+        const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+        await delay(1000);
+        const mostLovedArticle = await Article.findOne({}).sort({ likes: -1 });
+        try {
+            const user = await User.findById(mostLovedArticle.author); // Find the user by _id
+            if (user) {
+                mostLovedArticle.author = user.username; // Replace author with the username
+                } else {
+                mostLovedArticle.author = "Unknown"; // If user not found, set author to "Unknown" or handle it as needed
+            }
+            return response.status(200).json(mostLovedArticle);
+        } catch (error) {
+            console.error("Error fetching user:", error);
+            mostLovedArticle.author = "Unknown"; // If error occurs, set author to "Unknown" or handle it as needed
+            return response.status(200).json(mostLovedArticle);
+        }
+    }
+    catch (error) {
+        console.log(error);
+        return response.status(500).json({ message: error });
+    }
+});
+
+// gets most recent article
+router.get('/most-recent', async (request, response) => {
+    try {
+        const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+        await delay(3000);
+        const mostRecentArticle = await Article.findOne({}).sort({ date: -1 });
+        try {
+            const user = await User.findById(mostRecentArticle.author); // Find the user by _id
+            if (user) {
+                mostRecentArticle.author = user.username; // Replace author with the username
+                } else {
+                    mostRecentArticle.author = "Unknown"; // If user not found, set author to "Unknown" or handle it as needed
+            }
+            return response.status(200).json(mostRecentArticle);
+        } catch (error) {
+            console.error("Error fetching user:", error);
+            mostRecentArticle.author = "Unknown"; // If error occurs, set author to "Unknown" or handle it as needed
+            return response.status(200).json(mostRecentArticle);
+        }
+        return response.status(200).json(mostRecentArticle);
+    }
+    catch (error) {
+        console.log(error);
+        return response.status(500).json({ message: error });
+    }
+});
+
 router.get('/articles', async (request, response) => {
     try {
         const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
