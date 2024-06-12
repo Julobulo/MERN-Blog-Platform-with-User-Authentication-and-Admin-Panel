@@ -35,7 +35,7 @@ const ArticleCard = ({ title, subtitle, href, author, date, tags, imgSrc, likes,
     }
     return (
         <div className="p-6 mb-8 bg-gray-900 rounded-xl shadow-md">
-            <a href={href}>
+            <a href={`http://localhost:5173/blog/article/${title}`}>
                 <img
                     alt={title}
                     src={imgSrc}

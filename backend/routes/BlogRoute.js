@@ -2,8 +2,10 @@ import express, { response } from "express";
 import User from "../models/UserModel.js";
 import Article from "../models/ArticleModel.js";
 import jwt from "jsonwebtoken";
+import util from "util";
 
 const router = express.Router();
+const verifyToken = util.promisify(jwt.verify);
 
 // gets most liked article
 router.get('/most-liked', async (request, response) => {
@@ -99,10 +101,20 @@ router.get('/articles', async (request, response) => {
         await delay(1000);
         const articles = await Article.find({}).limit(20); // Fetch articles
         const articlesData = [];
-
+        const token = request.cookies.token;
+        let userRequesting = '';
+        if (token) {
+            try {
+                const data = await verifyToken(token, process.env.TOKEN_KEY);
+                userRequesting = await User.findById(data.id);
+            }
+            catch (error) {
+                console.log(error)
+            }
+        }
         // Iterate through each article
         for (const article of articles) {
-            const articleObj = article.toObject(); // Convert Mongoose document to plain JavaScript object
+            let articleObj = article.toObject(); // Convert Mongoose document to plain JavaScript object
 
             // Assuming you have a User model and each article has an author field pointing to the user's _id
             try {
@@ -115,6 +127,10 @@ router.get('/articles', async (request, response) => {
             } catch (error) {
                 console.error("Error fetching user:", error);
                 articleObj.author = "Unknown"; // If error occurs, set author to "Unknown" or handle it as needed
+            }
+            // added "liked" field
+            if (userRequesting) {
+                articleObj = { ...articleObj, liked: userRequesting.articlesLiked.includes(articleObj._id) };
             }
 
             articlesData.push(articleObj); // Push modified article object to the array

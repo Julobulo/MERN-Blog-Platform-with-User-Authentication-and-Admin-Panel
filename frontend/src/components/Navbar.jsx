@@ -47,7 +47,7 @@ const NavigationBar = () => {
                 </div>
             </div>
             {isOpen && (
-                <div className="sm:hidden bg-gray-900 shadow-md">
+                <div className="lg:hidden sm:items-center sm:flex sm:flex-col bg-gray-900 shadow-md">
                     <div className="px-2 pt-2 pb-3 space-y-1">
                         <Link to="/blog" className="block px-3 py-2 rounded-md text-base font-medium text-green-400"><MdOutlineExplore className='inline align-middle' /> <span className='align-middle'>Explore</span></Link>
                         <Link to="/create" className="block px-3 py-2 rounded-md text-base font-medium text-green-400"><MdOutlinePostAdd className='inline align-middle' /> <span className='align-middle'>New Post</span></Link>

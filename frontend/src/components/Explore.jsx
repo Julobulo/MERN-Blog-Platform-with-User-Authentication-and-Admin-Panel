@@ -16,7 +16,8 @@ const App = () => {
 
     useEffect(() => {
         setLoading(true);
-        axios.get('http://localhost:5555/blog/articles')
+        axios.get('http://localhost:5555/blog/articles',
+            { withCredentials: true })
             .then((response) => {
                 setArticles(response.data);
                 setLoading(false);
@@ -53,12 +54,12 @@ const App = () => {
                             key={index}
                             title={article.title}
                             description={article.subtitle}
-                            href={`http://localhost:5173/blog/article/${article.title}`}
                             author={article.author}
                             date={article.date}
                             tags={article.tags}
                             imgSrc={article.image}
-                            hearts={article.likes}
+                            likes={article.likes}
+                            liked={article.liked}
                         />
                     )))
                     }
