@@ -91,7 +91,7 @@ const Users = () => {
     // );
 
     return (
-        <div className='min-h-screen bg-black text-white'>
+        <div className='min-h-screen bg-black'>
             <div className='container mx-auto px-4 py-8'>
                 <div className="p-6 mb-8 bg-gray-900 rounded-xl shadow-md text-green-400 flex flex-col items-center max-w-3xl mx-auto">
                     <div className="flex justify-center space-x-6 mb-4 bg-gray-900 p-4 rounded-lg">
@@ -114,7 +114,7 @@ const Users = () => {
                             setHasMore(true);
                             fetchUsers(0, e.target.value);
                         }}
-                        className="mb-4 px-4 py-2 rounded-lg text-black w-full"
+                        className="mb-4 px-4 py-2 rounded-lg w-full text-black dark:text-white"
                     />
                     <div className=" w-full">
                         {loading ? (

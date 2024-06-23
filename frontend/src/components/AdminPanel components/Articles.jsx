@@ -60,7 +60,7 @@ const Articles = () => {
                         placeholder="Search..."
                         value={searchQuery}
                         onChange={e => setSearchQuery(e.target.value)}
-                        className="mb-4 px-4 py-2 rounded-lg text-black w-full"
+                        className="mb-4 px-4 py-2 rounded-lg w-full text-black dark:text-white"
                     />
                     <div className=" w-full">
                         {filteredPosts.map(post => (
