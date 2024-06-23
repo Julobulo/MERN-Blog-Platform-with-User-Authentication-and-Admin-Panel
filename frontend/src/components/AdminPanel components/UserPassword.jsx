@@ -8,6 +8,7 @@ const UserPassword = () => {
     const { author } = useParams();
     // To be able to navigate to other pages
     const navigate = useNavigate();
+    const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(true);
     const [userData, setUserData] = useState(null);
     const [isChanged, setIsChanged] = useState(false);
@@ -43,9 +44,9 @@ const UserPassword = () => {
 
     const handleChange = async () => {
         try {
-            const response = await axios.put(`http://localhost:5555/user/password`,
+            const response = await axios.put(`http://localhost:5555/user/password/${author}`,
+                { password },
                 {
-                    data: userData,
                     withCredentials: true
                 }
             );
@@ -90,6 +91,15 @@ const UserPassword = () => {
                             email={userData.email}
                             isAdmin={userData.isAdmin}
                             isSuperAdmin={userData.isSuperAdmin}
+                        />
+                        <input
+                            type="text"
+                            placeholder="Put the new password in..."
+                            value={password}
+                            onChange={e => {
+                                setPassword(e.target.value);
+                            }}
+                            className="my-4 px-4 py-2 rounded-lg w-full text-black dark:text-white"
                         />
                         <div className="mt-5 text-center">
                             {isConfirming ? (
