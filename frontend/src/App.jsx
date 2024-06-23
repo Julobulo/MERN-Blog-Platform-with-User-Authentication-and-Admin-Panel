@@ -20,6 +20,7 @@ import Navbar from "./components/Navbar";
 import Profile from "./components/Profile";
 import ProfileEdit from "./components/ProfileEdit";
 import Signup from "./components/Signup";
+import UserPassword from "./components/AdminPanel components/UserPassword";
 
 const App = () => {
   return (
@@ -44,6 +45,7 @@ const App = () => {
         <Route path="/AdminPanel/Articles/Delete/:id" element={[<Navbar />, <ArticleDelete />, <Footer />]} />
         <Route path="/AdminPanel/Users" element={[<Navbar />, <Users />, <Footer />]} />
         <Route path="/AdminPanel/Users/Edit/:author" element={[<Navbar />, <UserEdit />, <Footer />]} />
+        <Route path="/AdminPanel/Users/Password/:author" element={[<Navbar />, <UserPassword />, <Footer />]} />
         <Route path="/AdminPanel/Users/Delete/:author" element={[<Navbar />, <UserDelete />, <Footer />]} />
         <Route path="/author/:author" element={[<Navbar />, <Author />, <Footer />]} />
         <Route path="/blog/article/:title" element={[<Navbar />, <Article />, <Footer />]} />

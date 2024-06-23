@@ -31,7 +31,6 @@ const UserDelete = () => {
         )
             .then((response) => {
                 setLoading(false);
-                // const { _id, email, username, isAdmin, profilePicture } = response.data;
                 setUserData(response.data);
             })
             .catch((error) => {

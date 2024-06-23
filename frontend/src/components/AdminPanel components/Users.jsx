@@ -4,6 +4,7 @@ import axios from 'axios';
 import AuthorCard from '../AuthorCard';
 import { MdDeleteOutline } from "react-icons/md";
 import { FiEdit2 } from "react-icons/fi";
+import { RiLockPasswordLine } from "react-icons/ri" ;
 import Spinner from '../Spinner';
 import { toast } from 'react-toastify';
 
@@ -139,6 +140,9 @@ const Users = () => {
                                     <div className="basis-1/12 flex flex-col justify-evenly items-center">
                                         <Link to={`/AdminPanel/Users/Edit/${user.username}`} className='text-yellow-400 '>
                                             <FiEdit2 />
+                                        </Link>
+                                        <Link to={`/AdminPanel/Users/Password/${user.username}`} className='text-blue-400 '>
+                                            <RiLockPasswordLine />
                                         </Link>
                                         <Link to={`/AdminPanel/Users/Delete/${user.username}`} className='text-red-400'>
                                             <MdDeleteOutline />
