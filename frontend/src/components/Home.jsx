@@ -9,6 +9,7 @@ const HomePage = () => {
     const [mostRecentArticle, setMostRecentArticle] = useState({});
     const [likedLoading, setLikedLoading] = useState(true);
     const [recentLoading, setRecentLoading] = useState(true);
+    const [error, setError] = useState(false);
     useEffect(() => {
         setLikedLoading(true);
         setRecentLoading(true);
@@ -22,6 +23,7 @@ const HomePage = () => {
                 toast.error(error);
                 console.log(error);
                 setLikedLoading(false);
+                setError(true);
             });
         axios.get(`http://localhost:5555/blog/most-recent`,
             { withCredentials: true })
@@ -33,6 +35,7 @@ const HomePage = () => {
                 toast.error(error);
                 console.log(error);
                 setRecentLoading(false);
+                setError(true);
             });
     }, [])
     return (
@@ -48,8 +51,7 @@ const HomePage = () => {
                         </p>
                     </section>
 
-                    {/* Best Article Section */}
-                    <section className="mb-8">
+                    {!error ? (<><section className="mb-8">
                         {likedLoading ? (<ArticleCardSkeleton />) : (<ArticleCard
                             title={mostLikedArticle.title}
                             description={mostLikedArticle.subtitle}
@@ -62,21 +64,22 @@ const HomePage = () => {
                             liked={mostLikedArticle.liked}
                         />)}
                     </section>
-
-                    {/* Recent Article Section */}
-                    <section className="mb-8">
-                        {recentLoading ? (<ArticleCardSkeleton />) : (<ArticleCard
-                            title={mostRecentArticle.title}
-                            description={mostRecentArticle.subtitle}
-                            href={`http://localhost:5173/blog/article/${mostRecentArticle.title}`}
-                            author={mostRecentArticle.author}
-                            date={mostRecentArticle.date}
-                            tags={mostRecentArticle.tags}
-                            imgSrc={mostRecentArticle.image}
-                            likes={mostRecentArticle.likes}
-                            liked={mostRecentArticle.liked}
-                        />)}
-                    </section>
+                        <section className="mb-8">
+                            {recentLoading ? (<ArticleCardSkeleton />) : (<ArticleCard
+                                title={mostRecentArticle.title}
+                                description={mostRecentArticle.subtitle}
+                                href={`http://localhost:5173/blog/article/${mostRecentArticle.title}`}
+                                author={mostRecentArticle.author}
+                                date={mostRecentArticle.date}
+                                tags={mostRecentArticle.tags}
+                                imgSrc={mostRecentArticle.image}
+                                likes={mostRecentArticle.likes}
+                                liked={mostRecentArticle.liked}
+                            />)}
+                        </section></>)
+                        :
+                        (<div className='mb-5 text-red-400'>There was an error retrieving the articles</div>)
+                    }
 
                     {/* Testimonies Section */}
                     <section className="mb-8">
