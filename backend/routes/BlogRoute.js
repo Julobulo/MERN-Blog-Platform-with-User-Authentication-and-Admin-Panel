@@ -17,7 +17,7 @@ router.get('/most-liked', async (request, response) => {
             const user = await User.findById(mostLovedArticle.author); // Find the user by _id
             if (user) {
                 mostLovedArticle.author = user.username; // Replace author with the username
-                } else {
+            } else {
                 mostLovedArticle.author = "Unknown"; // If user not found, set author to "Unknown" or handle it as needed
             }
             // send "liked" field
@@ -25,8 +25,7 @@ router.get('/most-liked', async (request, response) => {
             if (token) {
                 jwt.verify(token, process.env.TOKEN_KEY, async (err, data) => {
                     if (err) {
-                        // return response.status(400).json({ message: "bad cookie" })
-                        // in this case, if there is an error, we don't need to return
+                        return response.status(200).json(mostLovedArticle);
                     } else {
                         const userRequesting = await User.findById(data.id);
                         if (userRequesting.articlesLiked.includes(mostLovedArticle._id)) {
