@@ -80,7 +80,6 @@ router.post('/update', async (request, response) => {
                     console.log('user is admin');
                     // if the user is an admin, he can change every fields of everyone (except superadmin)
                     const userToChange = await User.findById(_id); // get user by id that was passed
-                    console.log(`_id: ${_id}, user._id: ${user._id}, strip(String(_id)) === strip(String(user._id)): ${strip(String(_id)) === strip(String(user._id))}`);
                     if (String(_id) === String(user._id)) {
                         // userToChange is the same as the admin who sent the request -> admin wants to change his own info
                         console.log(`admin "${user.username}" wants to change his own info!`);
