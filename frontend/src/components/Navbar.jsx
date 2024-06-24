@@ -49,22 +49,22 @@ const NavigationBar = () => {
             {isOpen && (
                 <div className="lg:hidden sm:items-center sm:flex sm:flex-col bg-gray-900 shadow-md">
                     <div className="flex flex-col items-center px-2 pt-2 pb-3 space-y-1">
-                        <Link to="/blog" className="btn btn-ghost text-green-400 flex items-center">
+                        <Link to="/blog" className="btn btn-ghost text-green-400 flex items-center" onClick={toggleMenu}>
                             <MdOutlineExplore className='inline align-middle' />
                             <span className='align-middle ml-2'>Explore</span>
                         </Link>
                         {Cookies.get('token') ? (
                             <div className='flex flex-col items-center px-2 pt-2 pb-3 space-y-1'>
-                                <Link to="/create" className="btn btn-ghost text-green-400 flex items-center">
+                                <Link to="/create" className="btn btn-ghost text-green-400 flex items-center" onClick={toggleMenu}>
                                     <MdOutlinePostAdd className='inline align-middle' />
                                     <span className='align-middle ml-2'>New Post</span>
                                 </Link>
-                                <Link to="/profile" className="btn btn-ghost text-green-400 flex items-center">
+                                <Link to="/profile" className="btn btn-ghost text-green-400 flex items-center" onClick={toggleMenu}>
                                     <CgProfile className='inline align-middle' />
                                     <span className='align-middle ml-2'>Profile</span>
                                 </Link>
                                 {localStorage.getItem('isAdmin') === "true" && (
-                                    <Link to="/AdminPanel/Articles" className="btn btn-ghost text-green-400 flex items-center">
+                                    <Link to="/AdminPanel/Articles" className="btn btn-ghost text-green-400 flex items-center" onClick={toggleMenu}>
                                         <MdOutlineAdminPanelSettings className='inline align-middle' />
                                         <span className='align-middle ml-2'>Admin Panel</span>
                                     </Link>
@@ -76,6 +76,7 @@ const NavigationBar = () => {
                                         localStorage.removeItem('isAdmin');
                                         navigate('/');
                                         toast.success('Successfully logged out!', { position: 'bottom-right' });
+                                        toggleMenu();
                                     }}
                                 >
                                     <MdOutlineAdminPanelSettings className='inline align-middle' />
