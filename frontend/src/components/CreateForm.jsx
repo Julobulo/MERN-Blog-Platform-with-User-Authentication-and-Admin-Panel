@@ -16,9 +16,9 @@ const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, de
     // const [image, setImage] = useState();
     // const [title, setTitle] = useState('');
     // const [subtitle, setSubtitle] = useState('');
-    // const [tags, setTags] = useState([]);
+    const [tags, setTags] = useState([]);
     // const [mainContent, setMainContent] = useState('');
-    // const [tagInput, setTagInput] = useState('');
+    const [tagInput, setTagInput] = useState('');
 
     // const handleImageChange = async (event) => {
     //     const file = event.target.files[0];
@@ -44,22 +44,22 @@ const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, de
     //     }
     // };
 
-    // const handleTagInputKeyDown = (e) => {
-    //     if ((e.key === 'Enter' || e.key === ',') && tagInput.trim() && tags.length < 4) {
-    //         e.preventDefault();
-    //         const newTag = tagInput.trim();
-    //         if (newTag.length < 2 || newTag.length > 20) {
-    //             toast.error('Tags have to be between 2 and 20 characters.');
-    //             return; // Exit early if the tag is invalid
-    //         }
-    //         setTags([...tags, newTag]);
-    //         setTagInput('');
-    //     }
-    // };
+    const handleTagInputKeyDown = (e) => {
+        if ((e.key === 'Enter' || e.key === ',') && tagInput.trim() && tags.length < 4) {
+            e.preventDefault();
+            const newTag = tagInput.trim();
+            if (newTag.length < 2 || newTag.length > 20) {
+                toast.error('Tags have to be between 2 and 20 characters.');
+                return; // Exit early if the tag is invalid
+            }
+            setTags([...tags, newTag]);
+            setTagInput('');
+        }
+    };
 
-    // const handleTagRemove = (index) => {
-    //     setTags(tags.filter((_, i) => i !== index));
-    // };
+    const handleTagRemove = (index) => {
+        setTags(tags.filter((_, i) => i !== index));
+    };
 
     // const handlePost = async () => {
     //     if (!image) {
@@ -238,14 +238,32 @@ const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, de
     return (
         <div className="bg-black p-6 text-green-400">
             <div className="my-5 max-w-3xl mx-auto p-6 bg-gray-900 rounded-lg shadow-md">
-                <div className={"wrapper"}>
-                    <BlockNoteView
-                        editor={editor}
-                        onChange={() => {
-                            // Saves the document JSON to state.
-                            setBlocks(editor.document);
-                        }}
+                <BlockNoteView
+                    editor={editor}
+                    onChange={() => {
+                        // Saves the document JSON to state.
+                        setBlocks(editor.document);
+                    }}
+                    className="my-5"
+                />
+                <div className="mb-4">
+                    <label htmlFor="tags" className="block text-sm font-medium mb-1">Tags (up to 4)</label>
+                    <input
+                        type="text"
+                        id="tags"
+                        value={tagInput}
+                        onChange={(e) => setTagInput(e.target.value)}
+                        onKeyDown={handleTagInputKeyDown}
+                        placeholder={`Press Enter or comma to add tag (ex: "Quantum Computing", "Science", "Future", ...)`}
+                        className="w-full px-3 py-2 border border-gray-700 rounded-md bg-gray-800 text-green-400 focus:outline-none focus:ring-green-500 focus:border-green-500"
                     />
+                    <div className="mt-2 flex flex-wrap">
+                        {tags.map((tag, index) => (
+                            <span key={index} className="bg-gray-800 border border-gray-700 rounded-full px-3 py-1 text-xs mr-2 mt-2">
+                                {tag} <button type="button" onClick={() => handleTagRemove(index)} className="ml-1 text-red-500">×</button>
+                            </span>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>
