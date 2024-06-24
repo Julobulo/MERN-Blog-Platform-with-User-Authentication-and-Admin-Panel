@@ -29,10 +29,10 @@ const NavigationBar = () => {
                     {Cookies.get('token') ? (<>
                         <Link to="/create" className="btn btn-ghost text-green-400"><MdOutlinePostAdd className='inline align-middle' /> <span className='align-middle'>New Post</span></Link>
                         <Link to="/profile" className="btn btn-ghost text-green-400"><CgProfile className='inline align-middle' /> <span className='align-middle'>Profile</span></Link>
-                        {localStorage.getItem('isAdmin')==="true" ? (<Link to="/AdminPanel/Articles" className="btn btn-ghost text-green-400"><MdOutlineAdminPanelSettings className='inline align-middle' /> <span className='align-middle'>Admin Panel</span></Link>):''}
-                        <button className="btn btn-ghost text-green-400" onClick={() => { Cookies.remove('token'); localStorage.removeItem('isAdmin'); navigate('/'); toast.success('Successfully logged out!', {position: 'bottom-right'}) }}><MdOutlineAdminPanelSettings className='inline align-middle' /> <span className='align-middle'>Logout</span></button>
-                    </>) : 
-                    <Link to="/login" className="btn btn-ghost text-green-400"><SlLogin className='inline align-middle' /> <span className='align-middle'>Login</span></Link>
+                        {localStorage.getItem('isAdmin') === "true" ? (<Link to="/AdminPanel/Articles" className="btn btn-ghost text-green-400"><MdOutlineAdminPanelSettings className='inline align-middle' /> <span className='align-middle'>Admin Panel</span></Link>) : ''}
+                        <button className="btn btn-ghost text-green-400" onClick={() => { Cookies.remove('token'); localStorage.removeItem('isAdmin'); navigate('/'); toast.success('Successfully logged out!', { position: 'bottom-right' }) }}><MdOutlineAdminPanelSettings className='inline align-middle' /> <span className='align-middle'>Logout</span></button>
+                    </>) :
+                        <Link to="/login" className="btn btn-ghost text-green-400"><SlLogin className='inline align-middle' /> <span className='align-middle'>Login</span></Link>
                     }
                 </div>
                 <div className="lg:hidden">
@@ -48,10 +48,46 @@ const NavigationBar = () => {
             </div>
             {isOpen && (
                 <div className="lg:hidden sm:items-center sm:flex sm:flex-col bg-gray-900 shadow-md">
-                    <div className="px-2 pt-2 pb-3 space-y-1">
-                        <Link to="/blog" className="block px-3 py-2 rounded-md text-base font-medium text-green-400"><MdOutlineExplore className='inline align-middle' /> <span className='align-middle'>Explore</span></Link>
-                        <Link to="/create" className="block px-3 py-2 rounded-md text-base font-medium text-green-400"><MdOutlinePostAdd className='inline align-middle' /> <span className='align-middle'>New Post</span></Link>
-                        <Link to="/login" className="block px-3 py-2 rounded-md text-base font-medium text-green-400"><SlLogin className='inline align-middle' /> <span className='align-middle'>Login</span></Link>
+                    <div className="flex flex-col items-center px-2 pt-2 pb-3 space-y-1">
+                        <Link to="/blog" className="btn btn-ghost text-green-400 flex items-center">
+                            <MdOutlineExplore className='inline align-middle' />
+                            <span className='align-middle ml-2'>Explore</span>
+                        </Link>
+                        {Cookies.get('token') ? (
+                            <div className='flex flex-col items-center px-2 pt-2 pb-3 space-y-1'>
+                                <Link to="/create" className="btn btn-ghost text-green-400 flex items-center">
+                                    <MdOutlinePostAdd className='inline align-middle' />
+                                    <span className='align-middle ml-2'>New Post</span>
+                                </Link>
+                                <Link to="/profile" className="btn btn-ghost text-green-400 flex items-center">
+                                    <CgProfile className='inline align-middle' />
+                                    <span className='align-middle ml-2'>Profile</span>
+                                </Link>
+                                {localStorage.getItem('isAdmin') === "true" && (
+                                    <Link to="/AdminPanel/Articles" className="btn btn-ghost text-green-400 flex items-center">
+                                        <MdOutlineAdminPanelSettings className='inline align-middle' />
+                                        <span className='align-middle ml-2'>Admin Panel</span>
+                                    </Link>
+                                )}
+                                <button
+                                    className="btn btn-ghost text-green-400 flex items-center"
+                                    onClick={() => {
+                                        Cookies.remove('token');
+                                        localStorage.removeItem('isAdmin');
+                                        navigate('/');
+                                        toast.success('Successfully logged out!', { position: 'bottom-right' });
+                                    }}
+                                >
+                                    <MdOutlineAdminPanelSettings className='inline align-middle' />
+                                    <span className='align-middle ml-2'>Logout</span>
+                                </button>
+                            </div>
+                        ) : (
+                            <Link to="/login" className="btn btn-ghost text-green-400 flex items-center">
+                                <SlLogin className='inline align-middle' />
+                                <span className='align-middle ml-2'>Login</span>
+                            </Link>
+                        )}
                     </div>
                 </div>
             )}
