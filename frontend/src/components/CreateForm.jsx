@@ -212,11 +212,44 @@ const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, de
     //         </div>
     //     </div>
     // );
+    // Stores the document JSON.
+    const [blocks, setBlocks] = useState([]);
     // Creates a new editor instance.
-    const editor = useCreateBlockNote();
+    const editor = useCreateBlockNote({
+        initialContent: [
+            {
+                type: "paragraph",
+            },
+            {
+                type: "heading",
+                content: "Welcome to this text editor!",
+            },
+            {
+                type: "paragraph",
+                content: "Start writing your amazing article!",
+            },
+            {
+                type: "paragraph",
+            },
+        ],
+    });
 
     // Renders the editor instance using a React component.
-    return <BlockNoteView editor={editor} />;
+    return (
+        <div className="bg-black p-6 text-green-400">
+            <div className="my-5 max-w-3xl mx-auto p-6 bg-gray-900 rounded-lg shadow-md">
+                <div className={"wrapper"}>
+                    <BlockNoteView
+                        editor={editor}
+                        onChange={() => {
+                            // Saves the document JSON to state.
+                            setBlocks(editor.document);
+                        }}
+                    />
+                </div>
+            </div>
+        </div>
+    );
 };
 
 
