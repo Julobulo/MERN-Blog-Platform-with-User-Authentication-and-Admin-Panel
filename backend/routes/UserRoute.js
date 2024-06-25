@@ -269,7 +269,7 @@ router.put('/password/:author', async (request, response) => {
                 const userToChangePassword = await User.findOne({ username: author }); // get user by the username that was passed using the params
                 if (userToChangePassword) {
                     await changeUserPassword(userToChangePassword._id, newPassword);
-                    return response.status(200).json({ message: "successfully changed password" });
+                    return response.status(200).json({ message: `successfully changed password of user '${userToChangePassword.username}'` });
                 }
                 else {
                     return response.status(400).json({ message: "couldn't find the user" })
