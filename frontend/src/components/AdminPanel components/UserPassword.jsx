@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Spinner from "../Spinner";
 import axios from "axios";
 import AuthorCard from "../AuthorCard";
+import { toast } from "react-toastify";
 
 const UserPassword = () => {
     const { author } = useParams();
@@ -43,19 +44,20 @@ const UserPassword = () => {
     }, [setUserData]);
 
     const handleChange = async () => {
-        try {
-            const response = await axios.put(`http://localhost:5555/user/password/${author}`,
-                { newPassword: newPassword },
-                {
-                    withCredentials: true
-                }
-            );
-            toast.success(response.data.message);
-            setIsChanged(true);
-            navigate('/AdminPanel/Users');
-        } catch (error) {
-            toast.error(error.response.data.message);
-        }
+        axios.put(`http://localhost:5555/user/password/${author}`,
+            { newPassword: newPassword },
+            {
+                withCredentials: true
+            }
+        )
+            .then((response) => {
+                toast.success(response.data.message);
+                setIsChanged(true);
+                navigate('/AdminPanel/Users');
+            })
+            .catch((error) => {
+                toast.error(error.response.data.message);
+            })
     };
 
     const confirmChange = () => {
