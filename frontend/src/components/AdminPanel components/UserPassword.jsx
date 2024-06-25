@@ -8,7 +8,7 @@ const UserPassword = () => {
     const { author } = useParams();
     // To be able to navigate to other pages
     const navigate = useNavigate();
-    const [password, setPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
     const [loading, setLoading] = useState(true);
     const [userData, setUserData] = useState(null);
     const [isChanged, setIsChanged] = useState(false);
@@ -45,7 +45,7 @@ const UserPassword = () => {
     const handleChange = async () => {
         try {
             const response = await axios.put(`http://localhost:5555/user/password/${author}`,
-                { password },
+                { newPassword: newPassword },
                 {
                     withCredentials: true
                 }
@@ -95,9 +95,9 @@ const UserPassword = () => {
                         <input
                             type="text"
                             placeholder="Put the new password in..."
-                            value={password}
+                            value={newPassword}
                             onChange={e => {
-                                setPassword(e.target.value);
+                                setNewPassword(e.target.value);
                             }}
                             className="my-4 px-4 py-2 rounded-lg w-full text-black dark:text-white"
                         />
