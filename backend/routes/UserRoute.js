@@ -78,12 +78,10 @@ router.post('/update', async (request, response) => {
                 const user = await User.findById(data.id);
                 // check if user is admin
                 if (user.isAdmin) {
-                    console.log('user is admin');
                     // if the user is an admin, he can change every fields of everyone (except superadmin)
                     const userToChange = await User.findById(_id); // get user by id that was passed
                     if (String(_id) === String(user._id)) {
                         // userToChange is the same as the admin who sent the request -> admin wants to change his own info
-                        console.log(`admin "${user.username}" wants to change his own info!`);
                         user.bio = bio;
                         user.email = email;
                         user.isAdmin = isAdmin;
@@ -109,7 +107,6 @@ router.post('/update', async (request, response) => {
                     }
                     else {
                         // the user to change is neither the admin changing it nor him/herself an admin
-                        console.log('the user to change is neither the admin changing it nor him/herself an admin');
                         userToChange.bio = bio;
                         userToChange.email = email;
                         userToChange.isAdmin = isAdmin;
@@ -153,7 +150,6 @@ router.delete('/delete', async (request, response) => {
                 const user = await User.findById(data.id);
                 // check if user is admin
                 if (user.isSuperAdmin) {
-                    console.log('user is super admin');
                     // if the user is an admin, he can change every fields of everyone (except superadmin)
                     const userToDelete = await User.findById(_id); // get user by id that was passed
                     if (userToDelete.isSuperAdmin) {
@@ -181,19 +177,13 @@ router.get('/adminpanel', async (request, response) => {
         await delay(1000);
         const token = request.cookies.token;
         if (!token) {
-            console.log('There is no token');
             return response.status(400).json({ message: "cookie missing" })
         }
-        console.log('There is a token');
         try {
             const data = jwt.verify(token, process.env.TOKEN_KEY);
-            console.log('The token is good');
-
             const user = await User.findById(data.id);
             if (user) {
-                console.log('There is a user');
                 if (user.isAdmin) {
-                    console.log('The user is an admin');
                     // The user is an administrator, so he/she can request all of the users in the database
                     const skip = parseInt(request.query.skip) || 0; // Number of users to skip
                     const limit = 2; // Number of users per request
@@ -215,11 +205,9 @@ router.get('/adminpanel', async (request, response) => {
                     // const users = await User.find({}, { password: 0 }).skip(skip).limit(limit);
                     response.status(200).json(users);
                 } else {
-                    console.log('The user is not an admin');
                     return response.status(400).json({ message: "you are not administrator" });
                 }
             } else {
-                console.log('There is no user');
                 return response.status(404).json({ message: "user missing" });
             }
         } catch (error) {
@@ -246,7 +234,7 @@ const changeUserPassword = async (userId, newPassword) => {
         user.password = hashedPassword;
         await user.save();
         //   await User.findByIdAndUpdate(userId, { password: hashedPassword });
-        console.log('Password updated successfully');
+        console.log(`Password updated successfully for user '${user.username}'`);
     } catch (error) {
         console.error('Error updating password:', error);
     }
@@ -295,7 +283,6 @@ router.get('/:author', async (request, response) => {
         if (!token) {
             return response.status(200).json({ profilePicture: wantedUser.profilePicture, username: wantedUser.username, date: wantedUser.createdAt, bio: wantedUser.bio, isAdmin: wantedUser.isAdmin, isSuperAdmin: wantedUser.isSuperAdmin })
         }
-        console.log('There is a token');
         try {
             const data = jwt.verify(token, process.env.TOKEN_KEY);
             const user = await User.findById(data.id);
