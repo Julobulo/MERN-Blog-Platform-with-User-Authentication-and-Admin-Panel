@@ -94,6 +94,7 @@ const UserPassword = () => {
                             isAdmin={userData.isAdmin}
                             isSuperAdmin={userData.isSuperAdmin}
                         />
+                        <h2 className="text-2xl font-bold mt-6">New Password</h2>
                         <input
                             type="text"
                             placeholder="Put the new password in..."
