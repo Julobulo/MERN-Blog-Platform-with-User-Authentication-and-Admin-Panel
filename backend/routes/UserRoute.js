@@ -1,6 +1,7 @@
 import express from "express";
 import User from "../models/UserModel.js";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
 
 const router = express.Router();
 
@@ -156,11 +157,11 @@ router.delete('/delete', async (request, response) => {
                     // if the user is an admin, he can change every fields of everyone (except superadmin)
                     const userToDelete = await User.findById(_id); // get user by id that was passed
                     if (userToDelete.isSuperAdmin) {
-                        return response.status(400).json({ message: "you can't delete a super admin!"})
+                        return response.status(400).json({ message: "you can't delete a super admin!" })
                     }
-                await User.deleteOne({ _id: userToDelete._id});
-                console.log('deleted user');
-                return response.status(200).json({ message: "successfully deleted user"});
+                    await User.deleteOne({ _id: userToDelete._id });
+                    console.log('deleted user');
+                    return response.status(200).json({ message: "successfully deleted user" });
                 }
                 else {
                     return response.status(400).json({ message: "you have to be super admin to delete a user" });
@@ -230,6 +231,55 @@ router.get('/adminpanel', async (request, response) => {
         console.log(error.message);
         response.status(500).send({ message: error.message });
     }
+})
+
+const changeUserPassword = async (userId, newPassword) => {
+    try {
+        // Generate a salt
+        const salt = await bcrypt.genSalt(10);
+
+        // Hash the new password
+        const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+        // Update the user's password in the database
+        const user = await User.findById(userId);
+        user.password = hashedPassword;
+        await user.save();
+        //   await User.findByIdAndUpdate(userId, { password: hashedPassword });
+        console.log('Password updated successfully');
+    } catch (error) {
+        console.error('Error updating password:', error);
+    }
+};
+
+// this route will update a user's password
+router.put('/password/:author', async (request, response) => {
+    const { author } = request.params;
+    const { newPassword } = request.body;
+    const token = request.cookies.token;
+    if (!token) {
+        return response.status(400).json({ message: "you need to be authenticated to perform this operation" })
+    }
+    jwt.verify(token, process.env.TOKEN_KEY, async (err, data) => {
+        if (err) {
+            return response.status(400).json({ message: "bad cookie" })
+        } else {
+            const user = await User.findById(data.id);
+            if (user.isSuperAdmin) { // we can perform this operation only if superadmin
+                const userToChangePassword = await User.findOne({ username: author }); // get user by the username that was passed using the params
+                if (userToChangePassword) {
+                    await changeUserPassword(userToChangePassword._id, newPassword);
+                    return response.status(200).json({ message: "successfully changed password" });
+                }
+                else {
+                    return response.status(400).json({ message: "couldn't find the user" })
+                }
+            }
+            else {
+                return response.status(400).json({ message: "you have to be super admin to change a user's password" });
+            }
+        }
+    })
 })
 
 router.get('/:author', async (request, response) => {
