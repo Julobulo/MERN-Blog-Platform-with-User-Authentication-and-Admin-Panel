@@ -1,0 +1,6 @@
+.bn-editor {
+    background-color: #1f2937; /* This is where the color of the whole editor's background is defined */
+    border-radius: var(--bn-border-radius-large);
+    color: var(--bn-colors-editor-text);
+    font-family: var(--bn-font-family)
+}

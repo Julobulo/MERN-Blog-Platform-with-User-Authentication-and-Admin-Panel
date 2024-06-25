@@ -6,10 +6,11 @@ import { toast } from "react-toastify";
 import { MdExitToApp } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
-import "@blocknote/core/fonts/inter.css";
+// import "@blocknote/core/fonts/inter.css";
 import { useCreateBlockNote } from "@blocknote/react";
 import { BlockNoteView } from "@blocknote/mantine";
 import "@blocknote/mantine/style.css";
+import "./CreateForm.css";
 
 const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, defaultTags, defaultMainContent }) => {
     // const navigate = useNavigate();
