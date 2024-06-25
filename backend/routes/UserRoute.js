@@ -223,17 +223,9 @@ router.get('/adminpanel', async (request, response) => {
 
 const changeUserPassword = async (userId, newPassword) => {
     try {
-        // Generate a salt
         const salt = await bcrypt.genSalt(10);
-
-        // Hash the new password
         const hashedPassword = await bcrypt.hash(newPassword, salt);
-
-        // Update the user's password in the database
-        const user = await User.findById(userId);
-        user.password = hashedPassword;
-        await user.save();
-        //   await User.findByIdAndUpdate(userId, { password: hashedPassword });
+        await User.findByIdAndUpdate(userId, { password: hashedPassword });
         console.log(`Password updated successfully for user '${user.username}'`);
     } catch (error) {
         console.error('Error updating password:', error);
