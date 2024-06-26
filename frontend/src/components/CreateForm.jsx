@@ -219,18 +219,12 @@ const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, de
     const editor = useCreateBlockNote({
         initialContent: [
             {
-                type: "paragraph",
-            },
-            {
                 type: "heading",
                 content: "Welcome to this text editor!",
             },
             {
                 type: "paragraph",
                 content: "Start writing your amazing article!",
-            },
-            {
-                type: "paragraph",
             },
         ],
     });
