@@ -2,5 +2,11 @@
     background-color: #1f2937; /* This is where the color of the whole editor's background is defined */
     border-radius: var(--bn-border-radius-large);
     color: var(--bn-colors-editor-text);
-    font-family: var(--bn-font-family)
+    font-family: var(--bn-font-family);
+    border: 1px solid #374151;
+}
+
+.bn-editor:focus {
+    border: 1px solid #22c55e;
+    outline: none;
 }
