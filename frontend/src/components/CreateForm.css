@@ -4,6 +4,8 @@
     color: var(--bn-colors-editor-text);
     font-family: var(--bn-font-family);
     border: 1px solid #374151;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 
 .bn-editor:focus {
