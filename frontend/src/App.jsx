@@ -24,7 +24,7 @@ import UserPassword from "./components/AdminPanel components/UserPassword";
 
 const App = () => {
   return (
-    <main>
+    <main className="bg-black min-h-screen flex flex-col justify-between">
       <ToastContainer
         position="top-right"
         autoClose={5000}
