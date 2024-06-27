@@ -123,7 +123,7 @@ const UserEdit = () => {
     };
 
     return (
-        <div className="min-h-screen bg-black p-6 text-green-400">
+        <div className="bg-black p-6 text-green-400">
             <div className="max-w-md mx-auto bg-gray-900 p-6 rounded-lg shadow-lg">
                 <h2 className="text-2xl font-bold mb-4">Profile</h2>
                 {loading ? (<Spinner />) : (
