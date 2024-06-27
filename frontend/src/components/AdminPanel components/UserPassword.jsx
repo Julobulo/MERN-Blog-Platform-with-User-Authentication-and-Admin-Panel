@@ -70,7 +70,7 @@ const UserPassword = () => {
 
     if (isChanged) {
         return (
-            <div className="min-h-screen bg-black p-6 text-green-400">
+            <div className="bg-black p-6 text-green-400">
                 <div className="my-5 max-w-3xl mx-auto p-6 bg-gray-900 rounded-lg shadow-md text-center">
                     <h1 className="text-2xl font-bold mb-6">Password changed</h1>
                     <p>The password has been changed.</p>
@@ -80,7 +80,7 @@ const UserPassword = () => {
     }
 
     return (
-        <div className="min-h-screen bg-black p-6 text-green-400">
+        <div className="bg-black p-6 text-green-400">
             <div className="my-5 max-w-3xl mx-auto p-6 bg-gray-900 rounded-lg shadow-md">
                 <h1 className="text-2xl font-bold mb-6">Change User Password</h1>
                 {loading ? (<Spinner />) : (
