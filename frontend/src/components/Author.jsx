@@ -78,7 +78,7 @@ const Author = () => {
     }, []);
 
     return (
-        <div className='bg-black p-6 text-green-400 min-h-screen'>
+        <div className='bg-black p-6 text-green-400'>
             <div className="my-5 max-w-3xl mx-auto p-6 bg-gray-900 rounded-lg shadow-md">
                 {loading ? (<Spinner />) : (
                     <AuthorCard
