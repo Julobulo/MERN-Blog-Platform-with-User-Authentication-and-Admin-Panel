@@ -40,17 +40,17 @@ const Footer = () => {
             <div className="mb-4 sm:mb-0">
               <h2 className="text-lg font-semibold mb-2 text-gray-200">Latest Posts</h2>
               <ul>
-              {latestPosts.map((post, index) => (
-                <div className="my-2">
-                  <li key={index} className="my-2">
-                    <a href={`/blog/article/${post.title}`} className="text-gray-400 hover:text-gray-200">{post.title}</a>
-                  </li>
-                  {
-                    (index < latestPosts.length - 1) ?
-                    (<hr className="my-2" />) : (<></>)
-                   }
-                </div>
-              ))}
+                {latestPosts.map((post, index) => (
+                  <div className="my-2">
+                    <li key={index} className="my-2">
+                      <a href={`/blog/article/${post.title}`} className="text-gray-400 hover:text-gray-200">{post.title}</a>
+                    </li>
+                    {
+                      (index < latestPosts.length - 1) ?
+                        (<hr className="my-2" />) : (<></>)
+                    }
+                  </div>
+                ))}
               </ul>
             </div>
             <div>
@@ -62,6 +62,13 @@ const Footer = () => {
         </div>
         <div className="text-center mt-auto sm:my-5">
           <p className="text-gray-400">&copy; 2024 Your Blog. All rights reserved.</p>
+          <p className="text-gray-400">Powered by <a
+            href="https://jules.tf"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            jules.tf
+          </a>.</p>
         </div>
       </div>
     </footer>
