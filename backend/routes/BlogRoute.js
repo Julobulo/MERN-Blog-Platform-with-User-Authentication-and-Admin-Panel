@@ -94,6 +94,11 @@ router.get('/most-recent', async (request, response) => {
     }
 });
 
+router.get('/3-latest', async (request, response) => {
+    const threeLatest = await Article.find({}).sort({ date: -1 }).limit(3);
+    return response.json(threeLatest);
+})
+
 router.get('/articles', async (request, response) => {
     try {
         const delay = ms => new Promise(resolve => setTimeout(resolve, ms))

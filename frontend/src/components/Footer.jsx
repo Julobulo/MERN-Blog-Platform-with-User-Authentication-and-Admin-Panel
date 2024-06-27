@@ -6,7 +6,7 @@ const domainName = import.meta.env.VITE_API_BASE_URL;
 const Footer = () => {
   const [latestPosts, setLatestPosts] = useState([]);
   useEffect(() => {
-    axios.get(`${domainName}/latest`)
+    axios.get(`${domainName}/blog/3-latest`)
       .then((response) => {
         setLatestPosts(response.data)
       })
