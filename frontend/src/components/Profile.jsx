@@ -37,7 +37,7 @@ const Profile = () => {
             )
     }, []);
     return (
-        <div className="min-h-screen bg-black p-6 text-white">
+        <div className="bg-black p-6 text-white">
             <div className="max-w-3xl mx-auto bg-gray-800 p-6 rounded-lg shadow-lg">
                 <h2 className="text-2xl font-bold mb-4">Profile</h2>
                 {loading ? (<Spinner />) : (
