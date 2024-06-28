@@ -77,7 +77,7 @@ const UserDelete = () => {
 
     if (isDeleted) {
         return (
-            <div className="bg-black p-6 text-green-400">
+            <div className="flex-grow bg-black p-6 text-green-400">
                 <div className="my-5 max-w-3xl mx-auto p-6 bg-gray-900 rounded-lg shadow-md text-center">
                     <h1 className="text-2xl font-bold mb-6">User Deleted</h1>
                     <p>This user has been deleted.</p>
@@ -87,7 +87,7 @@ const UserDelete = () => {
     }
 
     return (
-        <div className="bg-black p-6 text-green-400">
+        <div className="flex-grow bg-black p-6 text-green-400">
             <div className="my-5 max-w-3xl mx-auto p-6 bg-gray-900 rounded-lg shadow-md">
                 <h1 className="text-2xl font-bold mb-6">Delete User</h1>
                 {loading ? (<Spinner />) : (
