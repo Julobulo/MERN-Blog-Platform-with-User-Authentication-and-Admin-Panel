@@ -231,7 +231,7 @@ const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, de
 
     // Renders the editor instance using a React component.
     return (
-        <div className="bg-black p-6 text-green-400">
+        <div className="flex-grow bg-black p-6 text-green-400">
             <div className="my-5 max-w-3xl mx-auto p-6 bg-gray-900 rounded-lg shadow-md">
                 <BlockNoteView
                     editor={editor}
