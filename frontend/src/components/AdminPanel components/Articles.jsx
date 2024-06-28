@@ -42,7 +42,7 @@ const Articles = () => {
         post.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
     );
     return (
-        <div className='bg-black text-white'>
+        <div className='flex-grow bg-black text-white'>
             <div className='container mx-auto px-4 py-8'>
                 <div className="p-6 mb-8 bg-gray-900 rounded-xl shadow-md text-green-400 flex flex-col items-center max-w-3xl mx-auto">
                     <div className="flex justify-center space-x-6 mb-4 bg-gray-900 p-4 rounded-lg">
