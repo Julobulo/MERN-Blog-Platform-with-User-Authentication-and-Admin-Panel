@@ -99,7 +99,7 @@ const ProfileEdit = () => {
     };
 
     return (
-        <div className="bg-black p-6 text-green-400">
+        <div className="flex-grow bg-black p-6 text-green-400">
             <div className="max-w-md mx-auto bg-gray-800 p-6 rounded-lg shadow-lg">
                 <h2 className="text-2xl font-bold mb-4">Edit Profile</h2>
                 {loading ? (
