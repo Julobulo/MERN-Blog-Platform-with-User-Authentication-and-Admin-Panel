@@ -33,7 +33,7 @@ const App = () => {
     //     article.description.toLowerCase().includes(searchQuery.toLowerCase())
     // );
     return (
-        <div className="bg-black md:p-6 p-0">
+        <div className="flex-grow bg-black md:p-6 p-0">
             <div className="md:p-6 p-2">
                 <div className="mb-6">
                     <input
