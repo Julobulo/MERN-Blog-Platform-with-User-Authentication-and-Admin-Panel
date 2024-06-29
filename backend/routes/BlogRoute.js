@@ -53,8 +53,8 @@ router.get('/most-liked', async (request, response) => {
 // gets most recent article
 router.get('/most-recent', async (request, response) => {
     try {
-        const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
-        await delay(1000);
+        // const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+        // await delay(1000);
         let mostRecentArticle = await Article.findOne({}).sort({ date: -1 });
         try {
             const user = await User.findById(mostRecentArticle.author); // Find the user by _id
