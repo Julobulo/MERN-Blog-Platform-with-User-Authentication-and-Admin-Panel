@@ -42,6 +42,7 @@ const authorArticles = [
 const Author = () => {
     const { author } = useParams(); // gets the author from the url
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
     const [authorData, setAuthorData] = useState({
         imgSrc: 'https://via.placeholder.com/64',
         username: 'john_doe',
@@ -62,6 +63,7 @@ const Author = () => {
             })
             .catch((error) => {
                 setLoading(false);
+                setError(true);
                 console.log(error);
                 // Sample data for testing
                 setAuthorData({
@@ -77,19 +79,37 @@ const Author = () => {
             )
     }, []);
 
+    if (loading) {
+        return (
+            <div className='flex-grow bg-black p-6 text-green-400'>
+                <div className="my-5 max-w-3xl mx-auto p-6 bg-gray-900 rounded-lg shadow-md">
+                    <Spinner />
+                </div>
+            </div>
+        )
+    }
+
+    if (error) {
+        return (
+            <div className='flex-grow bg-black p-6 text-green-400'>
+                <div className="my-5 max-w-3xl mx-auto p-6 bg-gray-900 rounded-lg shadow-md text-center">
+                    <span className='text-red-400'>There was an error retrieving data</span>
+                </div>
+            </div>
+        )
+    }
+
     return (
         <div className='flex-grow bg-black p-6 text-green-400'>
             <div className="my-5 max-w-3xl mx-auto p-6 bg-gray-900 rounded-lg shadow-md">
-                {loading ? (<Spinner />) : (
-                    <AuthorCard
-                        imgSrc={authorData.profilePicture}
-                        username={authorData.username}
-                        date={authorData.date}
-                        bio={authorData.bio}
-                        isAdmin={authorData.isAdmin}
-                        isSuperAdmin={authorData.isSuperAdmin}
-                    />
-                )}
+                <AuthorCard
+                    imgSrc={authorData.profilePicture}
+                    username={authorData.username}
+                    date={authorData.date}
+                    bio={authorData.bio}
+                    isAdmin={authorData.isAdmin}
+                    isSuperAdmin={authorData.isSuperAdmin}
+                />
                 {authorArticles.length > 0 && (
                     <>
                         <hr className='mt-6' />
