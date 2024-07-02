@@ -64,7 +64,7 @@ const Author = () => {
             .catch((error) => {
                 setLoading(false);
                 setError(true);
-                console.log(error);
+                console.log(error.response.data.message);
                 // Sample data for testing
                 setAuthorData({
                     imgSrc: 'https://via.placeholder.com/64',
@@ -74,7 +74,7 @@ const Author = () => {
                     email: 'email',
                     isAdmin: false,
                 });
-                toast.error(`Couldn't fetch the data...`);
+                toast.error(error.response.data.message);
             }
             )
     }, []);
