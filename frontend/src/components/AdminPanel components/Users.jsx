@@ -4,32 +4,9 @@ import axios from 'axios';
 import AuthorCard from '../AuthorCard';
 import { MdDeleteOutline } from "react-icons/md";
 import { FiEdit2 } from "react-icons/fi";
-import { RiLockPasswordLine } from "react-icons/ri" ;
+import { RiLockPasswordLine } from "react-icons/ri";
 import Spinner from '../Spinner';
 import { toast } from 'react-toastify';
-
-// // Sample data for testing
-// const users = [
-//     {
-//         _id: 1,
-//         username: "john_doe",
-//         email: "john@example.com",
-//         bio: "I love peanuts",
-//         imgSrc: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYmkp9a2rrD1Sskb9HLt5mDaTt4QaIs8CcBg&s",
-//         date: "January 1, 2020",
-//         isAdmin: false,
-//     },
-//     {
-//         _id: 2,
-//         username: "jane_smith",
-//         email: "jane@example.com",
-//         bio: "I'm a passionate critic and skeptic who always looks at things from a unique perspective. My friends often call me a 'hater,' but I prefer to think of myself as someone who values honesty and critical thinking above all else. I believe that questioning the status quo and challenging popular opinions are essential for progress and innovation. Whether it's a new tech trend, a popular movie, or the latest fashion craze, I enjoy diving deep into the details and exploring different viewpoints.",
-//         imgSrc: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYmkp9a2rrD1Sskb9HLt5mDaTt4QaIs8CcBg&s",
-//         date: "February 15, 2020",
-//         isAdmin: true,
-//     },
-//     // Add more users as needed...
-// ];
 
 const Users = () => {
     const location = useLocation();
@@ -124,32 +101,32 @@ const Users = () => {
                             </div>
                         ) : (
                             users && (
-                            users.map(user => (
-                                <div className='flex flex-row'>
-                                    <div className='basis-11/12 m-5'>
-                                        <AuthorCard
-                                            imgSrc={user.profilePicture}
-                                            username={user.username}
-                                            date={user.createdAt}
-                                            bio={user.bio}
-                                            email={user.email}
-                                            isAdmin={user.isAdmin}
-                                            isSuperAdmin={user.isSuperAdmin}
-                                        />
+                                users.map(user => (
+                                    <div className='flex flex-row'>
+                                        <div className='basis-11/12 m-5'>
+                                            <AuthorCard
+                                                imgSrc={user.profilePicture}
+                                                username={user.username}
+                                                date={user.createdAt}
+                                                bio={user.bio}
+                                                email={user.email}
+                                                isAdmin={user.isAdmin}
+                                                isSuperAdmin={user.isSuperAdmin}
+                                            />
+                                        </div>
+                                        <div className="basis-1/12 flex flex-col justify-evenly items-center">
+                                            <Link to={`/AdminPanel/Users/Edit/${user.username}`} className='text-yellow-400 '>
+                                                <FiEdit2 />
+                                            </Link>
+                                            <Link to={`/AdminPanel/Users/Password/${user.username}`} className='text-blue-400 '>
+                                                <RiLockPasswordLine />
+                                            </Link>
+                                            <Link to={`/AdminPanel/Users/Delete/${user.username}`} className='text-red-400'>
+                                                <MdDeleteOutline />
+                                            </Link>
+                                        </div>
                                     </div>
-                                    <div className="basis-1/12 flex flex-col justify-evenly items-center">
-                                        <Link to={`/AdminPanel/Users/Edit/${user.username}`} className='text-yellow-400 '>
-                                            <FiEdit2 />
-                                        </Link>
-                                        <Link to={`/AdminPanel/Users/Password/${user.username}`} className='text-blue-400 '>
-                                            <RiLockPasswordLine />
-                                        </Link>
-                                        <Link to={`/AdminPanel/Users/Delete/${user.username}`} className='text-red-400'>
-                                            <MdDeleteOutline />
-                                        </Link>
-                                    </div>
-                                </div>
-                            )) )
+                                )))
                         )}
                         {loadingMore ? (<Spinner />) : (
                             hasMore && (
