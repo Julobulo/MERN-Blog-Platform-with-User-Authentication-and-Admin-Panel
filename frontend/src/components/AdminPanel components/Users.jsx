@@ -18,6 +18,34 @@ const Users = () => {
     const [hasMore, setHasMore] = useState(true); // are there more users?
     const limit = 2; // Number of users per request
 
+    useEffect(() => {
+        if (!users.length) {
+            return
+        }
+        // Create a regular expression with the search query (case-insensitive)
+        const regex = new RegExp(searchQuery, 'i');
+
+        // Update the users array with highlighted fields
+        const updatedUsers = users.map((user) => {
+            return {
+                ...user,
+                username: user.username.replace(regex, (match) => `<span class="text-blue-400">${match}</span>`),
+                bio: user.bio.replace(regex, (match) => `<span class="bg-green-400">${match}</span>`),
+                email: user.email.replace(regex, (match) => `<span class="bg-green-400">${match}</span>`),
+            };
+        });
+
+        // const updatedUsers = JSON.stringify(users);
+        // console.log(`updatedUsers at beginning: ${updatedUsers}`)
+
+        // for (const user of updatedUsers) {
+        //     user.username.replace("test", "bigbigtest")
+        // }
+
+        // Set the updated users
+        setUsers(updatedUsers);
+    }, [users]);
+
     const fetchUsers = (skip, search) => {
         if (skip > 0) { setLoadingMore(true) } else { setLoading(true); setUsers([]) }
         axios.get(
