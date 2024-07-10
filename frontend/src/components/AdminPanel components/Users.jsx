@@ -24,19 +24,23 @@ const Users = () => {
         if (!users.length || wasHighlighted) {
             return
         }
-        // Create a regular expression with the search query (case-insensitive)
-        const regex = new RegExp(searchQuery, 'i');
 
-        // Update the users array with highlighted fields
-        const updatedUsers = users.map((user) => {
-            return {
-                ...user,
-                username: user.username.replace(regex, (match) => `<span class="text-blue-400">${match}</span>`),
-                bio: user.bio.replace(regex, (match) => `<span class="bg-green-400">${match}</span>`),
-                email: user.email.replace(regex, (match) => `<span class="bg-green-400">${match}</span>`),
-            };
-        });
-
+        let updatedUsers = users;
+        if (searchQuery) {
+            // Create a regular expression with the search query (case-insensitive)
+            const regex = new RegExp(searchQuery, 'i');
+            
+            // Update the users array with highlighted fields
+            updatedUsers = users.map((user) => {
+                return {
+                    ...user,
+                    username: user.username.replace(regex, (match) => `<span class="text-blue-400">${match}</span>`),
+                    bio: user.bio.replace(regex, (match) => `<span class="bg-green-400">${match}</span>`),
+                    email: user.email.replace(regex, (match) => `<span class="bg-green-400">${match}</span>`),
+                };
+            });
+        }
+            
         // const updatedUsers = JSON.stringify(users);
         // console.log(`updatedUsers at beginning: ${updatedUsers}`)
 
