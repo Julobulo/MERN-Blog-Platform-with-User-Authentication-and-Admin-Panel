@@ -28,7 +28,7 @@ const Users = () => {
         let updatedUsers = users;
         if (searchQuery) {
             // Create a regular expression with the search query (case-insensitive)
-            const regex = new RegExp(searchQuery, 'i');
+            const regex = new RegExp(searchQuery, 'ig');
             
             // Update the users array with highlighted fields
             updatedUsers = users.map((user) => {
@@ -43,7 +43,8 @@ const Users = () => {
 
         // Set the updated users
         setHighlightedUsers(updatedUsers);
-        setWasHighlighted(true)
+        setWasHighlighted(true);
+        console.log(`Highlighted users: ${JSON.stringify(updatedUsers)}`)
     }, [users]);
 
     const fetchUsers = (skip, search) => {
