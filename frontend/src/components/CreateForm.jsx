@@ -12,9 +12,11 @@ import { BlockNoteView } from "@blocknote/mantine";
 import "@blocknote/mantine/style.css";
 import "./CreateForm.css";
 
+// TODO: put all changes in localStorage
+
 const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, defaultTags, defaultMainContent }) => {
     // const navigate = useNavigate();
-    // const [image, setImage] = useState();
+    const [image, setImage] = useState();
     // const [title, setTitle] = useState('');
     // const [subtitle, setSubtitle] = useState('');
     const [tags, setTags] = useState([]);
@@ -62,52 +64,41 @@ const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, de
         setTags(tags.filter((_, i) => i !== index));
     };
 
-    // const handlePost = async () => {
-    //     if (!image) {
-    //         toast.error('You have to upload an image.');
-    //         return;
-    //     }
-    //     if (title.length < 10 || title.length > 100) {
-    //         toast.error('Title has to be between 10 and 100 characters.');
-    //         return;
-    //     }
-    //     if (subtitle.length < 30 || subtitle.length > 150) {
-    //         toast.error('Subtitle has to be between 30 and 150 characters.');
-    //         return;
-    //     }
-    //     if (!tags[0]) {
-    //         toast.error('You have to include at least one tag.');
-    //         return;
-    //     }
-    //     if (mainContent.length > 10000 || mainContent.length < 300) {
-    //         toast.error('Article has to be between 300 and 10,000 characters. (you can\'t upload images)');
-    //         return;
-    //     }
-    //     const articleData = {
-    //         image,
-    //         title,
-    //         subtitle,
-    //         tags,
-    //         main: mainContent,
-    //     };
+    const handlePost = async () => {
+        if (!image) {
+            toast.error('You have to upload an image.');
+            return;
+        }
+        if (!tags[0]) {
+            toast.error('You have to include at least one tag.');
+            return;
+        }
+        if (blocks.length > 1000) {
+            toast.error(`Article can't have more than 1000 blocks`);
+            return;
+        }
+        const articleData = {
+            image,
+            blocks,
+            tags,
+        };
 
-    //     try {
-    //         const response = await axios.post('http://localhost:5555/blog/new', articleData, {
-    //             headers: {
-    //                 'Content-Type': 'application/json'
-    //             },
-    //             withCredentials: true,
-    //         });
-    //         navigate(`/blog/article/${title}`);
-    //         toast.success(response.data.message);
-    //         console.log(response.data.message);
-    //         // Handle success (e.g., show a success message or redirect)
-    //     } catch (error) {
-    //         toast.error(error.response.data.message);
-    //         console.error(error);
-    //         // Handle error (e.g., show an error message)
-    //     }
-    // };
+        try {
+            const response = await axios.post('http://localhost:5555/blog/new', articleData, {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                withCredentials: true,
+            });
+            console.log(`Title will be "${blocks[0]}"`)
+            navigate(`/blog/article/${blocks[0]}`);
+            toast.success(response.data.message);
+            console.log(response.data.message);
+        } catch (error) {
+            toast.error(error.response.data.message);
+            console.error(error);
+        }
+    };
 
     // const toolbarOptions = [
     //     [{ header: [1, 2, 3, false] }],
@@ -276,7 +267,7 @@ const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, de
                     </div>
                 </div>
                 <button
-                    onClick={() => { }}
+                    onClick={handlePost}
                     className="w-full bg-green-500 text-white py-2 px-4 rounded-md shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                 >
                     {pageTitle === 'Create' ? 'Create' : 'Save'}
