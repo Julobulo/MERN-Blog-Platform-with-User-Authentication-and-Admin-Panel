@@ -18,10 +18,10 @@ const AuthorCard = ({ imgSrc, username, date, bio, email, isAdmin, isSuperAdmin 
                     />
                 </div>
                 <div className="basis-4/5">
-                    <h2 className="text-2xl font-bold">{username}</h2>
+                    <h2 className="text-2xl font-bold"><span dangerouslySetInnerHTML={{ __html: username }} /></h2>
                     <p className="text-sm text-gray-400">Joined: {formatDate(date)}</p>
                     {email && (
-                        <p className="text-sm text-gray-400">Email: {email}</p>
+                        <p className="text-sm text-gray-400">Email: <span dangerouslySetInnerHTML={{ __html: email }} /></p>
                     )}
                     {isAdmin && (
                             <div className="flex items-center mt-2 align-center text-green-400">
@@ -41,7 +41,7 @@ const AuthorCard = ({ imgSrc, username, date, bio, email, isAdmin, isSuperAdmin 
                     )}
                 </div>
             </a>
-            <p className="text-gray-300">{bio}</p>
+            <p className="text-gray-300"><span dangerouslySetInnerHTML={{ __html: bio }} /></p>
         </div>
     )
 }
