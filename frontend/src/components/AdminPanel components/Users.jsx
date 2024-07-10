@@ -35,7 +35,7 @@ const Users = () => {
                 return {
                     ...user,
                     username: user.username.replace(regex, (match) => `<span class="bg-green-300">${match}</span>`),
-                    bio: user.bio.replace(regex, (match) => `<span class="bg-green-300">${match}</span>`),
+                    bio: user.bio.replace(regex, (match) => `<span class="bg-green-500">${match}</span>`),
                     email: user.email.replace(regex, (match) => `<span class="bg-green-300">${match}</span>`),
                 };
             });
