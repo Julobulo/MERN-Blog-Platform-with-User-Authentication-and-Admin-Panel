@@ -34,9 +34,9 @@ const Users = () => {
             updatedUsers = users.map((user) => {
                 return {
                     ...user,
-                    username: user.username.replace(regex, (match) => `<span class="text-blue-400">${match}</span>`),
-                    bio: user.bio.replace(regex, (match) => `<span class="bg-green-400">${match}</span>`),
-                    email: user.email.replace(regex, (match) => `<span class="bg-green-400">${match}</span>`),
+                    username: user.username.replace(regex, (match) => `<span class="bg-green-300">${match}</span>`),
+                    bio: user.bio.replace(regex, (match) => `<span class="bg-green-300">${match}</span>`),
+                    email: user.email.replace(regex, (match) => `<span class="bg-green-300">${match}</span>`),
                 };
             });
         }
