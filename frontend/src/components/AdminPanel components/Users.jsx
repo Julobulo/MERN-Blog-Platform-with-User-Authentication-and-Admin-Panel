@@ -16,10 +16,11 @@ const Users = () => {
     const [users, setUsers] = useState([]);
     const [skip, setSkip] = useState(0);
     const [hasMore, setHasMore] = useState(true); // are there more users?
+    const [wasHighlighted, setWasHighlighted] = useState(false);
     const limit = 2; // Number of users per request
 
     useEffect(() => {
-        if (!users.length) {
+        if (!users.length || wasHighlighted) {
             return
         }
         // Create a regular expression with the search query (case-insensitive)
@@ -44,6 +45,7 @@ const Users = () => {
 
         // Set the updated users
         setUsers(updatedUsers);
+        setWasHighlighted(true)
     }, [users]);
 
     const fetchUsers = (skip, search) => {
@@ -68,6 +70,7 @@ const Users = () => {
                 }
                 setLoading(false);
                 setLoadingMore(false);
+                setWasHighlighted(false);
             })
             .catch((error) => {
                 setLoading(false);
