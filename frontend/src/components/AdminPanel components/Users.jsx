@@ -40,13 +40,6 @@ const Users = () => {
                 };
             });
         }
-            
-        // const updatedUsers = JSON.stringify(users);
-        // console.log(`updatedUsers at beginning: ${updatedUsers}`)
-
-        // for (const user of updatedUsers) {
-        //     user.username.replace("test", "bigbigtest")
-        // }
 
         // Set the updated users
         setHighlightedUsers(updatedUsers);
