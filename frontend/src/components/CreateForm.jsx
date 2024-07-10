@@ -21,29 +21,29 @@ const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, de
     // const [mainContent, setMainContent] = useState('');
     const [tagInput, setTagInput] = useState('');
 
-    // const handleImageChange = async (event) => {
-    //     const file = event.target.files[0];
-    //     const maxSize = 1 * 1024 * 1024; // 1MB
+    const handleImageChange = async (event) => {
+        const file = event.target.files[0];
+        const maxSize = 1 * 1024 * 1024; // 1MB
 
-    //     if (file) {
-    //         if (!file.type.startsWith('image/')) {
-    //             setImage('');
-    //             event.target.value = '';
-    //             toast.error('Please upload an image file.');
-    //             return;
-    //         }
-    //         if (file.size > maxSize) {
-    //             setImage('');
-    //             event.target.value = '';
-    //             toast.error('File size exceeds 1MB.');
-    //             return;
-    //         }
+        if (file) {
+            if (!file.type.startsWith('image/')) {
+                setImage('');
+                event.target.value = '';
+                toast.error('Please upload an image file.');
+                return;
+            }
+            if (file.size > maxSize) {
+                setImage('');
+                event.target.value = '';
+                toast.error('File size exceeds 1MB.');
+                return;
+            }
 
-    //         const reader = new FileReader();
-    //         reader.onloadend = () => setImage(reader.result);
-    //         reader.readAsDataURL(file);
-    //     }
-    // };
+            const reader = new FileReader();
+            reader.onloadend = () => setImage(reader.result);
+            reader.readAsDataURL(file);
+        }
+    };
 
     const handleTagInputKeyDown = (e) => {
         if ((e.key === 'Enter' || e.key === ',') && tagInput.trim() && tags.length < 4) {
@@ -233,14 +233,29 @@ const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, de
     return (
         <div className="flex-grow bg-black p-6 text-green-400">
             <div className="my-5 max-w-3xl mx-auto p-6 bg-gray-900 rounded-lg shadow-md">
-                <BlockNoteView
-                    editor={editor}
-                    onChange={() => {
-                        // Saves the document JSON to state.
-                        setBlocks(editor.document);
-                    }}
-                    className="my-5"
-                />
+                <h1 className="text-2xl font-bold mb-6 text-center">{pageTitle} Post</h1>
+                <div className="mb-4">
+                    <label htmlFor="image" className="block text-sm font-medium mb-1">Image (it will appear on the article display)</label>
+                    <input
+                        id="image"
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                        className="w-full px-3 py-2 border border-gray-700 rounded-md bg-gray-800 text-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500"
+                    />
+                </div>
+                <div>
+                    <label htmlFor="editor" className="block text-sm font-medium mb-1">Article (this is the actual article, including the title)</label>
+                    <BlockNoteView
+                        editor={editor}
+                        id="editor"
+                        onChange={() => {
+                            // Saves the document JSON to state.
+                            setBlocks(editor.document);
+                        }}
+                        className="mb-5"
+                    />
+                </div>
                 <div className="mb-4">
                     <label htmlFor="tags" className="block text-sm font-medium mb-1">Tags (up to 4)</label>
                     <input
@@ -261,7 +276,7 @@ const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, de
                     </div>
                 </div>
                 <button
-                    onClick={() => {}}
+                    onClick={() => { }}
                     className="w-full bg-green-500 text-white py-2 px-4 rounded-md shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                 >
                     {pageTitle === 'Create' ? 'Create' : 'Save'}
