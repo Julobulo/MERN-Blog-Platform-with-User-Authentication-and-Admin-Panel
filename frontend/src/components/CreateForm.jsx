@@ -5,6 +5,7 @@ import axios from 'axios';
 import { toast } from "react-toastify";
 import { MdExitToApp } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import imageCompression from "browser-image-compression";
 
 // import "@blocknote/core/fonts/inter.css";
 import { useCreateBlockNote } from "@blocknote/react";
@@ -26,8 +27,8 @@ const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, de
     const handleImageChange = async (event) => {
         const file = event.target.files[0];
         const maxSize = 1 * 1024 * 1024; // 1MB
-
         if (file) {
+            // Check image
             if (!file.type.startsWith('image/')) {
                 setImage('');
                 event.target.value = '';
@@ -40,10 +41,15 @@ const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, de
                 toast.error('File size exceeds 1MB.');
                 return;
             }
-
+            // compress image
+            const compressedFile = await imageCompression(file, {
+                maxSizeMB: 1,          // Maximum size in MB
+                maxWidthOrHeight: 800, // Maximum width or height
+                useWebWorker: true,    // Use web worker for compression
+            });
             const reader = new FileReader();
             reader.onloadend = () => setImage(reader.result);
-            reader.readAsDataURL(file);
+            reader.readAsDataURL(compressedFile);
         }
     };
 
