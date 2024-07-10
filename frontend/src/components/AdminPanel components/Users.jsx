@@ -14,6 +14,7 @@ const Users = () => {
     const [loading, setLoading] = useState(true);
     const [loadingMore, setLoadingMore] = useState(false);
     const [users, setUsers] = useState([]);
+    const [highlightedUsers, setHighlightedUsers] = useState([]);
     const [skip, setSkip] = useState(0);
     const [hasMore, setHasMore] = useState(true); // are there more users?
     const [wasHighlighted, setWasHighlighted] = useState(false);
@@ -44,7 +45,7 @@ const Users = () => {
         // }
 
         // Set the updated users
-        setUsers(updatedUsers);
+        setHighlightedUsers(updatedUsers);
         setWasHighlighted(true)
     }, [users]);
 
@@ -131,8 +132,8 @@ const Users = () => {
                                 <Spinner />
                             </div>
                         ) : (
-                            users && (
-                                users.map(user => (
+                            highlightedUsers && (
+                                highlightedUsers.map(user => (
                                     <div className='flex flex-row'>
                                         <div className='basis-11/12 m-5'>
                                             <AuthorCard
