@@ -4,6 +4,7 @@ import { GrUserAdmin } from "react-icons/gr";
 import formatDate from "../utils/formatDate";
 
 const AuthorCard = ({ imgSrc, username, date, bio, email, isAdmin, isSuperAdmin }) => {
+    console.log(`new author card. username: ${username}, bio: ${bio}, email: ${email}`)
     return (
         <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
             <a className="flex flex-row items-center mb-4" href={`/author/${username}`}>
