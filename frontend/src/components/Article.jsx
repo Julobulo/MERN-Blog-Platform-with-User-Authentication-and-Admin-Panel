@@ -10,6 +10,210 @@ import { FaHeart } from "react-icons/fa";
 import Cookies from "js-cookie";
 
 const App = () => {
+    const blocks = [
+        {
+            "id": "c585f24a-acd8-4b14-b00c-36186adaf418",
+            "type": "heading",
+            "props": {
+                "textColor": "default",
+                "backgroundColor": "default",
+                "textAlignment": "left",
+                "level": 1
+            },
+            "content": [
+                {
+                    "type": "text",
+                    "text": "My amazing title",
+                    "styles": {}
+                }
+            ],
+            "children": []
+        },
+        {
+            "id": "d409714c-b9c5-480e-a25d-0e6cf19c522c",
+            "type": "paragraph",
+            "props": {
+                "textColor": "default",
+                "backgroundColor": "default",
+                "textAlignment": "left"
+            },
+            "content": [
+                {
+                    "type": "text",
+                    "text": "Start writing your amazing article!",
+                    "styles": {}
+                }
+            ],
+            "children": [
+                {
+                    "id": "439a06f9-ffea-4705-b5e1-3dcd7a893c2d",
+                    "type": "paragraph",
+                    "props": {
+                        "textColor": "default",
+                        "backgroundColor": "default",
+                        "textAlignment": "left"
+                    },
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": "balala",
+                            "styles": {}
+                        }
+                    ],
+                    "children": [
+                        {
+                            "id": "25c18b51-d15e-4ea6-8da3-4f0b9a65130b",
+                            "type": "bulletListItem",
+                            "props": {
+                                "textColor": "default",
+                                "backgroundColor": "default",
+                                "textAlignment": "left"
+                            },
+                            "content": [
+                                {
+                                    "type": "text",
+                                    "text": "1st",
+                                    "styles": {}
+                                }
+                            ],
+                            "children": []
+                        },
+                        {
+                            "id": "378d2f8c-5864-4972-ba4a-29a2765e2fc2",
+                            "type": "bulletListItem",
+                            "props": {
+                                "textColor": "default",
+                                "backgroundColor": "default",
+                                "textAlignment": "left"
+                            },
+                            "content": [
+                                {
+                                    "type": "text",
+                                    "text": "2nd",
+                                    "styles": {}
+                                }
+                            ],
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "id": "831ab783-2d53-4ea5-87c2-2ed1903536fa",
+                    "type": "paragraph",
+                    "props": {
+                        "textColor": "default",
+                        "backgroundColor": "default",
+                        "textAlignment": "left"
+                    },
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": "balal",
+                            "styles": {}
+                        }
+                    ],
+                    "children": [
+                        {
+                            "id": "c3a62bdb-016a-4536-9d04-f7d23cc38ad6",
+                            "type": "numberedListItem",
+                            "props": {
+                                "textColor": "default",
+                                "backgroundColor": "default",
+                                "textAlignment": "left"
+                            },
+                            "content": [
+                                {
+                                    "type": "text",
+                                    "text": "point",
+                                    "styles": {}
+                                }
+                            ],
+                            "children": []
+                        },
+                        {
+                            "id": "0f4e2201-e335-48ff-83a3-70370ec9945a",
+                            "type": "numberedListItem",
+                            "props": {
+                                "textColor": "default",
+                                "backgroundColor": "default",
+                                "textAlignment": "left"
+                            },
+                            "content": [
+                                {
+                                    "type": "text",
+                                    "text": "other point",
+                                    "styles": {}
+                                }
+                            ],
+                            "children": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "997d1fc2-3ea5-4cc8-93a9-748851075577",
+            "type": "bulletListItem",
+            "props": {
+                "textColor": "default",
+                "backgroundColor": "default",
+                "textAlignment": "left"
+            },
+            "content": [
+                {
+                    "type": "text",
+                    "text": "hello",
+                    "styles": {}
+                }
+            ],
+            "children": []
+        },
+        {
+            "id": "e7853a07-70be-4299-9216-9ce619af39b8",
+            "type": "bulletListItem",
+            "props": {
+                "textColor": "default",
+                "backgroundColor": "default",
+                "textAlignment": "left"
+            },
+            "content": [
+                {
+                    "type": "text",
+                    "text": "I'm",
+                    "styles": {}
+                }
+            ],
+            "children": []
+        },
+        {
+            "id": "8b71eabf-bbee-4cd5-9894-4a9cc1fed9db",
+            "type": "bulletListItem",
+            "props": {
+                "textColor": "default",
+                "backgroundColor": "default",
+                "textAlignment": "left"
+            },
+            "content": [
+                {
+                    "type": "text",
+                    "text": "Someone",
+                    "styles": {}
+                }
+            ],
+            "children": []
+        },
+        {
+            "id": "ac8f302d-2e25-4a20-a5ab-33a4bd570503",
+            "type": "paragraph",
+            "props": {
+                "textColor": "default",
+                "backgroundColor": "default",
+                "textAlignment": "left"
+            },
+            "content": [],
+            "children": []
+        }
+    ];
     const { title } = useParams();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
@@ -53,6 +257,56 @@ const App = () => {
                 })
         }
     }
+
+    const displayMain = () => {
+        return (JSON.stringify(articleData.main))
+    }
+
+    // Function to render the content of a block
+    const renderContent = (content) => {
+        return content.map((item, index) => {
+            switch (item.type) {
+                case 'text':
+                    return <span key={index} style={item.styles}>{item.text}</span>;
+                default:
+                    return null;
+            }
+        });
+    };
+
+    // Function to render a single block and its children
+    const renderBlock = (block) => {
+        const { id, type, props, content, children } = block;
+        console.log(`rendering block whose id is: ${id}`);
+
+        const renderBlockByType = (type) => {
+            switch (type) {
+                case 'heading':
+                    const HeadingTag = `h${props.level}`;
+                    return <HeadingTag key={id} {...props}>{renderContent(content)}</HeadingTag>;
+                case 'paragraph':
+                    return <p key={id} {...props}>{renderContent(content)}</p>;
+                case 'numberedListItem':
+                    return <li key={id} {...props}>{renderContent(content)}</li>;
+                case 'bulletListItem':
+                    return <li key={id} {...props}>{renderContent(content)}</li>;
+                default:
+                    return null;
+            }
+        };
+
+        return (
+            <div key={id}>
+                {renderBlockByType(type)}
+                {children && children.length > 0 && (
+                    <div className="children">
+                        {children.map(renderBlock)}
+                    </div>
+                )}
+            </div>
+        );
+    };
+
     return (
         <div className="flex-grow bg-black text-white">
             <div className="container mx-auto px-4 py-8">
@@ -106,8 +360,10 @@ const App = () => {
                                     {articleData.subtitle}
                                 </div>
                                 <hr className="my-10" />
-                                <div dangerouslySetInnerHTML={{ __html: articleData.main }} className="text-gray-300">
-                                    {/* {articleData.main} */}
+                                {/* <div dangerouslySetInnerHTML={{ __html: articleData.main }} className="text-gray-300">
+                                </div> */}
+                                <div className="article">
+                                    {articleData.main.map(renderBlock)}
                                 </div>
                             </>)}
                         <hr className="my-6 border-t border-gray-700" />
