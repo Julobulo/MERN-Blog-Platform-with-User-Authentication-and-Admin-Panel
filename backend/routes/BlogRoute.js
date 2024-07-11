@@ -60,8 +60,8 @@ router.get('/most-recent', async (request, response) => {
             const user = await User.findById(mostRecentArticle.author); // Find the user by _id
             if (user) {
                 mostRecentArticle.author = user.username; // Replace author with the username
-                } else {
-                    mostRecentArticle.author = "Unknown"; // If user not found, set author to "Unknown" or handle it as needed
+            } else {
+                mostRecentArticle.author = "Unknown"; // If user not found, set author to "Unknown" or handle it as needed
             }
             // send "liked" field
             const token = request.cookies.token;
@@ -266,24 +266,39 @@ router.post('/new', async (request, response) => {
             if (err) {
                 return response.status(400).json({ message: "bad cookie" })
             } else {
-                const { image, title, subtitle, tags, main } = request.body;
+                const { image, blocks, tags } = request.body;
                 // check user
                 const user = await User.findById(data.id);
                 if (!user) {
                     return response.status(400).json({ message: "you need to be logged in!" })
                 }
                 // check if there is an article with same title already
-                const otherArticle = await Article.findOne({ title: title })
+                const otherArticle = await Article.findOne({ title: blocks[0].content[0].text })
                 if (otherArticle) {
                     return response.status(400).json({ message: "there is already an article with the same title" })
                 }
                 // check article
-                const checkedArticle = checkArticle(image, title, subtitle, tags, main);
+                const checkedArticle = checkArticle(
+                    {
+                        image: image,
+                        main: blocks,
+                        tags: tags,
+                        title: blocks[0].content[0].text,
+                        subtitle: blocks[1].content[0].text,
+                    }
+                );
                 if (!checkedArticle.allowed) {
                     return response.status(400).json({ message: checkedArticle.message })
                 }
                 // post article
-                const newArticle = Article.create({ image: image, title: title, subtitle: subtitle, tags: tags, main: main, author: data.id });
+                const newArticle = Article.create({
+                    image: image,
+                    title: blocks[0].content[0].text,
+                    subtitle: blocks[1].content[0].text,
+                    tags: tags,
+                    main: blocks,
+                    author: data.id
+                });
                 (await newArticle).save();
                 response.status(201).json({ message: "successfully posted article!" });
             }
