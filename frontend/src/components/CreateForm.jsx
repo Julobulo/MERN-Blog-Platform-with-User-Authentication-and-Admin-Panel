@@ -83,6 +83,10 @@ const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, de
             toast.error(`Article can't have more than 1000 blocks`);
             return;
         }
+        if (blocks[0].content[0].text.length > 200) {
+            toast.error(`Title can't be more than 200 characters!`);
+            return;
+        }
         const articleData = {
             image,
             blocks,
