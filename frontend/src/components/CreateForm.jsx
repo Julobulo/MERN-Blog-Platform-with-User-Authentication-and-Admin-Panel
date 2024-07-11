@@ -83,7 +83,7 @@ const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, de
             toast.error(`Article can't have more than 1000 blocks`);
             return;
         }
-        if (blocks[0].content[0].text.length > 200 || blocks[0].content[0].text.length < 10 ) {
+        if (blocks[0].content[0].text.length > 200 || blocks[0].content[0].text.length < 10) {
             toast.error(`Title can't be more than 200 characters and less than 10!`);
             return;
         }
@@ -220,12 +220,30 @@ const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, de
     const editor = useCreateBlockNote({
         initialContent: [
             {
-                type: "heading",
-                content: "Welcome to this text editor!",
+                type: 'heading',
+                content: 'My amazing title'
             },
             {
-                type: "paragraph",
-                content: "Start writing your amazing article!",
+                type: 'paragraph',
+                content: 'Start writing your amazing article!',
+                children: [
+                    {
+                        type: 'paragraph',
+                        content: 'balala',
+                    }
+                ],
+            },
+            {
+                type: 'bulletListItem',
+                content: 'hello',
+            },
+            {
+                type: 'bulletListItem',
+                content: "I'm",
+            },
+            {
+                type: 'bulletListItem',
+                content: 'Someone',
             },
         ],
     });
