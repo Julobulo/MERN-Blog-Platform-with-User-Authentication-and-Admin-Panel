@@ -1,5 +1,40 @@
 import mongoose, { mongo } from "mongoose";
 
+// Define a sub-schema for the 'main' field
+const MainSchema = new mongoose.Schema({
+    id: {
+        type: String,
+        required: true,
+    },
+    type: {
+        type: String,
+        required: true,
+    },
+    props: {
+        // Define properties for 'props' here
+        textColor: String,
+        backgroundColor: String,
+        textAlignment: String,
+        level: Number,
+    },
+    content: [
+        {
+            type: {
+                type: String,
+                required: true,
+            },
+            text: {
+                type: String,
+                required: true,
+            },
+            styles: {
+                // Define styles properties here
+            },
+        },
+    ],
+    children: [], // Define the structure for 'children' if needed
+});
+
 const ArticleSchema = new mongoose.Schema({
     image: {
         type: String,
@@ -25,7 +60,9 @@ const ArticleSchema = new mongoose.Schema({
         required: [true, "At least one tag is required"],
     },
     main: {
-        type: String,
+        type: [
+            MainSchema
+        ], // Use the custom sub-schema for 'main'
         required: [true, "The main part of the article is required"],
         minlength: 300,
         maxlength: 10000,
