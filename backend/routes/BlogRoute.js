@@ -225,7 +225,7 @@ router.post('/article/:title', async (request, response) => {
     }
 });
 
-function checkArticle(image, title, subtitle, tags, main) {
+function checkArticle({image, title, subtitle, tags, main}) {
     const maxPictureSize = 1 * 1024 * 1024; // 1MB
     if (!image || !title || !subtitle || !tags || tags.length < 1 || !main) {
         return { allowed: false, message: "you need to send all of the required fields: image, title, subtitle, tags, main" };
