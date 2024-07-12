@@ -334,7 +334,7 @@ const App = () => {
                         date={articleData.date}
                         relatedArticles={relatedArticles}
                     /> */}
-                    <div className="p-6 mb-8 bg-gray-900 rounded-xl shadow-md">
+                    <div className="p-6 mb-8 bg-[#1f2937] rounded-xl shadow-md">
                         {loading ? (<Spinner />) : (
                             <>
                                 <h1 className="text-3xl font-bold mb-4 text-green-400">{articleData.title}</h1>
