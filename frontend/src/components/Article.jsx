@@ -291,7 +291,7 @@ const App = () => {
                     );
                 case 'paragraph':
                     numberedListIteration = 0;
-                    return <p key={id} className="text-base mb-4 mx-4" {...props}>{renderContent(content)}</p>;
+                    return <p key={id} className="text-base mb-4 mx-8" {...props}>{renderContent(content)}</p>;
                 case 'numberedListItem':
                     numberedListIteration += 1;
                     return <ol>
