@@ -219,6 +219,7 @@ const App = () => {
     const [loading, setLoading] = useState(true);
     const [articleData, setArticleData] = useState({});
     const [liked, setLiked] = useState(false);
+    let numberedListIteration = 0;
     useEffect(() => {
         setLoading(true);
         axios.get(`http://localhost:5555/blog/article/${title}`,
@@ -282,19 +283,26 @@ const App = () => {
         const renderBlockByType = (type) => {
             switch (type) {
                 case 'heading':
+                    numberedListIteration = 0;
                     const HeadingTag = `h${props.level}`;
                     return (
-                        <HeadingTag key={id} className={`${props.level === 1 ? 'text-5xl' : props.level === 2 ? 'text-3xl' : 'text-2xl'} font-bold text-gray-300 mx-8 mb-5`}>
+                        <HeadingTag key={id} className={`${props.level === 1 ? 'text-5xl mb-5' : props.level === 2 ? 'text-3xl mb-4' : 'text-2xl mb-3'} font-bold text-gray-300 mx-8`}>
                             {renderContent(content)}
                         </HeadingTag>
                     );
                 case 'paragraph':
+                    numberedListIteration = 0;
                     return <p key={id} className="text-base mb-4 mx-4" {...props}>{renderContent(content)}</p>;
                 case 'numberedListItem':
-                    return <li key={id} {...props}>{renderContent(content)}</li>;
+                    numberedListIteration += 1;
+                    return <ol>
+                        <li key={id} className="text-gray-300 mx-8 mb-2" {...props}>{numberedListIteration}. {renderContent(content)}</li>
+                    </ol>;
                 case 'bulletListItem':
+                    numberedListIteration = 0;
                     return <li key={id} {...props}>{renderContent(content)}</li>;
                 default:
+                    numberedListIteration = 0;
                     return null;
             }
         };
