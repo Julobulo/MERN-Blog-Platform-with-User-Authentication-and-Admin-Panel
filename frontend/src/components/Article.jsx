@@ -278,7 +278,6 @@ const App = () => {
     // Function to render a single block and its children
     const renderBlock = (block) => {
         const { id, type, props, content, children } = block;
-        console.log(`rendering block whose id is: ${id}`);
 
         const renderBlockByType = (type) => {
             switch (type) {
@@ -301,6 +300,19 @@ const App = () => {
                 case 'bulletListItem':
                     numberedListIteration = 0;
                     return <li key={id} className="text-gray-300 mx-12 mb-2" {...props}>{renderContent(content)}</li>;
+                case 'checkListItem':
+                    numberedListIteration = 0;
+                    return (
+                        <div key={id} className="flex items-center mb-2 mx-8">
+                            <input
+                                type="checkbox"
+                                checked={props.checked}
+                                className="mr-2"
+                                disabled
+                            />
+                            <span style={{ textAlign: props.textAlignment }}>{renderContent(content)}</span>
+                        </div>
+                    );
                 default:
                     numberedListIteration = 0;
                     return null;
