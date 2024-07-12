@@ -289,9 +289,6 @@ const App = () => {
                             {renderContent(content)}
                         </HeadingTag>
                     );
-                case 'paragraph':
-                    numberedListIteration = 0;
-                    return <p key={id} className="text-base mb-4 mx-8" {...props}>{renderContent(content)}</p>;
                 case 'numberedListItem':
                     numberedListIteration += 1;
                     return <ol>
@@ -312,6 +309,29 @@ const App = () => {
                             />
                             <span style={{ textAlign: props.textAlignment }} className={props.checked && 'line-through'} >{renderContent(content)}</span>
                         </div>
+                    );
+                case 'paragraph':
+                    numberedListIteration = 0;
+                    return <p key={id} className="text-gray-300 mb-4 mx-8" {...props}>{renderContent(content)}</p>;
+                case 'table':
+                    return (
+                        <table key={id} className="border-gray-300 mx-8 text-gray-300">
+                            <tbody>
+                                {content[0].rows.map((row, rowIndex) => (
+                                    <tr key={rowIndex} className="border border-gray-300">
+                                        {row.cells.map((cell, cellIndex) => (
+                                            <td key={cellIndex} className="border border-gray-300 p-2">
+                                                {cell.map((cellContent, contentIndex) => (
+                                                    <div key={contentIndex}>
+                                                        {renderContent([cellContent])}
+                                                    </div>
+                                                ))}
+                                            </td>
+                                        ))}
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                     );
                 default:
                     numberedListIteration = 0;
