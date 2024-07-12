@@ -310,7 +310,7 @@ const App = () => {
                                 className="mr-2"
                                 disabled
                             />
-                            <span style={{ textAlign: props.textAlignment }}>{renderContent(content)}</span>
+                            <span style={{ textAlign: props.textAlignment }} className={props.checked && 'line-through'} >{renderContent(content)}</span>
                         </div>
                     );
                 default:
