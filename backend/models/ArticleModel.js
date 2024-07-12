@@ -31,6 +31,27 @@ const MainSchema = new mongoose.Schema({
             styles: {
                 // Define styles properties here
             },
+            rows: [
+                {
+                    cells: [
+                        [
+                            {
+                                type: {
+                                    type: String,
+                                    required: true,
+                                },
+                                text: {
+                                    type: String,
+                                    required: true,
+                                },
+                                styles: {
+                                    // Define styles properties here if needed
+                                },
+                            }
+                        ]
+                    ]
+                }
+            ]
         },
     ],
     children: [], // Define the structure for 'children' if needed
