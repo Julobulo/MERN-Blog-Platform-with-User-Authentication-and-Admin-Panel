@@ -284,7 +284,7 @@ const App = () => {
                 case 'heading':
                     const HeadingTag = `h${props.level}`;
                     return (
-                        <HeadingTag key={id} className={`${props.level === 1 ? 'text-4xl' : props.level === 2 ? 'text-3xl' : 'text-2xl'} font-bold m-4`}>
+                        <HeadingTag key={id} className={`${props.level === 1 ? 'text-5xl' : props.level === 2 ? 'text-3xl' : 'text-2xl'} font-bold text-gray-300 mx-8 mb-5`}>
                             {renderContent(content)}
                         </HeadingTag>
                     );
