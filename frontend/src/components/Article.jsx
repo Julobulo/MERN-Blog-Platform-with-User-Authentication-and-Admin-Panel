@@ -283,7 +283,11 @@ const App = () => {
             switch (type) {
                 case 'heading':
                     const HeadingTag = `h${props.level}`;
-                    return <HeadingTag key={id} {...props}>{renderContent(content)}</HeadingTag>;
+                    return (
+                        <HeadingTag key={id} className={`${props.level === 1 ? 'text-4xl' : props.level === 2 ? 'text-3xl' : 'text-2xl'} font-bold m-4`}>
+                            {renderContent(content)}
+                        </HeadingTag>
+                    );
                 case 'paragraph':
                     return <p key={id} {...props}>{renderContent(content)}</p>;
                 case 'numberedListItem':
