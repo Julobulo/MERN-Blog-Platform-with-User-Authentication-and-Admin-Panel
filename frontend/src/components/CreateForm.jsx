@@ -16,7 +16,7 @@ import "./CreateForm.css";
 // TODO: put all changes in localStorage
 
 const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, defaultTags, defaultMainContent }) => {
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const [image, setImage] = useState();
     // const [title, setTitle] = useState('');
     // const [subtitle, setSubtitle] = useState('');
@@ -100,8 +100,8 @@ const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, de
                 },
                 withCredentials: true,
             });
-            console.log(`Title will be "${blocks[0]}"`)
-            navigate(`/blog/article/${blocks[0]}`);
+            console.log(`Title will be "${blocks[0].content[0].text}"`)
+            navigate(`/blog/article/${blocks[0].content[0].text}`);
             toast.success(response.data.message);
             console.log(response.data.message);
         } catch (error) {
