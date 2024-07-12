@@ -16,6 +16,7 @@ const MainSchema = new mongoose.Schema({
         backgroundColor: String,
         textAlignment: String,
         level: Number,
+        checked: Boolean,
     },
     content: [
         {
