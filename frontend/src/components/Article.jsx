@@ -289,7 +289,7 @@ const App = () => {
                         </HeadingTag>
                     );
                 case 'paragraph':
-                    return <p key={id} {...props}>{renderContent(content)}</p>;
+                    return <p key={id} className="text-base mb-4 mx-4" {...props}>{renderContent(content)}</p>;
                 case 'numberedListItem':
                     return <li key={id} {...props}>{renderContent(content)}</li>;
                 case 'bulletListItem':
