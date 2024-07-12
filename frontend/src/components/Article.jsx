@@ -300,7 +300,7 @@ const App = () => {
                     </ol>;
                 case 'bulletListItem':
                     numberedListIteration = 0;
-                    return <li key={id} {...props}>{renderContent(content)}</li>;
+                    return <li key={id} className="text-gray-300 mx-12 mb-2" {...props}>{renderContent(content)}</li>;
                 default:
                     numberedListIteration = 0;
                     return null;
