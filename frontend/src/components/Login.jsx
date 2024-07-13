@@ -50,7 +50,7 @@ const Login = () => {
         });
     };
     const handleGoogleLogin = () => {
-        window.location.href = "http://localhost:3000/auth/google";
+        window.location.href = "http://localhost:5555/oauth/google";
     };
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-900">
