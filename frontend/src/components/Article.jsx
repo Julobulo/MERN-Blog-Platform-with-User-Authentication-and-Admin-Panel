@@ -7,6 +7,7 @@ import Spinner from "./Spinner";
 import formatDate from "../utils/formatDate";
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
+import { RiFile2Line } from "react-icons/ri";
 import Cookies from "js-cookie";
 
 const App = () => {
@@ -355,6 +356,16 @@ const App = () => {
                                 Your browser does not support the audio element.
                             </audio>
                             {props.caption && <p className="text-gray-300 mt-2">{props.caption}</p>}
+                        </div>
+                    );
+                case 'file':
+                    return (
+                        <div key={id} className="my-3 mx-8 flex items-center text-gray-300">
+                            <RiFile2Line className="w-8 text-2xl" />
+                            <a href={props.url} download={props.name}>
+                                {props.name || "Download File"}
+                            </a>
+                            {props.caption && <p className="mt-2">{props.caption}</p>}
                         </div>
                     );
                 default:
