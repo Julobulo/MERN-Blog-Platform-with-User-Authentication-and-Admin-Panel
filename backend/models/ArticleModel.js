@@ -17,6 +17,11 @@ const MainSchema = new mongoose.Schema({
         textAlignment: String,
         level: Number,
         checked: Boolean,
+        name: String,
+        url: String,
+        caption: String,
+        showPreview: Boolean,
+        previewWidth: Number,
     },
     content: [
         {
