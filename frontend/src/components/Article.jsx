@@ -333,6 +333,10 @@ const App = () => {
                             </tbody>
                         </table>
                     );
+                case "image":
+                    return (
+                        <img className="my-3 mx-8" src={props.url} alt={props.caption} width={props.previewWidth} />
+                    )
                 default:
                     numberedListIteration = 0;
                     return null;
