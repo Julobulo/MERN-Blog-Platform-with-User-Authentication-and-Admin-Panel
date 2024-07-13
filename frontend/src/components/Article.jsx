@@ -347,6 +347,16 @@ const App = () => {
                             {props.caption && <p className="text-gray-300 mt-2">{props.caption}</p>}
                         </div>
                     );
+                case 'audio':
+                    return (
+                        <div key={id} className="my-3 mx-8">
+                            <audio controls={props.controls !== undefined ? props.controls : true}>
+                                <source src={props.url} type="audio/mpeg" />
+                                Your browser does not support the audio element.
+                            </audio>
+                            {props.caption && <p className="text-gray-300 mt-2">{props.caption}</p>}
+                        </div>
+                    );
                 default:
                     numberedListIteration = 0;
                     return null;
