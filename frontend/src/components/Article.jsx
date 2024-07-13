@@ -315,7 +315,7 @@ const App = () => {
                     return <p key={id} className="text-gray-300 mb-4 mx-8" {...props}>{renderContent(content)}</p>;
                 case 'table':
                     return (
-                        <table key={id} className="border-gray-300 mx-8 text-gray-300">
+                        <table key={id} className="border-gray-300 mx-8 mb-6 text-gray-300">
                             <tbody>
                                 {content[0].rows.map((row, rowIndex) => (
                                     <tr key={rowIndex} className="border border-gray-300">
@@ -337,6 +337,16 @@ const App = () => {
                     return (
                         <img className="my-3 mx-8" src={props.url} alt={props.caption} width={props.previewWidth} />
                     )
+                case 'video':
+                    return (
+                        <div key={id} className="mx-8">
+                            <video controls={props.controls !== undefined ? props.controls : true} width={props.previewWidth}>
+                                <source src={props.url} type="video/mp4" />
+                                Your browser does not support the video tag.
+                            </video>
+                            {props.caption && <p className="text-gray-300 mt-2">{props.caption}</p>}
+                        </div>
+                    );
                 default:
                     numberedListIteration = 0;
                     return null;
