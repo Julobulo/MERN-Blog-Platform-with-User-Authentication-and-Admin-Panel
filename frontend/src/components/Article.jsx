@@ -361,7 +361,7 @@ const App = () => {
                 case 'file':
                     return (
                         <div key={id} className="my-3 mx-8 flex items-center text-gray-300">
-                            <RiFile2Line className="w-8 text-2xl" />
+                            <RiFile2Line className="mx-1 text-2xl" />
                             <a href={props.url} download={props.name}>
                                 {props.name || "Download File"}
                             </a>
