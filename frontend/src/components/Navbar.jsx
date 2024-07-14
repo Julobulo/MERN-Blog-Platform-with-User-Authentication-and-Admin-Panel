@@ -107,11 +107,11 @@ const NavigationBar = () => {
                 </div>
             )}
             <Modal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)}>
-                <Login onSignupLinkClick={handleSignupLinkClick} />
+                <Login onSignupLinkClick={handleSignupLinkClick} popup={true} />
             </Modal>
 
             <Modal isOpen={isSignupOpen} onClose={() => setIsSignupOpen(false)}>
-                <Signup onLoginLinkClick={handleLoginLinkClick} />
+                <Signup onLoginLinkClick={handleLoginLinkClick} popup={true} />
             </Modal>
         </nav>
     );
