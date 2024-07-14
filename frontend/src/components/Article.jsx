@@ -277,10 +277,11 @@ const App = () => {
     };
 
     // Function to render a single block and its children
-    const renderBlock = (block, isChild) => {
+    const renderBlock = (block, isChild = false) => {
         const { id, type, props, content, children } = block;
 
         const renderBlockByType = (type) => {
+            console.log(`block type: ${type}, isChild: ${isChild}`)
             switch (type) {
                 case 'heading':
                     numberedListIteration = 0;
@@ -378,7 +379,7 @@ const App = () => {
             <div key={id}>
                 {renderBlockByType(type)}
                 {children && children.length > 0 && (
-                    <div className="border-l border-gray-500 ml-1 pl-4">
+                    <div className={`border-l border-gray-500 ml-${isChild ? '1' : '9'} pl-4`}>
                         {children.map(childBlock => renderBlock(childBlock, true))}
                     </div>
                 )}
@@ -442,7 +443,7 @@ const App = () => {
                                 {/* <div dangerouslySetInnerHTML={{ __html: articleData.main }} className="text-gray-300">
                                 </div> */}
                                 <div className="article">
-                                    {articleData.main.map(renderBlock)}
+                                    {articleData.main.map(block => renderBlock(block, false))}
                                 </div>
                             </>)}
                         <hr className="my-6 border-t border-gray-700" />
