@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 
-const Signup = ({ onLoginLinkClick }) => {
+const Signup = ({ onLoginLinkClick, popup = false }) => {
     const navigate = useNavigate();
     const [inputValue, setInputValue] = useState({
         email: "",
@@ -32,11 +32,11 @@ const Signup = ({ onLoginLinkClick }) => {
             console.log(data);
             const { success, message, isAdmin } = data;
             if (success) {
-                toast.success(message, {position: "bottom-left"});
+                toast.success(message, { position: "bottom-left" });
                 localStorage.setItem('isAdmin', isAdmin);
                 navigate("/");
             } else {
-                toast.error(message, {position: "bottom-left"});
+                toast.error(message, { position: "bottom-left" });
             }
         } catch (error) {
             toast.error(`Couldn't signup`);
@@ -52,7 +52,7 @@ const Signup = ({ onLoginLinkClick }) => {
         window.location.href = "http://localhost:5555/oauth/google";
     };
     return (
-        <div className="flex items-center justify-center">
+        <div className={`flex items-center justify-center ${!popup ? 'min-h-screen' : ''}`}>
             <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md">
                 <h2 className="text-2xl font-bold mb-6 text-green-400">Sign up</h2>
                 <form onSubmit={handleSubmit}>
