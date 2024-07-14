@@ -190,8 +190,8 @@ const App = () => {
                     <div className="p-6 mb-8 bg-[#1f2937] rounded-xl shadow-md">
                         {loading ? (<Spinner />) : (
                             <>
-                                <h1 className="text-3xl font-bold mb-4 text-green-400">{articleData.title}</h1>
-                                <div className="flex justify-between mb-4">
+                                <h1 className="text-5xl font-bold mb-4 text-green-400 mx-8">{articleData.title}</h1>
+                                <div className="flex justify-between mb-4 mx-8">
                                     <a href={`/author/${articleData.author}`} className="font-medium text-green-400">
                                         <div className="flex items-center space-x-2">
                                             <img
@@ -216,17 +216,16 @@ const App = () => {
                                         <span className='text-red-500'>{articleData.likes}</span>
                                     </div>
                                 </div>
-                                <img
-                                    alt={articleData.title}
-                                    src={articleData.image}
-                                    className="mb-5 w-full rounded-xl bg-no-repeat object-cover object-center"
-                                />
-                                <div>
-                                    {articleData.subtitle}
+                                <div className="mx-8">
+                                    <img
+                                        alt={articleData.title}
+                                        src={articleData.image}
+                                        className="mb-5 rounded-xl w-full object-cover"
+                                    />
                                 </div>
-                                <hr className="my-10" />
+                                <hr className="my-10 mx-8" />
                                 <div className="article">
-                                    {articleData.main.map(block => renderBlock(block, false))}
+                                    {articleData.main.slice(1).map(block => renderBlock(block, false))}
                                 </div>
                             </>)}
                         <hr className="my-6 border-t border-gray-700" />
