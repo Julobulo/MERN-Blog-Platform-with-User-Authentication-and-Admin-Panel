@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 
-const Login = () => {
+const Login = ({ onSignupLinkClick }) => {
     const navigate = useNavigate();
     const [inputValue, setInputValue] = useState({
         email: "",
@@ -92,7 +92,7 @@ const Login = () => {
                 </button>
                 <hr className="my-6 border-t border-gray-700" />
                 <span className="block text-sm text-center mt-4 text-gray-300">
-                    Don't have an account? <Link to="/signup" className="text-green-400 hover:underline">Signup</Link>
+                    Don't have an account? <button onClick={onSignupLinkClick} className="text-green-400 hover:underline">Signup</button>
                 </span>
             </div>
         </div>

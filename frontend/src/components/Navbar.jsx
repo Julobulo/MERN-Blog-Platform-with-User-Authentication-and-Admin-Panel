@@ -22,6 +22,10 @@ const NavigationBar = () => {
 
     const [isLoginOpen, setIsLoginOpen] = useState(false);
     const [isSignupOpen, setIsSignupOpen] = useState(false);
+    const handleSignupLinkClick = () => {
+        setIsLoginOpen(false);
+        setIsSignupOpen(true);
+    };
 
     return (
         <nav className="bg-gray-900 shadow-md">
@@ -99,7 +103,7 @@ const NavigationBar = () => {
                 </div>
             )}
             <Modal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)}>
-                <Login />
+                <Login onSignupLinkClick={handleSignupLinkClick} />
             </Modal>
 
             <Modal isOpen={isSignupOpen} onClose={() => setIsSignupOpen(false)}>
