@@ -42,9 +42,10 @@ const ArticleCard = ({ title, subtitle, href, author, date, tags, imgSrc, likes,
                     className="mb-5 h-48 w-full rounded-xl bg-no-repeat object-cover object-center transition-transform duration-200 ease-out hover:scale-[1.02]"
                 />
             </a>
-            <h2 className="pb-3 text-xl font-semibold tracking-tight text-white">
+            <h2 className="text-xl font-semibold tracking-tight text-white">
                 <a href={href}>{title}</a>
             </h2>
+            <p className="mb-2 text-gray-400">{subtitle}</p>
             <div className="flex flex-wrap overflow-auto space-x-2 md:hidden pb-2">
                 {tags.slice(0, 1).map(tag => (
                     <div key={tag} className="flex rounded-full border border-gray-700 bg-gray-800 px-3 py-1 badge">
@@ -77,7 +78,6 @@ const ArticleCard = ({ title, subtitle, href, author, date, tags, imgSrc, likes,
                     <span className='text-red-500'>{likesNumber}</span>
                 </div>
             </div>
-            <p className="mb-6 text-gray-400">{subtitle}</p>
             <div className="flex items-center justify-between font-medium text-green-400">
                 <a href={href} className="flex items-center space-x-2">
                     <span>Read more</span>
