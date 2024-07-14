@@ -235,7 +235,7 @@ const App = () => {
                                 <ArticleCard
                                     key={index}
                                     title={article.title}
-                                    description={article.description}
+                                    subtitle={article.subtitle}
                                     href={article.href}
                                     author={article.author}
                                     date={article.date}

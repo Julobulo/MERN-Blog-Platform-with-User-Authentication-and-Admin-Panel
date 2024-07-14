@@ -54,7 +54,7 @@ const HomePage = () => {
                     {!error ? (<><section className="mb-8">
                         {likedLoading ? (<ArticleCardSkeleton />) : (<ArticleCard
                             title={mostLikedArticle.title}
-                            description={mostLikedArticle.subtitle}
+                            subtitle={mostLikedArticle.subtitle}
                             href={`http://localhost:5173/blog/article/${mostLikedArticle.title}`}
                             author={mostLikedArticle.author}
                             date={mostLikedArticle.date}
@@ -67,7 +67,7 @@ const HomePage = () => {
                         <section className="mb-8">
                             {recentLoading ? (<ArticleCardSkeleton />) : (<ArticleCard
                                 title={mostRecentArticle.title}
-                                description={mostRecentArticle.subtitle}
+                                subtitle={mostRecentArticle.subtitle}
                                 href={`http://localhost:5173/blog/article/${mostRecentArticle.title}`}
                                 author={mostRecentArticle.author}
                                 date={mostRecentArticle.date}

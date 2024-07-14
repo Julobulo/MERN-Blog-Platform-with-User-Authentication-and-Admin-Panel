@@ -54,7 +54,6 @@ const App = () => {
                             key={index}
                             title={article.title}
                             subtitle={article.subtitle}
-                            description={article.subtitle}
                             author={article.author}
                             date={article.date}
                             tags={article.tags}
