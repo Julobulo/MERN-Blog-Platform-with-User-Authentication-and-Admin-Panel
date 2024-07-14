@@ -7,6 +7,9 @@ import { CgProfile } from "react-icons/cg";
 import { SlLogin } from "react-icons/sl";
 import Cookies from "js-cookie";
 import { toast } from 'react-toastify';
+import Modal from './Modal';
+import Login from './Login';
+import Signup from './Signup';
 
 const NavigationBar = () => {
     const tokenExists = Cookies.get('token');
@@ -16,6 +19,9 @@ const NavigationBar = () => {
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     };
+
+    const [isLoginOpen, setIsLoginOpen] = useState(false);
+    const [isSignupOpen, setIsSignupOpen] = useState(false);
 
     return (
         <nav className="bg-gray-900 shadow-md">
@@ -32,7 +38,11 @@ const NavigationBar = () => {
                         {localStorage.getItem('isAdmin') === "true" ? (<Link to="/AdminPanel/Articles" className="btn btn-ghost text-green-400"><MdOutlineAdminPanelSettings className='inline align-middle' /> <span className='align-middle'>Admin Panel</span></Link>) : ''}
                         <button className="btn btn-ghost text-green-400" onClick={() => { Cookies.remove('token'); localStorage.removeItem('isAdmin'); navigate('/'); toast.success('Successfully logged out!', { position: 'bottom-right' }) }}><MdOutlineAdminPanelSettings className='inline align-middle' /> <span className='align-middle'>Logout</span></button>
                     </>) :
-                        <Link to="/login" className="btn btn-ghost text-green-400"><SlLogin className='inline align-middle' /> <span className='align-middle'>Login</span></Link>
+                        // <Link to="/login" className="btn btn-ghost text-green-400"><SlLogin className='inline align-middle' /> <span className='align-middle'>Login</span></Link>
+                        <div>
+                            <button onClick={() => setIsLoginOpen(true)} className="text-green-400 px-4">Login</button>
+                            <button onClick={() => setIsSignupOpen(true)} className="text-green-400 px-4">Signup</button>
+                        </div>
                     }
                 </div>
                 <div className="lg:hidden">
@@ -92,6 +102,13 @@ const NavigationBar = () => {
                     </div>
                 </div>
             )}
+            <Modal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)}>
+                <Login />
+            </Modal>
+
+            <Modal isOpen={isSignupOpen} onClose={() => setIsSignupOpen(false)}>
+                <Signup />
+            </Modal>
         </nav>
     );
 };
