@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import AuthorCard from '../AuthorCard';
 import { MdDeleteOutline } from "react-icons/md";
@@ -7,8 +7,15 @@ import { FiEdit2 } from "react-icons/fi";
 import { RiLockPasswordLine } from "react-icons/ri";
 import Spinner from '../Spinner';
 import { toast } from 'react-toastify';
+import Cookies from "js-cookie";
 
 const Users = () => {
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (!Cookies.get('token')) {
+            navigate('/login');
+        }
+    }, []);
     const location = useLocation();
     const [searchQuery, setSearchQuery] = useState("");
     const [loading, setLoading] = useState(true);

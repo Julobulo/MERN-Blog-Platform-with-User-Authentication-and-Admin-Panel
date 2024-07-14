@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import ArticleCard from '../ArticleCard';
 import { MdDeleteOutline } from "react-icons/md";
 import { FiEdit2 } from "react-icons/fi";
+import Cookies from "js-cookie";
 
 // Sample data for testing
 const posts = [
@@ -32,6 +33,12 @@ const posts = [
 ];
 
 const Articles = () => {
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (!Cookies.get('token')) {
+            navigate('/login');
+        }
+    }, []);
     const [searchQuery, setSearchQuery] = useState("");
     const location = useLocation();
 
