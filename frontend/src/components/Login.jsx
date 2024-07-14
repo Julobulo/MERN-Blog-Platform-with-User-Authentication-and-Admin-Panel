@@ -53,7 +53,7 @@ const Login = () => {
         window.location.href = "http://localhost:5555/oauth/google";
     };
     return (
-        <div className="flex items-center justify-center bg-gray-900">
+        <div className="flex items-center justify-center">
             <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md">
                 <h2 className="text-2xl font-bold mb-6 text-green-400">Login</h2>
                 <form onSubmit={handleSubmit}>

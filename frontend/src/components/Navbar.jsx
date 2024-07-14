@@ -38,11 +38,7 @@ const NavigationBar = () => {
                         {localStorage.getItem('isAdmin') === "true" ? (<Link to="/AdminPanel/Articles" className="btn btn-ghost text-green-400"><MdOutlineAdminPanelSettings className='inline align-middle' /> <span className='align-middle'>Admin Panel</span></Link>) : ''}
                         <button className="btn btn-ghost text-green-400" onClick={() => { Cookies.remove('token'); localStorage.removeItem('isAdmin'); navigate('/'); toast.success('Successfully logged out!', { position: 'bottom-right' }) }}><MdOutlineAdminPanelSettings className='inline align-middle' /> <span className='align-middle'>Logout</span></button>
                     </>) :
-                        // <Link to="/login" className="btn btn-ghost text-green-400"><SlLogin className='inline align-middle' /> <span className='align-middle'>Login</span></Link>
-                        <div>
-                            <button onClick={() => setIsLoginOpen(true)} className="text-green-400 px-4">Login</button>
-                            <button onClick={() => setIsSignupOpen(true)} className="text-green-400 px-4">Signup</button>
-                        </div>
+                        <button onClick={() => setIsLoginOpen(true)} className="btn btn-ghost text-green-400"><SlLogin className='inline align-middle' /> <span className='align-middle'>Login</span></button>
                     }
                 </div>
                 <div className="lg:hidden">
