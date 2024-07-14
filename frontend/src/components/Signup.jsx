@@ -102,7 +102,10 @@ const Signup = ({ onLoginLinkClick, popup = false }) => {
                 </button>
                 <hr className="my-6 border-t border-gray-700" />
                 <span className="block text-sm text-center mt-4 text-gray-300">
-                    Already have an account? <button onClick={onLoginLinkClick} className="text-green-400 hover:underline">Login</button>
+                    Already have an account? {popup ?
+                    (<button onClick={onLoginLinkClick} className="text-green-400 hover:underline">Login</button>) :
+                    (<Link to="/login" className="text-green-400 hover:underline">Login</Link>)
+                    }
                 </span>
             </div>
         </div>
