@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 
-const Login = ({ onSignupLinkClick }) => {
+const Login = ({ onSignupLinkClick, popup = false }) => {
     const navigate = useNavigate();
     const [inputValue, setInputValue] = useState({
         email: "",
@@ -53,7 +53,7 @@ const Login = ({ onSignupLinkClick }) => {
         window.location.href = "http://localhost:5555/oauth/google";
     };
     return (
-        <div className="flex items-center justify-center">
+        <div className={`flex items-center ${!popup ? 'min-h-screen' : ''} justify-center`}>
             <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md">
                 <h2 className="text-2xl font-bold mb-6 text-green-400">Login</h2>
                 <form onSubmit={handleSubmit}>
