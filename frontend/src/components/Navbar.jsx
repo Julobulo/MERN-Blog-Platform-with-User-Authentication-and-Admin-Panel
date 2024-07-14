@@ -26,6 +26,10 @@ const NavigationBar = () => {
         setIsLoginOpen(false);
         setIsSignupOpen(true);
     };
+    const handleLoginLinkClick = () => {
+        setIsLoginOpen(true);
+        setIsSignupOpen(false);
+    };
 
     return (
         <nav className="bg-gray-900 shadow-md">
@@ -107,7 +111,7 @@ const NavigationBar = () => {
             </Modal>
 
             <Modal isOpen={isSignupOpen} onClose={() => setIsSignupOpen(false)}>
-                <Signup />
+                <Signup onLoginLinkClick={handleLoginLinkClick} />
             </Modal>
         </nav>
     );
