@@ -48,6 +48,9 @@ const Signup = ({ onLoginLinkClick }) => {
             password: "",
         });
     };
+    const handleGoogleLogin = () => {
+        window.location.href = "http://localhost:5555/oauth/google";
+    };
     return (
         <div className="flex items-center justify-center">
             <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md">
@@ -88,7 +91,16 @@ const Signup = ({ onLoginLinkClick }) => {
                     </div>
                     <button type="submit" className="w-full bg-green-600 text-white py-2 px-4 rounded-md shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-400">Sign up</button>
                 </form>
-                <hr className="my-4 border-t border-gray-700" />
+                <div className="flex items-center my-2 mx-2">
+                    <hr className="flex-grow border-t border-gray-700" />
+                    <span className="px-2 text-gray-400">or</span>
+                    <hr className="flex-grow border-t border-gray-700" />
+                </div>
+                <button onClick={handleGoogleLogin} className="w-full bg-gray-700 text-gray-300 py-2 px-4 rounded-md shadow-md hover:bg-gray-600 flex items-center justify-center">
+                    <svg className="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path fill="#4285F4" d="M24 9.5c3.27 0 5.97 1.17 8.22 3.07l6.14-6.14C34.79 3.36 29.73 1 24 1 14.56 1 6.67 6.58 3.34 14.28l7.28 5.64C12.6 14.09 17.88 9.5 24 9.5z" /><path fill="#34A853" d="M46.55 24.27c0-1.38-.12-2.74-.33-4.05H24v8.28h12.78c-.55 2.95-2.12 5.45-4.48 7.14l6.93 5.37c4.07-3.76 6.32-9.29 6.32-15.74z" /><path fill="#FBBC05" d="M10.44 29.12a15.56 15.56 0 01-.87-5.13c0-1.78.31-3.5.87-5.13l-7.28-5.64A23.912 23.912 0 001 24c0 3.83.89 7.45 2.46 10.65l7.28-5.53z" /><path fill="#EA4335" d="M24 46c5.73 0 10.55-1.9 14.07-5.15l-6.93-5.37c-1.95 1.31-4.4 2.09-7.14 2.09-6.13 0-11.34-4.14-13.19-9.67l-7.28 5.53C6.67 41.42 14.56 46 24 46z" /><path fill="none" d="M1 1h46v46H1z" /></svg>
+                    <span>Signup with Google</span>
+                </button>
+                <hr className="my-6 border-t border-gray-700" />
                 <span className="block text-sm text-center mt-4 text-gray-300">
                     Already have an account? <button onClick={onLoginLinkClick} className="text-green-400 hover:underline">Login</button>
                 </span>
