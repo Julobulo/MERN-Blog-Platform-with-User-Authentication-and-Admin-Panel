@@ -206,16 +206,18 @@ router.post('/article/:title', async (request, response) => {
                 // add article title to user's articlesLiked
                 if (user.articlesLiked.includes(article._id)) {
                     user.articlesLiked.pull(article._id);
-                    user.save();
+                    await user.save();
                     article.likes -= 1;
-                    article.save();
+                    await article.save();
                     return response.status(200).json({ message: "un-liked this article" })
                 }
-                user.articlesLiked.push(article._id);
-                user.save();
-                article.likes += 1;
-                article.save();
-                return response.status(200).json({ message: "liked article" })
+                else {
+                    user.articlesLiked.push(article._id);
+                    await user.save();
+                    article.likes += 1;
+                    await article.save();
+                    return response.status(200).json({ message: "liked article" })
+                }
             }
         })
     }
