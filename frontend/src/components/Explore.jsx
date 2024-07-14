@@ -53,6 +53,7 @@ const App = () => {
                         <ArticleCard
                             key={index}
                             title={article.title}
+                            subtitle={article.subtitle}
                             description={article.subtitle}
                             author={article.author}
                             date={article.date}
