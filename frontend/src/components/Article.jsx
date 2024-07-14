@@ -277,7 +277,7 @@ const App = () => {
     };
 
     // Function to render a single block and its children
-    const renderBlock = (block) => {
+    const renderBlock = (block, isChild) => {
         const { id, type, props, content, children } = block;
 
         const renderBlockByType = (type) => {
@@ -286,22 +286,22 @@ const App = () => {
                     numberedListIteration = 0;
                     const HeadingTag = `h${props.level}`;
                     return (
-                        <HeadingTag key={id} className={`${props.level === 1 ? 'text-5xl mb-5' : props.level === 2 ? 'text-3xl mb-4' : 'text-2xl mb-3'} font-bold text-gray-300 mx-8`}>
+                        <HeadingTag key={id} className={`${props.level === 1 ? 'text-5xl mb-5' : props.level === 2 ? 'text-3xl mb-4' : 'text-2xl mb-3'} font-bold text-gray-300 mx-${isChild ? '0' : '8'}`}>
                             {renderContent(content)}
                         </HeadingTag>
                     );
                 case 'numberedListItem':
                     numberedListIteration += 1;
                     return <ol>
-                        <li key={id} className="text-gray-300 mx-8 mb-2" {...props}>{numberedListIteration}. {renderContent(content)}</li>
+                        <li key={id} className={`text-gray-300 mx-${isChild ? '0' : '8'} mb-2`} {...props}>{numberedListIteration}. {renderContent(content)}</li>
                     </ol>;
                 case 'bulletListItem':
                     numberedListIteration = 0;
-                    return <li key={id} className="text-gray-300 mx-12 mb-2" {...props}>{renderContent(content)}</li>;
+                    return <li key={id} className={`text-gray-300 mx-${isChild ? '4' : '12'} mb-2`} {...props}>{renderContent(content)}</li>;
                 case 'checkListItem':
                     numberedListIteration = 0;
                     return (
-                        <div key={id} className="flex items-center mb-2 mx-8">
+                        <div key={id} className={`flex items-center mb-2 mx-${isChild ? '0' : '8'}`}>
                             <input
                                 type="checkbox"
                                 checked={props.checked}
@@ -313,10 +313,10 @@ const App = () => {
                     );
                 case 'paragraph':
                     numberedListIteration = 0;
-                    return <p key={id} className="text-gray-300 mb-4 mx-8" {...props}>{renderContent(content)}</p>;
+                    return <p key={id} className={`text-gray-300 mb-4 mx-${isChild ? '0' : '8'}`} {...props}>{renderContent(content)}</p>;
                 case 'table':
                     return (
-                        <table key={id} className="border-gray-300 mx-8 mb-6 text-gray-300">
+                        <table key={id} className={`border-gray-300 mx-${isChild ? '0' : '8'} mb-6 text-gray-300`}>
                             <tbody>
                                 {content[0].rows.map((row, rowIndex) => (
                                     <tr key={rowIndex} className="border border-gray-300">
@@ -336,11 +336,11 @@ const App = () => {
                     );
                 case "image":
                     return (
-                        <img className="my-3 mx-8" src={props.url} alt={props.caption} width={props.previewWidth} />
+                        <img className={`my-3 mx-${isChild ? '0' : '8'}`} src={props.url} alt={props.caption} width={props.previewWidth} />
                     )
                 case 'video':
                     return (
-                        <div key={id} className="mx-8">
+                        <div key={id} className={`mx-${isChild ? '0' : '8'}`}>
                             <video controls={props.controls !== undefined ? props.controls : true} width={props.previewWidth}>
                                 <source src={props.url} type="video/mp4" />
                                 Your browser does not support the video tag.
@@ -350,7 +350,7 @@ const App = () => {
                     );
                 case 'audio':
                     return (
-                        <div key={id} className="my-3 mx-8">
+                        <div key={id} className={`my-3 mx-${isChild ? '0' : '8'}`}>
                             <audio controls={props.controls !== undefined ? props.controls : true}>
                                 <source src={props.url} type="audio/mpeg" />
                                 Your browser does not support the audio element.
@@ -360,7 +360,7 @@ const App = () => {
                     );
                 case 'file':
                     return (
-                        <div key={id} className="my-3 mx-8 flex items-center text-gray-300">
+                        <div key={id} className={`my-3 mx-${isChild ? '0' : '8'} flex items-center text-gray-300`}>
                             <RiFile2Line className="mx-1 text-2xl" />
                             <a href={props.url} download={props.name}>
                                 {props.name || "Download File"}
@@ -378,8 +378,8 @@ const App = () => {
             <div key={id}>
                 {renderBlockByType(type)}
                 {children && children.length > 0 && (
-                    <div className="children">
-                        {children.map(renderBlock)}
+                    <div className="border-l border-gray-500 ml-1 pl-4">
+                        {children.map(childBlock => renderBlock(childBlock, true))}
                     </div>
                 )}
             </div>
