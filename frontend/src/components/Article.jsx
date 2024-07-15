@@ -175,7 +175,7 @@ const App = () => {
             <div key={id}>
                 {renderBlockByType(type)}
                 {children && children.length > 0 && (
-                    <div className={`border-l border-gray-500 ml-${isChild ? '1' : '9'} pl-4`}>
+                    <div className={`border-l border-gray-500 ${isChild ? 'ml-1' : 'ml-9'} pl-4`}>
                         {children.map(childBlock => renderBlock(childBlock, true))}
                     </div>
                 )}
