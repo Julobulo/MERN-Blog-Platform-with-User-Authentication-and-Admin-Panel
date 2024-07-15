@@ -41,15 +41,23 @@ const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, de
                 toast.error('File size exceeds 1MB.');
                 return;
             }
-            // compress image
-            const compressedFile = await imageCompression(file, {
-                maxSizeMB: 1,          // Maximum size in MB
-                maxWidthOrHeight: 800, // Maximum width or height
-                useWebWorker: true,    // Use web worker for compression
-            });
-            const reader = new FileReader();
-            reader.onloadend = () => setImage(reader.result);
-            reader.readAsDataURL(compressedFile);
+            if (file.size > (maxSize / 2)) {
+                // compress image
+                const compressedFile = await imageCompression(file, {
+                    maxSizeMB: maxSize/2,          // Maximum size in MB, in our case 512kb
+                    maxWidthOrHeight: 1920, // Maximum width or height
+                    useWebWorker: true,    // Use web worker for compression
+                });
+                const reader = new FileReader();
+                reader.onloadend = () => setImage(reader.result);
+                reader.readAsDataURL(compressedFile);
+            }
+            else {
+                // no need to compress image in that case
+                const reader = new FileReader();
+                reader.onloadend = () => setImage(reader.result);
+                reader.readAsDataURL(file);
+            }
         }
     };
 
