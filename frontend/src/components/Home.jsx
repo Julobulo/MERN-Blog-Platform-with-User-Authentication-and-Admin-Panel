@@ -88,14 +88,14 @@ const HomePage = () => {
                             {/* Fake Testimony 1 */}
                             <div className="bg-gray-800 p-6 rounded-lg shadow-md">
                                 <p className="text-lg mb-4 text-green-400">
-                                    "Your Blog has been an invaluable resource for me. I've learned so much from the articles on the platform. Highly recommended!"
+                                    "{import.meta.env.VITE_BLOG_NAME} has been an invaluable resource for me. I've learned so much from the articles on the platform. Highly recommended!"
                                 </p>
                                 <p className="text-sm text-gray-400">- John Doe</p>
                             </div>
                             {/* Fake Testimony 2 */}
                             <div className="bg-gray-800 p-6 rounded-lg shadow-md">
                                 <p className="text-lg mb-4 text-green-400">
-                                    "I love how easy it is to navigate through Your Blog and find articles that interest me. Every time I read an article, I discover new things and grow my knowledge."
+                                    "I love how easy it is to navigate through {import.meta.env.VITE_BLOG_NAME} and find articles that interest me. Every time I read an article, I discover new things and grow my knowledge."
                                 </p>
                                 <p className="text-sm text-gray-400">- Jane Smith</p>
                             </div>
