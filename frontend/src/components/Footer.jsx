@@ -61,7 +61,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="text-center mt-auto sm:my-5">
-          <p className="text-gray-400">&copy; 2024 Your Blog. All rights reserved.</p>
+          <p className="text-gray-400">&copy; 2024 {import.meta.env.VITE_BLOG_NAME}. All rights reserved.</p>
           <p className="text-gray-400">Powered by <a
             href="https://jules.tf"
             target="_blank"
