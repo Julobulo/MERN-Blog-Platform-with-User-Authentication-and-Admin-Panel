@@ -44,10 +44,10 @@ const HomePage = () => {
                 <div className="max-w-3xl mx-auto">
                     {/* Introduction Section */}
                     <section className="mb-8">
-                        <h1 className="text-3xl font-bold mb-4 text-green-400">Welcome to Your Blog</h1>
+                        <h1 className="text-3xl font-bold mb-4 text-green-400">Welcome to {import.meta.env.VITE_BLOG_NAME}</h1>
                         <p className="text-lg mb-4">
-                            Your Blog is a platform for sharing articles, insights, and discussions on various topics, including technology, science, and more.
-                            Whether you're a seasoned professional or just starting out, Your Blog provides a space for you to express your ideas and connect with like-minded individuals.
+                            {import.meta.env.VITE_BLOG_NAME} is a platform for sharing articles, insights, and discussions on various topics, including technology, science, and more.
+                            Whether you're a seasoned professional or just starting out, {import.meta.env.VITE_BLOG_NAME} provides a space for you to express your ideas and connect with like-minded individuals.
                         </p>
                     </section>
 
