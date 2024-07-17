@@ -86,7 +86,12 @@ const Articles = () => {
                         type="text"
                         placeholder="Search..."
                         value={searchQuery}
-                        onChange={e => setSearchQuery(e.target.value)}
+                        onChange={e => {
+                            setSearchQuery(e.target.value);
+                            setSkip(0);
+                            setHasMore(true);
+                            fetchArticles(0, e.target.value);
+                        }}
                         className="mb-4 px-4 py-2 rounded-lg w-full text-black dark:text-white"
                     />
                     <div className=" w-full">
