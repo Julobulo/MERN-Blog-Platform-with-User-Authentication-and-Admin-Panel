@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { MdExitToApp } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import imageCompression from "browser-image-compression";
+import Cookies from "js-cookie";
 
 // import "@blocknote/core/fonts/inter.css";
 import { useCreateBlockNote } from "@blocknote/react";
@@ -17,6 +18,10 @@ import "./CreateForm.css";
 
 const CreateForm = ({ pageTitle, defaultImage, defaultTitle, defaultSubtitle, defaultTags, defaultMainContent }) => {
     const navigate = useNavigate();
+    useEffect(() => {
+        if (!Cookies.get('token')) {
+            navigate('/login')
+        }}, [navigate])
     const [image, setImage] = useState();
     // const [title, setTitle] = useState('');
     // const [subtitle, setSubtitle] = useState('');
