@@ -79,6 +79,13 @@ const ProfileEdit = () => {
         }
     };
 
+    const handleRightsChange = () => {
+        setUserData(() => ({
+            ...userData,
+            isAdmin: event.target.value === "admin",
+        }))
+    }
+
     const handleSave = async () => {
         try {
             const response = await axios.post('http://localhost:5555/user/update',
@@ -109,7 +116,7 @@ const ProfileEdit = () => {
                 ) : (
                     <>
                         <div className="mb-4">
-                            <label htmlFor="profilePicture" className="block text-sm font-medium mb-1">Profile Picture (you can use <a href="https://getavataaars.com" className='underline'>getavataaars</a> to generate one)</label>
+                            <label htmlFor="profilePicture" className="block text-sm font-medium mb-1">Profile Picture (you can use <a href="https://getavataaars.com" className='underline' target="_blank" rel="noopener noreferrer">getavataaars</a> to generate one)</label>
                             <input
                                 id="profilePicture"
                                 type="file"
@@ -139,11 +146,11 @@ const ProfileEdit = () => {
                             />
                         </div>
                         <div className="mb-4">
-                            <label htmlFor="userRights" className="block text-sm font-medium mb-1">User Rights</label>
+                            <label htmlFor="userRights" className="block text-sm font-medium mb-1">User Rights (in a production site, this field would be disabled. However, for demonstration purposes, it is enabled in both the frontend and the backend)</label>
                             <select
-                                disabled
                                 id="userRights"
                                 value={userData.isAdmin ? "admin" : "regular"}
+                                onChange={handleRightsChange}
                                 className="w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 bg-gray-900 text-white"
                             >
                                 <option value="regular">Regular users rights</option>
