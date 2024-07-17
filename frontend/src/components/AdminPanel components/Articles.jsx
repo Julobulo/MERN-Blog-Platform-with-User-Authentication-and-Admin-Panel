@@ -36,7 +36,7 @@ const Articles = () => {
     const navigate = useNavigate();
     useEffect(() => {
         if (!Cookies.get('token')) {
-            navigate('/');
+            navigate('/login');
         }
     }, []);
     const [searchQuery, setSearchQuery] = useState("");

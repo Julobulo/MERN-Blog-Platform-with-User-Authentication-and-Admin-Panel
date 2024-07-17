@@ -13,7 +13,7 @@ const Users = () => {
     const navigate = useNavigate();
     useEffect(() => {
         if (!Cookies.get('token')) {
-            navigate('/');
+            navigate('/login');
         }
     }, []);
     const location = useLocation();
