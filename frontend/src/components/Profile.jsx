@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthorCard from "./AuthorCard";
 import Spinner from "./Spinner";
+import Cookies from "js-cookie";
 
 
 const Profile = () => {
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (!Cookies.get('token')) {
+            navigate('/login')
+        }}, [navigate])
     const [loading, setLoading] = useState(true);
     const [authorData, setAuthorData] = useState(null);
     useEffect(() => {
