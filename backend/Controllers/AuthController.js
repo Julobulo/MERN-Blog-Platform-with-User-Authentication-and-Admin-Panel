@@ -38,12 +38,16 @@ export const Login = async (req, res, next) => {
         if (!user) {
             return res.json({ message: 'Incorrect password or email' })
         }
-        const auth = await bcrypt.compare(password, user.password)
+        const auth = await bcrypt.compare(password, user.password);
         if (!auth) {
             return res.json({ message: 'Incorrect password or email' })
         }
         const token = createSecretToken(user._id);
         res.cookie("token", token, {
+            withCredentials: true,
+            httpOnly: false,
+        });
+        res.cookie("isAdmin", user.isAdmin, {
             withCredentials: true,
             httpOnly: false,
         });

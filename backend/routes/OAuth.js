@@ -37,7 +37,8 @@ passport.use(new GoogleStrategy({
             }
 
             const token = createSecretToken(user._id);
-            done(null, { user, token });
+            const isAdmin = user.isAdmin;
+            done(null, { user, token, isAdmin });
         } catch (error) {
             done(error, null);
         }
@@ -63,6 +64,11 @@ router.get('/google/callback',
         // Successful authentication, redirect home with the token
         const token = req.user.token;
         res.cookie("token", token, {
+            withCredentials: true,
+            httpOnly: false,
+        });
+        const isAdmin = req.user.isAdmin;
+        res.cookie("isAdmin", isAdmin, {
             withCredentials: true,
             httpOnly: false,
         });
