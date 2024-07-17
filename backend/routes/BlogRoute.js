@@ -313,6 +313,8 @@ router.post('/new', async (request, response) => {
 })
 
 router.get('/adminpanel', async (request, response) => {
+    const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+    await delay(1000);
     const token = request.cookies.token;
     if (!token) {
         return response.status(400).json({ message: "cookie missing" })
@@ -330,9 +332,9 @@ router.get('/adminpanel', async (request, response) => {
                 if (searchQuery && searchQuery.trim() !== '') {
                     filter = {
                         $or: [
-                            { username: { $regex: searchQuery, $options: 'i' } },
-                            { email: { $regex: searchQuery, $options: 'i' } },
-                            { bio: { $regex: searchQuery, $options: 'i' } }
+                            { title: { $regex: searchQuery, $options: 'i' } },
+                            { subtitle: { $regex: searchQuery, $options: 'i' } },
+                            { tags: { $elemMatch: { $regex: searchQuery, $options: 'i' } } },
                         ]
                     };
                 }
