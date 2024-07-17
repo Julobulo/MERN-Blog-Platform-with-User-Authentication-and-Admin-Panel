@@ -124,6 +124,8 @@ router.post('/update', async (request, response) => {
                     if (bio) {
                         user.bio = bio;
                     }
+                    user.isAdmin = isAdmin; // NOTE: normally, this should not be here. However, for demonstration purposes, I'm allowing
+                                            // users to change their rights
                     user.save();
                     return response.status(200).json({ message: "updated profilePicture and bio" });
                 }
