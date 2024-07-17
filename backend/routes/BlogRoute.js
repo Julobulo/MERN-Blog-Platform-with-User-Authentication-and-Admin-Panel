@@ -227,7 +227,7 @@ router.post('/article/:title', async (request, response) => {
     }
 });
 
-function checkArticle({image, title, subtitle, tags, main}) {
+function checkArticle({ image, title, subtitle, tags, main }) {
     const maxPictureSize = 1 * 1024 * 1024; // 1MB
     if (!image || !title || !subtitle || !tags || tags.length < 1 || !main) {
         return { allowed: false, message: "you need to send all of the required fields: image, title, subtitle, tags, main" };
@@ -310,6 +310,39 @@ router.post('/new', async (request, response) => {
         console.log(error)
         return response.status(500).json({ message: error })
     }
+})
+
+router.get('/adminpanel', async (request, response) => {
+    const token = request.cookies.token;
+    if (!token) {
+        return response.status(400).json({ message: "cookie missing" })
+    }
+    jwt.verify(token, process.env.TOKEN_KEY, async (err, data) => {
+        if (err) {
+            return response.status(400).json({ message: "bad cookie" })
+        } else {
+            const user = await User.findById(data.id);
+            if (user && user.isAdmin) {
+                const skip = parseInt(request.query.skip) || 0;
+                const limit = 2;
+                const searchQuery = request.query.search;
+                let filter = {};
+                if (searchQuery && searchQuery.trim() !== '') {
+                    filter = {
+                        $or: [
+                            { username: { $regex: searchQuery, $options: 'i' } },
+                            { email: { $regex: searchQuery, $options: 'i' } },
+                            { bio: { $regex: searchQuery, $options: 'i' } }
+                        ]
+                    };
+                }
+                const articles = await Article.find(filter).skip(skip).limit(limit);
+                return response.status(200).json(articles);
+            } else {
+                return response.status(400).json({ message: "user doesn't exist/isn't administrator" })
+            }
+        }
+    })
 })
 
 export default router

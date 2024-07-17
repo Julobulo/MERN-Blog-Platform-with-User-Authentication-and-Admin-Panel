@@ -209,7 +209,7 @@ router.get('/adminpanel', async (request, response) => {
 
                     const users = await User.find(filter, { password: 0 }).skip(skip).limit(limit);
                     // const users = await User.find({}, { password: 0 }).skip(skip).limit(limit);
-                    response.status(200).json(users);
+                    return response.status(200).json(users);
                 } else {
                     return response.status(400).json({ message: "you are not administrator" });
                 }
