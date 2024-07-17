@@ -79,31 +79,14 @@ const Users = () => {
                 setWasHighlighted(false);
             })
             .catch((error) => {
-                setLoading(false);
-                setLoadingMore(false);
+                toast.error(`Couldn't fetch the data... Error: ${error.response.data.message}`);
                 console.log(error);
-                // Sample data for testing
-                setUsers([{
-                    imgSrc: 'https://via.placeholder.com/64',
-                    username: 'username',
-                    date: 'January 1, 2000',
-                    bio: 'bio',
-                    email: 'email',
-                    isAdmin: false,
-                }]);
-                // toast.error(`Couldn't fetch the data... Error: ${error.response.data.message}`);
             })
     }
 
     useEffect(() => {
         fetchUsers(skip, '')
     }, []);
-
-    // const filteredUsers = users.filter(user =>
-    //     user.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    //     user.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    //     user.bio.toLowerCase().includes(searchQuery.toLowerCase())
-    // );
 
     return (
         <div className='flex-grow bg-black'>
