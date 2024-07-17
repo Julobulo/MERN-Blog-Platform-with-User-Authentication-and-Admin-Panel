@@ -43,7 +43,7 @@ const NavigationBar = () => {
                     {Cookies.get('token') ? (<>
                         <Link to="/create" className="btn btn-ghost text-green-400"><MdOutlinePostAdd className='inline align-middle' /> <span className='align-middle'>New Post</span></Link>
                         <Link to="/profile" className="btn btn-ghost text-green-400"><CgProfile className='inline align-middle' /> <span className='align-middle'>Profile</span></Link>
-                        {localStorage.getItem('isAdmin') === "true" ? (<Link to="/AdminPanel/Articles" className="btn btn-ghost text-green-400"><MdOutlineAdminPanelSettings className='inline align-middle' /> <span className='align-middle'>Admin Panel</span></Link>) : ''}
+                        {Cookies.get('isAdmin') === "true" ? (<Link to="/AdminPanel/Articles" className="btn btn-ghost text-green-400"><MdOutlineAdminPanelSettings className='inline align-middle' /> <span className='align-middle'>Admin Panel</span></Link>) : ''}
                         <button className="btn btn-ghost text-green-400" onClick={() => { Cookies.remove('token'); localStorage.removeItem('isAdmin'); navigate('/'); toast.success('Successfully logged out!', { position: 'bottom-right' }) }}><MdOutlineAdminPanelSettings className='inline align-middle' /> <span className='align-middle'>Logout</span></button>
                     </>) :
                         <button onClick={() => setIsLoginOpen(true)} className="btn btn-ghost text-green-400"><SlLogin className='inline align-middle' /> <span className='align-middle'>Login</span></button>
@@ -77,7 +77,7 @@ const NavigationBar = () => {
                                     <CgProfile className='inline align-middle' />
                                     <span className='align-middle ml-2'>Profile</span>
                                 </Link>
-                                {localStorage.getItem('isAdmin') === "true" && (
+                                {Cookies.get('isAdmin') === "true" && (
                                     <Link to="/AdminPanel/Articles" className="btn btn-ghost text-green-400 flex items-center" onClick={toggleMenu}>
                                         <MdOutlineAdminPanelSettings className='inline align-middle' />
                                         <span className='align-middle ml-2'>Admin Panel</span>
