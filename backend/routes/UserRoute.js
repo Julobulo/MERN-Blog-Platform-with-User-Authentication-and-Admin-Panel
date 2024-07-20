@@ -2,6 +2,7 @@ import express from "express";
 import User from "../models/UserModel.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
+import Article from "../models/ArticleModel.js";
 
 const router = express.Router();
 
@@ -60,6 +61,18 @@ function validateDataToChange(_id, bio, date, email, isAdmin, profilePicture, us
     return { allowed: true };
 }
 
+const updateAuthorNameInArticles = async (userId, newUsername) => {
+    try {
+        await Article.updateMany(
+            { author: userId },
+            { $set: { author_name: newUsername } }
+        );
+    } catch (error) {
+        console.error(`Error updating articles for user ${userId}:`, error);
+    }
+};
+
+
 router.post('/update', async (request, response) => {
     try {
         const { _id, bio, date, email, isAdmin, profilePicture, username } = request.body;
@@ -86,7 +99,10 @@ router.post('/update', async (request, response) => {
                         user.email = email;
                         user.isAdmin = isAdmin;
                         user.profilePicture = profilePicture;
-                        user.username = username;
+                        if (user.username !== username) {
+                            user.username = username;
+                            updateAuthorNameInArticles(user._id, username);
+                        }
                         await user.save();
                         return response.status(200).json({ message: "successfully changed your info!" });
                     }
@@ -97,7 +113,10 @@ router.post('/update', async (request, response) => {
                             userToChange.email = email;
                             userToChange.isAdmin = isAdmin;
                             userToChange.profilePicture = profilePicture;
-                            userToChange.username = username;
+                            if (user.username !== username) {
+                                userToChange.username = username;
+                                updateAuthorNameInArticles(userToChange._id, username);
+                            }
                             await userToChange.save();
                             return response.status(200).json({ message: "successfully changed the admin's info!" });
                         }
@@ -111,7 +130,10 @@ router.post('/update', async (request, response) => {
                         userToChange.email = email;
                         userToChange.isAdmin = isAdmin;
                         userToChange.profilePicture = profilePicture;
-                        userToChange.username = username;
+                        if (user.username !== username) {
+                            userToChange.username = username;
+                            updateAuthorNameInArticles(userToChange._id, username);
+                        }
                         await userToChange.save();
                         return response.status(200).json({ message: "successfully the regular user's info!" });
                     }
