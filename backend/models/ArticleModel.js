@@ -105,6 +105,9 @@ const ArticleSchema = new mongoose.Schema({
     author: {
         type: String, // author _id
         required: [true, "An author is required"],
+    },
+    author_name: {
+        type: String,
     }
 })
 
