@@ -1,2 +1,5 @@
 Backend:
     create delete route for articles in BlogRoute.js
+
+Frontend:
+    make sure all axios requests checks for 401s, and if they do get one, navigate to /login
