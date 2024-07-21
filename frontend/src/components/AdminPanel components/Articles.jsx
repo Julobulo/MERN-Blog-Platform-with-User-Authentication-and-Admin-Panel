@@ -37,9 +37,9 @@ const Articles = () => {
             updatedArticles = articles.map((article) => {
                 return {
                     ...article,
-                    title: article.title.replace(regex, (match) => `<span class="bg-green-300">${match}</span>`),
+                    title_highlighted: article.title.replace(regex, (match) => `<span class="bg-green-300">${match}</span>`),
                     subtitle: article.subtitle.replace(regex, (match) => `<span class="bg-green-300">${match}</span>`),
-                    author_name: article.author_name.replace(regex, (match) => `<span class="bg-green-500">${match}</span>`),
+                    author_highlighted: article.author_name.replace(regex, (match) => `<span class="bg-green-500">${match}</span>`),
                     tags: article.tags.map(tag => tag.replace(regex, (match) => `<span class="bg-green-300">${match}</span>`)),
                 };
             });
@@ -48,7 +48,6 @@ const Articles = () => {
         // Set the updated users
         setHighlightedArticles(updatedArticles);
         setWasHighlighted(true);
-        console.log(`Highlighted users: ${JSON.stringify(updatedArticles)}`)
     }, [articles]);
 
     const fetchArticles = (skip, search) => {
@@ -135,9 +134,11 @@ const Articles = () => {
                                     <ArticleCard
                                         key={article._id}
                                         title={article.title}
+                                        title_highlighted={article.title_highlighted}
                                         subtitle={article.subtitle}
                                         href={`/blog/article/${article.title}`}
                                         author={article.author_name}
+                                        author_highlighted={article.author_highlighted}
                                         date={article.date}
                                         tags={article.tags}
                                         imgSrc={article.image}

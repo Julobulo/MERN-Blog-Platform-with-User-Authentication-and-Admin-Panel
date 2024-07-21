@@ -6,7 +6,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-const ArticleCard = ({ title, subtitle, href, author, date, tags, imgSrc, likes, liked }) => {
+const ArticleCard = ({ title, title_highlighted, subtitle, href, author, author_highlighted, date, tags, imgSrc, likes, liked }) => {
     const [wasLiked, setWasLiked] = useState(liked);
     const [likesNumber, setLikesNumber] = useState(likes);
     const navigate = useNavigate();
@@ -43,7 +43,7 @@ const ArticleCard = ({ title, subtitle, href, author, date, tags, imgSrc, likes,
                 />
             </a>
             <h2 className="text-xl font-semibold tracking-tight text-white">
-                <a href={href} dangerouslySetInnerHTML={{ __html: title }}></a>
+                <a href={href} dangerouslySetInnerHTML={{ __html: (title_highlighted ? title_highlighted : title) }}></a>
             </h2>
             <p className="mb-2 text-gray-400" dangerouslySetInnerHTML={{ __html: subtitle }}></p>
             <div className="flex flex-wrap overflow-auto space-x-2 md:hidden pb-2">
@@ -62,7 +62,7 @@ const ArticleCard = ({ title, subtitle, href, author, date, tags, imgSrc, likes,
                             className="w-8 h-8 rounded-full"
                         />
                         <div className="flex flex-col">
-                            <span dangerouslySetInnerHTML={{ __html: author }}></span>
+                            <span dangerouslySetInnerHTML={{ __html: (author_highlighted ? author_highlighted : author) }}></span>
                             <span className="text-sm text-gray-400">{formatDate(date)}</span>
                         </div>
                     </div>

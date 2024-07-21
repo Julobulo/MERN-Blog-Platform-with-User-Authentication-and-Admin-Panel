@@ -51,7 +51,6 @@ const Users = () => {
         // Set the updated users
         setHighlightedUsers(updatedUsers);
         setWasHighlighted(true);
-        console.log(`Highlighted users: ${JSON.stringify(updatedUsers)}`)
     }, [users]);
 
     const fetchUsers = (skip, search) => {
