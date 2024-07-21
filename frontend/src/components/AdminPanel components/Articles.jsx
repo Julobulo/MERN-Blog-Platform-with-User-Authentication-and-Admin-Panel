@@ -16,6 +16,7 @@ const Articles = () => {
     }, []);
     const [searchQuery, setSearchQuery] = useState("");
     const [articles, setArticles] = useState([]);
+    const [highlightedArticles, setHighlightedArticles] = useState([]);
     const [loading, setLoading] = useState(false);
     const [loadingMore, setLoadingMore] = useState(false);
     const [hasMore, setHasMore] = useState(true);
@@ -23,6 +24,32 @@ const Articles = () => {
     const [wasHighlighted, setWasHighlighted] = useState(false);
     const location = useLocation();
     const limit = 2;
+
+    useEffect(() => {
+        if (!articles.length || wasHighlighted) {
+            return
+        }
+        let updatedArticles = articles;
+        if (searchQuery) {
+            // Create a regular expression with the search query (case-insensitive)
+            const regex = new RegExp(searchQuery, 'ig');
+            // Update the users array with highlighted fields
+            updatedArticles = articles.map((article) => {
+                return {
+                    ...article,
+                    title: article.title.replace(regex, (match) => `<span class="bg-green-300">${match}</span>`),
+                    subtitle: article.subtitle.replace(regex, (match) => `<span class="bg-green-300">${match}</span>`),
+                    author_name: article.author_name.replace(regex, (match) => `<span class="bg-green-500">${match}</span>`),
+                    tags: article.tags.map(tag => tag.replace(regex, (match) => `<span class="bg-green-300">${match}</span>`)),
+                };
+            });
+        }
+
+        // Set the updated users
+        setHighlightedArticles(updatedArticles);
+        setWasHighlighted(true);
+        console.log(`Highlighted users: ${JSON.stringify(updatedArticles)}`)
+    }, [articles]);
 
     const fetchArticles = (skip, search) => {
         if (skip > 0) { setLoadingMore(true) } else { setLoading(true); setArticles([]) }
@@ -102,7 +129,7 @@ const Articles = () => {
                             <div className='mb-5'>
                                 <Spinner />
                             </div>
-                        ) : (articles.map(article => (
+                        ) : (highlightedArticles.map(article => (
                             <div className='flex flex-row'>
                                 <div className='basis-11/12'>
                                     <ArticleCard
