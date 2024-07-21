@@ -43,13 +43,13 @@ const ArticleCard = ({ title, subtitle, href, author, date, tags, imgSrc, likes,
                 />
             </a>
             <h2 className="text-xl font-semibold tracking-tight text-white">
-                <a href={href}>{title}</a>
+                <a href={href} dangerouslySetInnerHTML={{ __html: title }}></a>
             </h2>
-            <p className="mb-2 text-gray-400">{subtitle}</p>
+            <p className="mb-2 text-gray-400" dangerouslySetInnerHTML={{ __html: subtitle }}></p>
             <div className="flex flex-wrap overflow-auto space-x-2 md:hidden pb-2">
                 {tags.slice(0, 1).map(tag => (
                     <div key={tag} className="flex rounded-full border border-gray-700 bg-gray-800 px-3 py-1 badge">
-                        {<span className="text-xs uppercase leading-none text-green-400 text-center my-auto">{tag}</span>}
+                        {<span className="text-xs uppercase leading-none text-green-400 text-center my-auto" dangerouslySetInnerHTML={{ __html: tag }}></span>}
                     </div>
                 ))}
             </div>
@@ -62,7 +62,7 @@ const ArticleCard = ({ title, subtitle, href, author, date, tags, imgSrc, likes,
                             className="w-8 h-8 rounded-full"
                         />
                         <div className="flex flex-col">
-                            <span>{author}</span>
+                            <span dangerouslySetInnerHTML={{ __html: author }}></span>
                             <span className="text-sm text-gray-400">{formatDate(date)}</span>
                         </div>
                     </div>
@@ -88,7 +88,7 @@ const ArticleCard = ({ title, subtitle, href, author, date, tags, imgSrc, likes,
                 <div className="flex flex-wrap max-w-full max-h-16 overflow-auto space-x-2 max-md:hidden">
                     {tags.slice(0, 2).map(tag => (
                         <div key={tag} className="flex rounded-full border border-gray-700 bg-gray-800 px-3 py-1 badge">
-                            {<span className="text-xs uppercase leading-none text-green-400 text-center my-2">{tag}</span>}
+                            {<span className="text-xs uppercase leading-none text-green-400 text-center my-2" dangerouslySetInnerHTML={{ __html: tag }}></span>}
                         </div>
                     ))}
                 </div>
