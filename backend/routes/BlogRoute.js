@@ -334,6 +334,7 @@ router.get('/adminpanel', async (request, response) => {
                         $or: [
                             { title: { $regex: searchQuery, $options: 'i' } },
                             { subtitle: { $regex: searchQuery, $options: 'i' } },
+                            { author_name: { $regex: searchQuery, $options: 'i' } },
                             { tags: { $elemMatch: { $regex: searchQuery, $options: 'i' } } },
                         ]
                     };
