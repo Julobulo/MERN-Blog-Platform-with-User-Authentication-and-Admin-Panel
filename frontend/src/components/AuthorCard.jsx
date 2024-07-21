@@ -3,7 +3,7 @@ import { MdOutlineAdminPanelSettings } from "react-icons/md";
 import { GrUserAdmin } from "react-icons/gr";
 import formatDate from "../utils/formatDate";
 
-const AuthorCard = ({ imgSrc, username, date, bio, email, isAdmin, isSuperAdmin }) => {
+const AuthorCard = ({ imgSrc, username, username_highlighted, date, bio, email, isAdmin, isSuperAdmin }) => {
     console.log(`new author card. username: ${username}, bio: ${bio}, email: ${email}`)
     return (
         <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
@@ -18,7 +18,7 @@ const AuthorCard = ({ imgSrc, username, date, bio, email, isAdmin, isSuperAdmin 
                     />
                 </div>
                 <div className="basis-4/5">
-                    <h2 className="text-2xl font-bold"><span dangerouslySetInnerHTML={{ __html: username }} /></h2>
+                    <h2 className="text-2xl font-bold"><span dangerouslySetInnerHTML={{ __html: (username_highlighted ? username_highlighted : username) }} /></h2>
                     <p className="text-sm text-gray-400">Joined: {formatDate(date)}</p>
                     {email && (
                         <p className="text-sm text-gray-400">Email: <span dangerouslySetInnerHTML={{ __html: email }} /></p>

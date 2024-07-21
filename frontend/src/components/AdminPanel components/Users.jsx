@@ -41,7 +41,7 @@ const Users = () => {
             updatedUsers = users.map((user) => {
                 return {
                     ...user,
-                    username: user.username.replace(regex, (match) => `<span class="bg-green-300">${match}</span>`),
+                    username_highlighted: user.username.replace(regex, (match) => `<span class="bg-green-300">${match}</span>`),
                     bio: user.bio.replace(regex, (match) => `<span class="bg-green-500">${match}</span>`),
                     email: user.email.replace(regex, (match) => `<span class="bg-green-300">${match}</span>`),
                 };
@@ -126,6 +126,7 @@ const Users = () => {
                                             <AuthorCard
                                                 imgSrc={user.profilePicture}
                                                 username={user.username}
+                                                username_highlighted={user.username_highlighted}
                                                 date={user.createdAt}
                                                 bio={user.bio}
                                                 email={user.email}
