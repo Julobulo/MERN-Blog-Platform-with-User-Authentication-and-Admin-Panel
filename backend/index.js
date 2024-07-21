@@ -8,6 +8,7 @@ import BlogRoute from "./routes/BlogRoute.js";
 import cookieParser from "cookie-parser";
 import User from "./models/UserModel.js";
 import bodyParser from "body-parser";
+import Article from "./models/ArticleModel.js";
 dotenv.config();
 const { PORT, DB_URL } = process.env;
 
@@ -75,11 +76,38 @@ mongoose
         app.listen(PORT, () => {
             console.log(`App is listening on port: ${PORT}`);
         });
+        updateArticlesWithAuthorName()
     })
     .catch((error) => {
         console.log(error)
     })
 
+async function updateArticlesWithAuthorName() {
+    // Find all articles that do not have the author_name field
+    const articlesWithoutAuthorName = await Article.find({ author_name: { $exists: false } });
+
+    for (let article of articlesWithoutAuthorName) {
+        const authorId = article.author;
+
+        // Find the user with the given author ID
+        const user = await User.findById(authorId);
+
+        if (user) {
+            // Update the article with the author's username
+            article.author_name = user.username;
+            await article.save();
+            console.log(`Updated article ${article._id} with author_name ${user.username}`);
+        } else {
+            console.warn(`User with ID ${authorId} not found for article ${article._id}`);
+        }
+    }
+    if (articlesWithoutAuthorName.length) {
+        console.log('Update completed');
+    }
+    else {
+        console.log('No articles without author_name fields')
+    }
+}
 
 app.use('/', AuthRoute)
 app.use('/user', UserRoute)
