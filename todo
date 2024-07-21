@@ -1,2 +1,2 @@
 Backend:
-    create delete route
+    create delete route for articles in BlogRoute.js
