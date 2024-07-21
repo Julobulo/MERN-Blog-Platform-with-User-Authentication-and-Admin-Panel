@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ArticleCard from "../ArticleCard";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const article = {
     title: "The Rise of Artificial Intelligence in Modern Society",
@@ -17,15 +18,19 @@ const ArticleDelete = () => {
     const [isDeleted, setIsDeleted] = useState(false);
     const [isConfirming, setIsConfirming] = useState(false);
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     const handleDelete = async () => {
-        try {
-            // Mock delete operation
-            await axios.delete('http://localhost:5555/blog/delete', { data: { title: article.title } });
-            setIsDeleted(true);
-        } catch (error) {
-            setError('Failed to delete the article.');
-        }
+        axios.delete('http://localhost:5555/blog/delete', { data: { title: article.title } })
+            .then((response) => {
+                setIsDeleted(true);
+            })
+            .catch((error) => {
+                if (error.response.status === 401) {
+                    navigate('/login');
+                }
+                setError('Failed to delete the article.');
+            })
     };
 
     const confirmDelete = () => {
