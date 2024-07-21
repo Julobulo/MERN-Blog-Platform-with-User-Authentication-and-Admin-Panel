@@ -146,10 +146,10 @@ const Articles = () => {
                                     />
                                 </div>
                                 <div className="basis-1/12 flex flex-col justify-evenly items-center">
-                                    <Link to={`/AdminPanel/Articles/Edit/${article._id}`} className='text-yellow-400 '>
+                                    <Link to={`/AdminPanel/Articles/Edit/${article.title}`} className='text-yellow-400 '>
                                         <FiEdit2 />
                                     </Link>
-                                    <Link to={`/AdminPanel/Articles/Delete/${article._id}`} className='text-red-400'>
+                                    <Link to={`/AdminPanel/Articles/Delete/${article.title}`} className='text-red-400'>
                                         <MdDeleteOutline />
                                     </Link>
                                 </div>
