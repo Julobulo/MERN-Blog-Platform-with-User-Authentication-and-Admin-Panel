@@ -16,7 +16,7 @@ router.get('/', async (request, response) => {
         }
         jwt.verify(token, process.env.TOKEN_KEY, async (err, data) => {
             if (err) {
-                return response.status(400).json({ message: "bad cookie" })
+                return response.status(401).json({ message: "bad cookie" })
             } else {
                 const user = await User.findById(data.id);
                 if (user) return response.status(200).json({ _id: user._id, profilePicture: user.profilePicture, username: user.username, date: user.createdAt, bio: user.bio, email: user.email, isAdmin: user.isAdmin, isSuperAdmin: user.isSuperAdmin })
@@ -86,7 +86,7 @@ router.post('/update', async (request, response) => {
         }
         jwt.verify(token, process.env.TOKEN_KEY, async (err, data) => {
             if (err) {
-                return response.status(400).json({ message: "bad cookie" })
+                return response.status(401).json({ message: "bad cookie" })
             } else {
                 const user = await User.findById(data.id);
                 // check if user is admin
@@ -173,7 +173,7 @@ router.delete('/delete', async (request, response) => {
         }
         jwt.verify(token, process.env.TOKEN_KEY, async (err, data) => {
             if (err) {
-                return response.status(400).json({ message: "bad cookie" })
+                return response.status(401).json({ message: "bad cookie" })
             } else {
                 const user = await User.findById(data.id);
                 // check if user is admin
@@ -270,7 +270,7 @@ router.put('/password/:author', async (request, response) => {
     }
     jwt.verify(token, process.env.TOKEN_KEY, async (err, data) => {
         if (err) {
-            return response.status(400).json({ message: "bad cookie" })
+            return response.status(401).json({ message: "bad cookie" })
         } else {
             const user = await User.findById(data.id);
             if (user.isSuperAdmin) { // we can perform this operation only if superadmin

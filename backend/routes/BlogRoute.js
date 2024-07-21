@@ -165,7 +165,7 @@ router.get('/article/:title', async (request, response) => {
         if (token) {
             jwt.verify(token, process.env.TOKEN_KEY, async (err, data) => {
                 if (err) {
-                    return response.status(400).json({ message: "bad cookie" })
+                    return response.status(401).json({ message: "bad cookie" })
                 } else {
                     const userRequesting = await User.findById(data.id);
                     if (userRequesting.articlesLiked.includes(article._id)) {
@@ -199,7 +199,7 @@ router.post('/article/:title', async (request, response) => {
         }
         jwt.verify(token, process.env.TOKEN_KEY, async (err, data) => {
             if (err) {
-                return response.status(400).json({ message: "bad cookie" })
+                return response.status(401).json({ message: "bad cookie" })
             } else {
                 const user = await User.findById(data.id);
                 // add article title to user's articlesLiked
@@ -265,7 +265,7 @@ router.post('/new', async (request, response) => {
         }
         jwt.verify(token, process.env.TOKEN_KEY, async (err, data) => {
             if (err) {
-                return response.status(400).json({ message: "bad cookie" })
+                return response.status(401).json({ message: "bad cookie" })
             } else {
                 const { image, blocks, tags } = request.body;
                 // check user
@@ -320,7 +320,7 @@ router.get('/adminpanel', async (request, response) => {
     }
     jwt.verify(token, process.env.TOKEN_KEY, async (err, data) => {
         if (err) {
-            return response.status(400).json({ message: "bad cookie" })
+            return response.status(401).json({ message: "bad cookie" })
         } else {
             const user = await User.findById(data.id);
             if (user && user.isAdmin) {
