@@ -298,7 +298,8 @@ router.post('/new', async (request, response) => {
                     subtitle: blocks[1].content[0].text,
                     tags: tags,
                     main: blocks,
-                    author: data.id
+                    author: data.id,
+                    author_name: (await User.findById(data.id)).username,
                 });
                 (await newArticle).save();
                 response.status(201).json({ message: "successfully posted article!" });
