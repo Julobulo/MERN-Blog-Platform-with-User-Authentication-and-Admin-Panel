@@ -107,7 +107,7 @@ const Articles = () => {
                                         title={article.title}
                                         subtitle={article.subtitle}
                                         href={`/blog/article/${article.title}`}
-                                        author={article.author}
+                                        author={article.author_name}
                                         date={article.date}
                                         tags={article.tags}
                                         imgSrc={article.image}
