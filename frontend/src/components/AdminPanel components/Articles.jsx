@@ -48,6 +48,9 @@ const Articles = () => {
                 setWasHighlighted(false);
             })
             .catch((error) => {
+                if (error.response.status === 401) {
+                    navigate('/login');
+                }
                 setLoading(false);
                 setLoadingMore(false);
                 console.log(error);
