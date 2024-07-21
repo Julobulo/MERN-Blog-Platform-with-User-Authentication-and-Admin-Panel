@@ -68,8 +68,7 @@ router.get('/most-recent', async (request, response) => {
             if (token) {
                 jwt.verify(token, process.env.TOKEN_KEY, async (err, data) => {
                     if (err) {
-                        // return response.status(400).json({ message: "bad cookie" })
-                        // in this case, if there is an error, we don't need to return
+                        return response.status(200).json(mostRecentArticle);
                     } else {
                         const userRequesting = await User.findById(data.id);
                         if (userRequesting.articlesLiked.includes(mostRecentArticle._id)) {
