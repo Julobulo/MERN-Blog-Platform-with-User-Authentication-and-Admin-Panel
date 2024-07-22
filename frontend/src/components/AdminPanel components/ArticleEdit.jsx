@@ -1,65 +1,320 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import CreateForm from '../CreateForm';
+import Spinner from '../Spinner';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 const ArticleEdit = () => {
+    const { title } = useParams();
+    // const [loading, setLoading] = useState(true);
+    // const [articleData, setArticleData] = useState({});
+    // useEffect(() => {
+    //     setLoading(true);
+    //     axios.get(`http://localhost:5555/blog/article/${title}`,
+    //         { withCredentials: true })
+    //         .then((response) => {
+    //             setArticleData(response.data);
+    //             const article = response.data;
+    //             const { image: _, ...articleWithoutImage } = article; // Destructure to remove the "image" field
+    //             console.log(`Here's the article data gotten: ${JSON.stringify(articleWithoutImage)}`);
+    //             setLoading(false);
+    //         })
+    //         .catch((error) => {
+    //             setLoading(false);
+    //         })
+    //     console.log(`Article data after axios: ${JSON.stringify(articleData)}`)
+    // }, []);
+    const [loading, setLoading] = useState(false);
+    const [articleData, setArticleData] = useState(
+        {
+            image: "https://google.com/image",
+            tags: ["test", "retest"],
+            main: [
+                {
+                    "id": "10c15bef-5b69-4d91-b113-056ccf8666b3",
+                    "type": "table",
+                    "props": {
+                        "textColor": "default",
+                        "backgroundColor": "default"
+                    },
+                    "content": [{
+                        "type": "tableContent",
+                        "rows": [
+                            {
+                                "cells": [
+                                    [
+                                        {
+                                            "type": "text",
+                                            "text": "this",
+                                            "styles": {}
+                                        }
+                                    ],
+                                    [
+                                        {
+                                            "type": "text",
+                                            "text": "table",
+                                            "styles": {}
+                                        }
+                                    ],
+                                    [
+                                        {
+                                            "type": "text",
+                                            "text": "is",
+                                            "styles": {}
+                                        }
+                                    ]
+                                ]
+                            },
+                            {
+                                "cells": [
+                                    [
+                                        {
+                                            "type": "text",
+                                            "text": "going",
+                                            "styles": {}
+                                        }
+                                    ],
+                                    [
+                                        {
+                                            "type": "text",
+                                            "text": "to",
+                                            "styles": {}
+                                        }
+                                    ],
+                                    [
+                                        {
+                                            "type": "text",
+                                            "text": "be",
+                                            "styles": {}
+                                        }
+                                    ]
+                                ]
+                            },
+                            {
+                                "cells": [
+                                    [
+                                        {
+                                            "type": "text",
+                                            "text": "difficult",
+                                            "styles": {}
+                                        }
+                                    ],
+                                    [
+                                        {
+                                            "type": "text",
+                                            "text": "to",
+                                            "styles": {}
+                                        }
+                                    ],
+                                    [
+                                        {
+                                            "type": "text",
+                                            "text": "display",
+                                            "styles": {}
+                                        }
+                                    ]
+                                ]
+                            }
+                        ]
+                    }],
+                    "children": []
+                },
+                {
+                    "props": {
+                        "textColor": "default",
+                        "backgroundColor": "default"
+                    },
+                    "id": "10c15bef-5b69-4d91-b113-056ccf8666b3",
+                    "type": "table",
+                    "content": [{
+                        "type": "tableContent",
+                        "rows": [
+                            {
+                                "cells": [
+                                    [
+                                        {
+                                            "type": "text",
+                                            "text": "this",
+                                            "_id": "6692d1e7dced7f68d80b0d77",
+                                            "styles": {}
+                                        }
+                                    ],
+                                    [
+                                        {
+                                            "type": "text", "text": "table", "_id": "6692d1e7dced7f68d80b0d78", "styles": {}
+                                        }
+                                    ],
+                                    [
+                                        {
+                                            "type": "text", "text": "is", "_id": "6692d1e7dced7f68d80b0d79", "styles": {}
+                                        }
+                                    ]
+                                ],
+                                "_id": "6692d1e7dced7f68d80b0d76",
+                                "styles": {}
+                            },
+                            {
+                                "cells": [
+                                    [
+                                        {
+                                            "type": "text", "text": "going", "_id": "6692d1e7dced7f68d80b0d7b", "styles": {}
+                                        }
+                                    ],
+                                    [
+                                        {
+                                            "type": "text", "text": "to", "_id": "6692d1e7dced7f68d80b0d7c", "styles": {}
+                                        }
+                                    ],
+                                    [
+                                        {
+                                            "type": "text", "text": "be", "_id": "6692d1e7dced7f68d80b0d7d", "styles": {}
+                                        }
+                                    ]
+                                ],
+                                "_id": "6692d1e7dced7f68d80b0d7a",
+                                "styles": {}
+                            },
+                            {
+                                "cells": [
+                                    [
+                                        {
+                                            "type": "text", "text": "difficult", "_id": "6692d1e7dced7f68d80b0d7f", "styles": {}
+                                        }
+                                    ],
+                                    [
+                                        {
+                                            "type": "text", "text": "to", "_id": "6692d1e7dced7f68d80b0d80", "styles": {}
+                                        }
+                                    ],
+                                    [
+                                        {
+                                            "type": "text", "text": "display", "_id": "6692d1e7dced7f68d80b0d81", "styles": {}
+                                        }
+                                    ]
+                                ],
+                                "_id": "6692d1e7dced7f68d80b0d7e",
+                                "styles": {}
+                            },
+                        ],
+                        "_id": "6692d1e7dced7f68d80b0d75",
+                        "styles": {}
+                    }]
+                    ,
+                    "children": [],
+                    "_id": "6692d1e7dced7f68d80b0d74"
+                },
+                // {
+                //     "props": {
+                //         "textColor": "default",
+                //         "backgroundColor": "default"
+                //     },
+                //     "id": "10c15bef-5b69-4d91-b113-056ccf8666b3",
+                //     "type": "table",
+                //     "content": [
+                //         {
+                //             "type": "tableContent",
+                //             "rows": [
+                //                 {
+                //                     "cells": [
+                //                         [
+                //                             {
+                //                                 "type": "text",
+                //                                 "text": "this",
+                //                                 "_id": "6692d1e7dced7f68d80b0d77"
+                //                             }
+                //                         ],
+                //                         [
+                //                             {
+                //                                 "type": "text",
+                //                                 "text": "table",
+                //                                 "_id": "6692d1e7dced7f68d80b0d78"
+                //                             }
+                //                         ],
+                //                         [
+                //                             {
+                //                                 "type": "text",
+                //                                 "text": "is",
+                //                                 "_id": "6692d1e7dced7f68d80b0d79"
+                //                             }
+                //                         ]
+                //                     ],
+                //                     "_id": "6692d1e7dced7f68d80b0d76"
+                //                 },
+                //                 {
+                //                     "cells": [
+                //                         [
+                //                             {
+                //                                 "type": "text",
+                //                                 "text": "going",
+                //                                 "_id": "6692d1e7dced7f68d80b0d7b"
+                //                             }
+                //                         ],
+                //                         [
+                //                             {
+                //                                 "type": "text",
+                //                                 "text": "to",
+                //                                 "_id": "6692d1e7dced7f68d80b0d7c"
+                //                             }
+                //                         ],
+                //                         [
+                //                             {
+                //                                 "type": "text",
+                //                                 "text": "be",
+                //                                 "_id": "6692d1e7dced7f68d80b0d7d"
+                //                             }
+                //                         ]
+                //                     ],
+                //                     "_id": "6692d1e7dced7f68d80b0d7a"
+                //                 },
+                //                 {
+                //                     "cells": [
+                //                         [
+                //                             {
+                //                                 "type": "text",
+                //                                 "text": "difficult",
+                //                                 "_id": "6692d1e7dced7f68d80b0d7f"
+                //                             }
+                //                         ],
+                //                         [
+                //                             {
+                //                                 "type": "text",
+                //                                 "text": "to",
+                //                                 "_id": "6692d1e7dced7f68d80b0d80"
+                //                             }
+                //                         ],
+                //                         [
+                //                             {
+                //                                 "type": "text",
+                //                                 "text": "display",
+                //                                 "_id": "6692d1e7dced7f68d80b0d81"
+                //                             }
+                //                         ]
+                //                     ],
+                //                     "_id": "6692d1e7dced7f68d80b0d7e"
+                //                 }
+                //             ],
+                //             "_id": "6692d1e7dced7f68d80b0d75"
+                //         }
+                //     ],
+                //     "children": [],
+                //     "_id": "6692d1e7dced7f68d80b0d74"
+                // },
+            ]
+        });
+    if (loading || !articleData) {
+        return <Spinner />
+    }
+    else (
+        console.log(`article data: ${JSON.stringify(articleData)}`)
+    )
     return (
-        CreateForm(
-            {
-                pageTitle: 'Edit',
-                defaultImage: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/Lorem_Ipsum_Article.png?20150528112327',
-                defaultTitle: 'The Future of Quantum Computing',
-                defaultSubtitle: 'Exploring the potential and challenges of quantum technology.',
-                defaultTags: ['Quantum Computing', 'Technology', 'Innovation', 'Future'],
-                defaultMainContent: `
-            <h1>The Future of Quantum Computing</h1>
-            <h2>Introduction</h2>
-            <p><strong>Quantum computing</strong> represents a paradigm shift in the way we process information. Unlike classical computers, which use bits as the smallest unit of data, quantum computers use quantum bits or <em>qubits</em>. These qubits can exist in multiple states simultaneously, thanks to the principles of <u>superposition</u> and <u>entanglement</u>.</p>
-            
-            <blockquote>
-                <p>One of the most significant potential applications of quantum computing is in the field of cryptography. Quantum algorithms, such as <strong>Shor's algorithm</strong>, could potentially break many of the cryptographic systems currently in use. This has profound implications for data security and privacy.</p>
-            </blockquote>
-        
-            <h2>Challenges and Solutions</h2>
-            <p>However, there are substantial challenges to overcome before quantum computing can become mainstream:</p>
-            <ul>
-                <li>Maintaining qubit stability (<em>decoherence</em>)</li>
-                <li>Error correction</li>
-                <li>Scaling up the number of qubits in a single system</li>
-            </ul>
-            <p>Researchers are actively exploring various approaches, such as <strong>topological qubits</strong> and quantum error correction codes, to address these issues.</p>
-        
-            <h3>Maintaining Qubit Stability</h3>
-            <p>Decoherence is one of the most significant challenges in quantum computing. It refers to the loss of quantum coherence, which can result in errors. To combat this, scientists are developing <mark>quantum error correction</mark> techniques and exploring different materials for building stable qubits.</p>
-        
-            <h3>Scaling Up</h3>
-            <p>Scaling up quantum systems to have more qubits is crucial for practical applications. This involves not only increasing the number of qubits but also ensuring they can interact effectively. <a href="https://quantum-computing.ibm.com">IBM's quantum computing platform</a> is one example of ongoing efforts to build scalable quantum systems.</p>
-        
-            <h2>Applications of Quantum Computing</h2>
-            <p>The future of quantum computing holds promise for solving complex problems that are currently intractable for classical computers. This includes applications in:</p>
-            <ol>
-                <li>Drug discovery</li>
-                <li>Optimization problems</li>
-                <li>Material science</li>
-            </ol>
-        
-            <h3>Drug Discovery</h3>
-            <p>Quantum computers can simulate molecular interactions at a level of detail that classical computers cannot, potentially leading to breakthroughs in <strong>drug discovery</strong> and personalized medicine.</p>
-        
-            <h3>Optimization Problems</h3>
-            <p>Many real-world problems, such as optimizing supply chains and financial portfolios, can be modeled as optimization problems. Quantum algorithms have the potential to find optimal solutions much faster than classical algorithms.</p>
-        
-            <h3>Material Science</h3>
-            <p>By simulating the properties of new materials at the quantum level, researchers can discover new materials with desirable properties for use in technology and industry.</p>
-        
-            <h2>Conclusion</h2>
-            <p>As the technology matures, <em>quantum computing</em> could revolutionize industries and drive significant advancements in science and technology. The journey is fraught with challenges, but the potential rewards make it a field of immense interest and investment.</p>
-        
-            <p><strong>The future of quantum computing is not just a possibility; it's an inevitability. </strong> Researchers, engineers, and technologists around the world are working tirelessly to bring this revolutionary technology to fruition.</p>
-            
-            <p style="text-align: center;"><img src="https://via.placeholder.com/400" alt="Quantum Computing" /></p>
-                                    `,
-            }
-        )
+        <CreateForm
+            pageTitle={'Edit'}
+            articleData={articleData}
+        />
+        // <pre>
+        //     {JSON.stringify(articleData.tags, null, "\t")}
+        // </pre>
     );
 };
 
