@@ -3,3 +3,4 @@ Backend:
 
 Frontend:
     make sure all axios requests checks for 401s, and if they do get one, navigate to /login
+    Put new articles changes in localStorage
