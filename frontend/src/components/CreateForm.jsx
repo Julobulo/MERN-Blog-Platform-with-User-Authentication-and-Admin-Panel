@@ -14,18 +14,24 @@ import { BlockNoteView } from "@blocknote/mantine";
 import "@blocknote/mantine/style.css";
 import "./CreateForm.css";
 
-// TODO: put all changes in localStorage
-
-const CreateForm = ({ pageTitle, defaultImage, defaultTags, defaultMainContent }) => {
+const CreateForm = ({ pageTitle, articleData }) => {
     const navigate = useNavigate();
     useEffect(() => {
         if (!Cookies.get('token')) {
             navigate('/login')
-        }}, [navigate])
-    const [image, setImage] = useState();
-    const [tags, setTags] = useState([]);
-    const [blocks, setBlocks] = useState([]);
+        }
+    }, [navigate])
     const [tagInput, setTagInput] = useState('');
+    if (pageTitle === 'Edit') {
+        const [image, setImage] = useState(articleData.image);
+        const [tags, setTags] = useState(articleData.tags);
+        const [blocks, setBlocks] = useState(articleData.blocks);
+    }
+    else {
+        const [image, setImage] = useState();
+        const [tags, setTags] = useState([]);
+        const [blocks, setBlocks] = useState([]);
+    }
 
     const handleImageChange = async (event) => {
         const file = event.target.files[0];
@@ -47,7 +53,7 @@ const CreateForm = ({ pageTitle, defaultImage, defaultTags, defaultMainContent }
             if (file.size > (maxSize / 2)) {
                 // compress image
                 const compressedFile = await imageCompression(file, {
-                    maxSizeMB: maxSize/2,          // Maximum size in MB, in our case 512kb
+                    maxSizeMB: maxSize / 2,          // Maximum size in MB, in our case 512kb
                     maxWidthOrHeight: 1920, // Maximum width or height
                     useWebWorker: true,    // Use web worker for compression
                 });
