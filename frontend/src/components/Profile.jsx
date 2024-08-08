@@ -38,7 +38,8 @@ const Profile = () => {
                     email: 'email',
                     isAdmin: false,
                 });
-                toast.error(`Couldn't fetch the data...`);
+                toast.error(error.response.data.message);
+                navigate('/login');
             }
             )
     }, []);
