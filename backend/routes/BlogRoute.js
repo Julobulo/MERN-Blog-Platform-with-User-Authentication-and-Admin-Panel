@@ -342,7 +342,7 @@ router.get('/adminpanel', async (request, response) => {
                 const articles = await Article.find(filter).skip(skip).limit(limit);
                 return response.status(200).json(articles);
             } else {
-                return response.status(400).json({ message: "user doesn't exist/isn't administrator" })
+                return response.status(401).json({ message: "user doesn't exist/isn't administrator" })
             }
         }
     })

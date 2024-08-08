@@ -6,6 +6,7 @@ import { FiEdit2 } from "react-icons/fi";
 import Cookies from "js-cookie";
 import axios from 'axios';
 import Spinner from '../Spinner';
+import { toast } from 'react-toastify';
 
 const Articles = () => {
     const navigate = useNavigate();
@@ -75,6 +76,7 @@ const Articles = () => {
             })
             .catch((error) => {
                 if (error.response.status === 401) {
+                    toast.error(error.response.data.message);
                     navigate('/login');
                 }
                 setLoading(false);
