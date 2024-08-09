@@ -8,11 +8,34 @@ import SkeletonLoader from './SkeletonLoader';
 const App = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [articles, setArticles] = useState([]);
+    const [highlightedArticles, setHighlightedArticles] = useState([]);
+    const [wasHighlighted, setWasHighlighted] = useState(false);
     const [loading, setLoading] = useState(true);
     const [loadingMore, setLoadingMore] = useState(false);
     const [skip, setSkip] = useState(0);
     const [hasMore, setHasMore] = useState(true);
     const limit = 4;
+
+    useEffect(() => {
+        if (!articles.length || wasHighlighted) {
+            return
+        }
+        let updatedArticles = articles;
+        if (searchQuery) {
+            const regex = new RegExp(searchQuery, 'ig');
+            updatedArticles = articles.map((article) => {
+                return {
+                    ...article,
+                    title_highlighted: article.title.replace(regex, (match) => `<span class="bg-green-300">${match}</span>`),
+                    subtitle: article.subtitle.replace(regex, (match) => `<span class="bg-green-300">${match}</span>`),
+                    author_highlighted: article.author_name.replace(regex, (match) => `<span class="bg-green-500">${match}</span>`),
+                    tags: article.tags.map(tag => tag.replace(regex, (match) => `<span class="bg-green-300">${match}</span>`)),
+                };
+            });
+        }
+        setHighlightedArticles(updatedArticles);
+        setWasHighlighted(true);
+    }, [articles]);
 
     const fetchArticles = (skip, search) => {
         if (skip > 0) {
@@ -48,6 +71,7 @@ const App = () => {
                 }
                 setLoading(false);
                 setLoadingMore(false);
+                setWasHighlighted(false);
             })
             .catch((error) => {
                 toast.error(error.response.data.message);
@@ -84,12 +108,14 @@ const App = () => {
                         Array.from({ length: 4 }).map((_, index) => (
                             <SkeletonLoader key={index} />
                         ))
-                    ) : (articles.map((article, index) => (
+                    ) : (highlightedArticles.map((article, index) => (
                         <ArticleCard
                             key={index}
                             title={article.title}
+                            title_highlighted={article.title_highlighted}
                             subtitle={article.subtitle}
                             author={article.author}
+                            author_highlighted={article.author_highlighted}
                             date={article.date}
                             tags={article.tags}
                             imgSrc={article.image}
