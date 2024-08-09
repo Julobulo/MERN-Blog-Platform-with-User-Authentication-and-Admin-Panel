@@ -169,7 +169,7 @@ router.delete('/delete', async (request, response) => {
         const { _id, bio, date, email, isAdmin, profilePicture, username } = request.body;
         const token = request.cookies.token;
         if (!token) {
-            return response.status(400).json({ message: "cookie missing" })
+            return response.status(401).json({ message: "cookie missing" })
         }
         jwt.verify(token, process.env.TOKEN_KEY, async (err, data) => {
             if (err) {
