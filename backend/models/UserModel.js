@@ -20,7 +20,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  bio: { type: String },
+  bio: {
+    type: String,
+    required: true,
+    default: '',
+  },
   isAdmin: { type: Boolean, default: false },
   isSuperAdmin: { type: Boolean, default: false },
   profilePicture: {
