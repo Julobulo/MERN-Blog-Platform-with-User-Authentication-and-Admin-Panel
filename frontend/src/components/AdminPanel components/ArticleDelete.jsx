@@ -24,13 +24,15 @@ const ArticleDelete = () => {
                 console.log(`finishing use effect hook, with articleData: ${JSON.stringify(response.data)}`);
                 setArticleData(response.data);
                 console.log('almost finished!')
+                setLoading(false);
             })
             .catch((error) => {
-                console.log(`caught error in axios request`);
+                console.log(`caught error in axios request: ${error.data.response.message}`);
                 toast.error(error.data.response.message);
+                setError(error.data.response.message);
+                setLoading(false);
             })
         console.log('finishing use effect hook!');
-        setLoading(false);
     }, [])
 
     const handleDelete = async () => {
@@ -55,7 +57,11 @@ const ArticleDelete = () => {
     };
 
     if (loading) {
-        return <Spinner />
+        return (<div className="flex-grow bg-black p-6 text-green-400">
+            <div className="my-5 max-w-3xl mx-auto p-6 bg-gray-900 rounded-lg shadow-md text-center">
+                <Spinner />
+            </div>
+        </div>)
     }
     if (error) {
         return (
@@ -78,19 +84,18 @@ const ArticleDelete = () => {
         );
     }
     return (
-
         <div className="flex-grow bg-black p-6 text-green-400">
             <div className="my-5 max-w-3xl mx-auto p-6 bg-gray-900 rounded-lg shadow-md">
                 <h1 className="text-2xl font-bold mb-6">Delete Article</h1>
                 <ArticleCard
                     title={articleData.title}
-                    description={articleData.description}
+                    subtitle={articleData.subtitle}
                     href={articleData.href}
                     author={articleData.author}
                     date={articleData.date}
                     tags={articleData.tags}
-                    imgSrc={articleData.imgSrc}
-                    hearts={articleData.hearts}
+                    imgSrc={articleData.image}
+                    likes={articleData.likes}
                 />
                 <div className="mt-5 text-center">
                     {isConfirming ? (
