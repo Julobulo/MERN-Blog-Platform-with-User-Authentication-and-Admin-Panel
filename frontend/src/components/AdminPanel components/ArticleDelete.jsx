@@ -1,27 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ArticleCard from "../ArticleCard";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-
-const article = {
-    title: "The Rise of Artificial Intelligence in Modern Society",
-    description: "Explore how AI is transforming the healthcare industry, from diagnostics to treatment.",
-    href: "#",
-    author: "Jane Doe",
-    date: "June 1, 2024",
-    tags: ["AI", "Healthcare"],
-    imgSrc: "https://via.placeholder.com/300",
-    hearts: 120
-}
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import Spinner from "../Spinner";
 
 const ArticleDelete = () => {
+    const { title } = useParams();
     const [isDeleted, setIsDeleted] = useState(false);
     const [isConfirming, setIsConfirming] = useState(false);
     const [error, setError] = useState(null);
+    const [articleData, setArticleData] = useState({});
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
+    useEffect(() => {
+        console.log('beginning use effect hook');
+        toast.success(`title: ${title}`);
+        console.log('continuing use effect hook');
+        axios.get(`http://localhost:5555/blog/article/${title}`,
+            { withCredentials: true })
+            .then((response) => {
+                console.log(`finishing use effect hook, with articleData: ${JSON.stringify(response.data)}`);
+                setArticleData(response.data);
+                console.log('almost finished!')
+            })
+            .catch((error) => {
+                console.log(`caught error in axios request`);
+                toast.error(error.data.response.message);
+            })
+        console.log('finishing use effect hook!');
+        setLoading(false);
+    }, [])
+
     const handleDelete = async () => {
-        axios.delete('http://localhost:5555/blog/delete', { data: { title: article.title } })
+        axios.delete('http://localhost:5555/blog/delete', { data: { title: articleData.title } })
             .then((response) => {
                 setIsDeleted(true);
             })
@@ -41,6 +54,9 @@ const ArticleDelete = () => {
         setIsConfirming(false);
     };
 
+    if (loading) {
+        return <Spinner />
+    }
     if (error) {
         return (
             <div className="flex-grow bg-black p-6 text-green-400">
@@ -67,14 +83,14 @@ const ArticleDelete = () => {
             <div className="my-5 max-w-3xl mx-auto p-6 bg-gray-900 rounded-lg shadow-md">
                 <h1 className="text-2xl font-bold mb-6">Delete Article</h1>
                 <ArticleCard
-                    title={article.title}
-                    description={article.description}
-                    href={article.href}
-                    author={article.author}
-                    date={article.date}
-                    tags={article.tags}
-                    imgSrc={article.imgSrc}
-                    hearts={article.hearts}
+                    title={articleData.title}
+                    description={articleData.description}
+                    href={articleData.href}
+                    author={articleData.author}
+                    date={articleData.date}
+                    tags={articleData.tags}
+                    imgSrc={articleData.imgSrc}
+                    hearts={articleData.hearts}
                 />
                 <div className="mt-5 text-center">
                     {isConfirming ? (
