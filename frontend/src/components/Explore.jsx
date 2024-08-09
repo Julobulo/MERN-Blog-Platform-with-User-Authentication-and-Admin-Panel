@@ -9,29 +9,57 @@ const App = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [articles, setArticles] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [loadingMore, setLoadingMore] = useState(false);
+    const [skip, setSkip] = useState(0);
+    const [hasMore, setHasMore] = useState(true);
+    const limit = 4;
 
-    const handleSearchChange = (event) => {
-        setSearchQuery(event.target.value);
-    };
-
-    useEffect(() => {
-        setLoading(true);
-        axios.get('http://localhost:5555/blog/articles',
-            { withCredentials: true })
+    const fetchArticles = (skip, search) => {
+        if (skip > 0) {
+            setLoadingMore(true);
+        } else {
+            setLoading(true);
+            setArticles([]);
+        }
+        axios.get(
+            `http://localhost:5555/blog/articles?skip=${skip}&search=${search}`,
+            { withCredentials: true }
+        )
             .then((response) => {
-                setArticles(response.data);
+                if (response.data.length > 0 && response.data.length === limit) {
+                    setSkip(skip + limit);
+                    if (skip < 1) {
+                        setArticles(response.data);
+                    } else {
+                        setArticles([...articles, ...response.data]);
+                    }
+                }
+                else if (response.data.length > 0 && response.data.length < limit) {
+                    setSkip(skip + limit);
+                    if (skip < 1) {
+                        setArticles(response.data);
+                    } else {
+                        setArticles([...articles, ...response.data]);
+                    }
+                    setHasMore(false);
+                }
+                else {
+                    setHasMore(false);
+                }
                 setLoading(false);
+                setLoadingMore(false);
             })
             .catch((error) => {
-                toast.error(error.response.data);
+                toast.error(error.response.data.message);
                 setLoading(false);
-            })
+                setLoadingMore(false);
+            });
+    }
+
+    useEffect(() => {
+        fetchArticles(skip, '');
     }, [])
 
-    // const filteredArticles = articles.filter(article =>
-    //     article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    //     article.description.toLowerCase().includes(searchQuery.toLowerCase())
-    // );
     return (
         <div className="flex-grow bg-black md:p-6 p-0">
             <div className="md:p-6 p-2">
@@ -40,7 +68,14 @@ const App = () => {
                         type="text"
                         placeholder="Search articles..."
                         value={searchQuery}
-                        onChange={handleSearchChange}
+                        onChange={
+                            e => {
+                                setSearchQuery(e.target.value);
+                                setSkip(0);
+                                setHasMore(true);
+                                fetchArticles(0, e.target.value);
+                            }
+                        }
                         className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                     />
                 </div>
@@ -64,54 +99,21 @@ const App = () => {
                     )))
                     }
                 </div>
+                {loadingMore ? (<Spinner />) : (
+                    hasMore && (
+                        <button
+                            onClick={() => fetchArticles(skip, searchQuery)}
+                            className="w-full bg-green-600 text-white py-2 px-4 rounded-md shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                        >
+                            Load More
+                        </button>
+                    )
+                )
+                }
+                {!hasMore && <p className='text-center'>No more articles to load</p>}
             </div>
         </div>
     );
 }
-
-
-const articles = [
-    {
-        title: "The Rise of Artificial Intelligence in Modern Society",
-        description: "Explore how AI is transforming the healthcare industry, from diagnostics to treatment.",
-        href: "#",
-        author: "Jane Doe",
-        date: "June 1, 2024",
-        tags: ["AI", "Healthcare"],
-        imgSrc: "https://via.placeholder.com/300",
-        hearts: 120
-    },
-    {
-        title: "AI and Financial Services",
-        description: "Discover the ways AI is revolutionizing the financial sector and enhancing security.",
-        href: "#",
-        author: "John Smith",
-        date: "May 20, 2024",
-        tags: ["AI", "Finance"],
-        imgSrc: "https://via.placeholder.com/300",
-        hearts: 98
-    },
-    {
-        title: "AI and Financial Services",
-        description: "Discover the ways AI is revolutionizing the financial sector and enhancing security.",
-        href: "#",
-        author: "John Smith",
-        date: "May 20, 2024",
-        tags: ["AI", "Finance"],
-        imgSrc: "https://via.placeholder.com/300",
-        hearts: 98
-    },
-    {
-        title: "AI and Financial Services",
-        description: "Discover the ways AI is revolutionizing the financial sector and enhancing security.",
-        href: "#",
-        author: "John Smith",
-        date: "May 20, 2024",
-        tags: ["AI", "Finance"],
-        imgSrc: "https://via.placeholder.com/300",
-        hearts: 98
-    },
-    // Add more articles as needed...
-];
 
 export default App;
