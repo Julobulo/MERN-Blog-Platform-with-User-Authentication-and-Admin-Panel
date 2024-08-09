@@ -102,7 +102,21 @@ router.get('/articles', async (request, response) => {
     try {
         const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
         await delay(1000);
-        const articles = await Article.find({}).limit(20); // Fetch articles
+        const skip = parseInt(request.query.skip) || 0;
+        const limit = 4;
+        const searchQuery = request.query.search;
+        let filter = {};
+        if (searchQuery && searchQuery.trim() !== '') {
+            filter = {
+                $or: [
+                    { title: { $regex: searchQuery, $options: 'i' } },
+                    { subtitle: { $regex: searchQuery, $options: 'i' } },
+                    { author_name: { $regex: searchQuery, $options: 'i' } },
+                    { tags: { $elemMatch: { $regex: searchQuery, $options: 'i' } } },
+                ]
+            };
+        }
+        const articles = await Article.find(filter).skip(skip).limit(limit); // Fetch articles
         const articlesData = [];
         const token = request.cookies.token;
         let userRequesting = '';
