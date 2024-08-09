@@ -36,7 +36,8 @@ const ArticleDelete = () => {
     }, [])
 
     const handleDelete = async () => {
-        axios.delete('http://localhost:5555/blog/delete', { data: { title: articleData.title } })
+        axios.delete(`http://localhost:5555/blog/delete/${title}`,
+            { withCredentials: true })
             .then((response) => {
                 setIsDeleted(true);
             })
