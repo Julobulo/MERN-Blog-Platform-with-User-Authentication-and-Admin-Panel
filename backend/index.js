@@ -76,7 +76,8 @@ mongoose
         app.listen(PORT, () => {
             console.log(`App is listening on port: ${PORT}`);
         });
-        updateArticlesWithAuthorName()
+        updateArticlesWithAuthorName();
+        checkUsers();
     })
     .catch((error) => {
         console.log(error)
@@ -106,6 +107,18 @@ async function updateArticlesWithAuthorName() {
     }
     else {
         console.log('No articles without author_name fields')
+    }
+}
+
+async function checkUsers() {
+    try {
+        const users = await User.find();
+        for (let user of users) {
+            await user.save();
+        }
+        console.log('All user documents are correct');
+    } catch (error) {
+        console.error('Error checking or updating users:', error);
     }
 }
 
