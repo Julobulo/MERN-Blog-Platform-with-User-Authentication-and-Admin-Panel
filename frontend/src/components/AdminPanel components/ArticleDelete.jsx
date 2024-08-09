@@ -15,24 +15,17 @@ const ArticleDelete = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log('beginning use effect hook');
-        toast.success(`title: ${title}`);
-        console.log('continuing use effect hook');
         axios.get(`http://localhost:5555/blog/article/${title}`,
             { withCredentials: true })
             .then((response) => {
-                console.log(`finishing use effect hook, with articleData: ${JSON.stringify(response.data)}`);
                 setArticleData(response.data);
-                console.log('almost finished!')
                 setLoading(false);
             })
             .catch((error) => {
-                console.log(`caught error in axios request: ${error.data.response.message}`);
-                toast.error(error.data.response.message);
-                setError(error.data.response.message);
+                toast.error(error.response.data.message);
+                setError(error.response.data.message);
                 setLoading(false);
             })
-        console.log('finishing use effect hook!');
     }, [])
 
     const handleDelete = async () => {
