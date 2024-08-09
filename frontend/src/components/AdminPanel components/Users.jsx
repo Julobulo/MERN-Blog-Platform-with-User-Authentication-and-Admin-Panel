@@ -78,7 +78,10 @@ const Users = () => {
                 setWasHighlighted(false);
             })
             .catch((error) => {
-                toast.error(`Couldn't fetch the data... Error: ${error.response.data.message}`);
+                toast.error(error.response.data.message);
+                if (error.response.status === 401) {
+                    navigate('/login');
+                }
                 console.log(error);
             })
     }
