@@ -348,4 +348,28 @@ router.get('/adminpanel', async (request, response) => {
     })
 })
 
+router.delete('/delete/:title', async (request, response) => {
+    const { title } = request.params;
+    const token = request.cookies.token;
+    if (!token) {
+        return response.status(401).json({ message: "cookie missing" })
+    }
+    jwt.verify(token, process.env.TOKEN_KEY, async (err, data) => {
+        if (err) {
+            return response.status(401).json({ message: "bad cookie" })
+        }
+        const user = await User.findById(data.id);
+        if (!user.isAdmin) {
+            return response.status(403).json({ message: "you can't perform that action" })
+        }
+        const article = await Article.findOne({ title });
+        if (!article) {
+            return response.status(404).json({ message: "article doesn't exist" })
+        }
+        await Article.deleteOne({ _id: article._id });
+        console.log
+        return response.status(204).json({ message: "the article was successfully deleted" });
+    })
+})
+
 export default router
