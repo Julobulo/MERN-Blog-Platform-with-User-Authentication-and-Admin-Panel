@@ -13,6 +13,9 @@ router.get('/most-liked', async (request, response) => {
         const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
         await delay(1000);
         let mostLovedArticle = await Article.findOne({}).sort({ likes: -1 });
+        if (!mostLovedArticle) {
+            return response.status(404).json({ message: "no articles found" })
+        }
         try {
             const user = await User.findById(mostLovedArticle.author); // Find the user by _id
             if (user) {
@@ -56,6 +59,9 @@ router.get('/most-recent', async (request, response) => {
         // const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
         // await delay(1000);
         let mostRecentArticle = await Article.findOne({}).sort({ date: -1 });
+        if (!mostRecentArticle) {
+            return response.status(404).json({ message: "no articles found" })
+        }
         try {
             const user = await User.findById(mostRecentArticle.author); // Find the user by _id
             if (user) {
