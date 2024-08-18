@@ -30,43 +30,41 @@ const CreateForm = ({ pageTitle, articleData }) => {
         return blocks.map(block => {
             if (block.content && Array.isArray(block.content)) { // adding styles field to content field
                 block.content = block.content.map(item => {
-                    if (item.rows) {
-                        item.rows = item.rows.map(row => {
-                            row.cells = row.cells.map(cellGroup => {
-                                return cellGroup.map(cell => ({
-                                    ...cell,
-                                    styles: cell.styles || {}
-                                }));
-                            });
-                            return row;
-                        });
-                    }
+                    // if (item.rows) {
+                    //     item.rows = item.rows.map(row => {
+                    //         row.cells = row.cells.map(cellGroup => {
+                    //             return cellGroup.map(cell => ({
+                    //                 ...cell,
+                    //                 styles: cell.styles || {}
+                    //             }));
+                    //         });
+                    //         return row;
+                    //     });
+                    // }
                     return {
                         ...item,
                         styles: item.styles || {}
                     };
                 });
             }
-            if (block.content.length < 2) { // makes the field content a single element instead of a list of elements
-                block.content = block.content[0]
-            }
-            // Check for children and recursively call addMissingStyles
-            if (block.children && block.children.length > 0) {
-                console.log(`hit children: ${JSON.stringify(block.children)}`);
-                block.children = addMissingStyles(block.children);
-            }
+            // if (block.content.length < 2) { // makes the field content a single element instead of a list of elements
+            //     block.content = block.content[0]
+            // }
+            // // Check for children and recursively call addMissingStyles
+            // if (block.children && block.children.length > 0) {
+            //     console.log(`hit children: ${JSON.stringify(block.children)}`);
+            //     block.children = addMissingStyles(block.children);
+            // }
             return block;
         });
     };
-    useEffect(() => {
-        if (pageTitle === "Edit") {
-            // articleData = {
-            //     ...articleData,
-            //     main: addMissingStyles(articleData.main),
-            // }
-            console.log(`article data after adding: ${JSON.stringify(articleData, null, 2)}`);
+    if (pageTitle === "Edit") {
+        articleData = {
+            ...articleData,
+            main: addMissingStyles(articleData.main),
         }
-    }, [pageTitle, articleData]);
+        console.log(`article data after adding: ${JSON.stringify(articleData, null, 2)}`);
+    }
     const [tagInput, setTagInput] = useState('');
     const [image, setImage] = useState(pageTitle === 'Edit' ? articleData.image : null);
     const [tags, setTags] = useState(pageTitle === 'Edit' ? articleData.tags : []);
@@ -180,7 +178,7 @@ const CreateForm = ({ pageTitle, articleData }) => {
                 "content": [
                     {
                         "type": "text",
-                        "text": "My amazing title",
+                        "text": "(Create) My amazing title",
                         "styles": {}
                     }
                 ],
@@ -819,7 +817,7 @@ const CreateForm = ({ pageTitle, articleData }) => {
                     {blocks && (
                         <div>
                             <pre>
-                                {JSON.stringify(blocks.slice(15, 16), null, "\t")}
+                                {JSON.stringify(blocks, null, "\t")}
                             </pre>
                         </div>
                     )}
