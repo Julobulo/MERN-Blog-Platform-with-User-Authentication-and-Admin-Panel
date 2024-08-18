@@ -16,6 +16,7 @@ const App = () => {
     const [loading, setLoading] = useState(true);
     const [articleData, setArticleData] = useState({});
     const [liked, setLiked] = useState(false);
+    const [relatedArticles, setRelatedArticles] = useState([]);
     let numberedListIteration = 0;
     useEffect(() => {
         setLoading(true);
@@ -29,6 +30,17 @@ const App = () => {
             .catch((error) => {
                 toast.error(error.response.data);
                 setLoading(false);
+            })
+    }, []);
+
+    useEffect(() => {
+        axios.get(`http://localhost:5555/blog/related/${title}`,
+            { withCredentials: true })
+            .then((response) => {
+                setRelatedArticles(response.data);
+            })
+            .catch((error) => {
+                toast.error(error.response.data);
             })
     }, []);
 
@@ -228,23 +240,29 @@ const App = () => {
                                     {articleData.main.slice(1).map(block => renderBlock(block, false))}
                                 </div>
                             </>)}
-                        <hr className="my-6 border-t border-gray-700" />
-                        <h2 className="text-2xl font-bold mb-4 text-green-400">Suggested Articles</h2>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            {relatedArticles.map((article, index) => (
-                                <ArticleCard
-                                    key={index}
-                                    title={article.title}
-                                    subtitle={article.subtitle}
-                                    href={article.href}
-                                    author={article.author}
-                                    date={article.date}
-                                    tags={article.tags}
-                                    imgSrc={article.imgSrc}
-                                    hearts={article.hearts}
-                                />
-                            ))}
-                        </div>
+                        {relatedArticles && (
+                            <>
+                                <hr className="my-6 border-t border-gray-700" />
+                                <h2 className="text-2xl font-bold mb-4 text-green-400">Suggested Articles</h2>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    {relatedArticles.map((article, index) => (
+                                        <ArticleCard
+                                            key={index}
+                                            title={article.title}
+                                            title_highlighted={article.title_highlighted}
+                                            subtitle={article.subtitle}
+                                            author={article.author}
+                                            author_highlighted={article.author_highlighted}
+                                            date={article.date}
+                                            tags={article.tags}
+                                            imgSrc={article.image}
+                                            likes={article.likes}
+                                            liked={article.liked}
+                                        />
+                                    ))}
+                                </div>
+                            </>)
+                        }
                     </div>
                 </div>
             </div>
@@ -253,26 +271,3 @@ const App = () => {
 }
 
 export default App;
-
-const relatedArticles = [
-    {
-        title: "The Future of AI in Healthcare",
-        description: "Explore how AI is transforming the healthcare industry, from diagnostics to treatment.",
-        href: "#",
-        author: "Jane Doe",
-        date: "June 1, 2024",
-        tags: ["AI", "Healthcare"],
-        imgSrc: "https://via.placeholder.com/300",
-        hearts: 120
-    },
-    {
-        title: "AI and Financial Services",
-        description: "Discover the ways AI is revolutionizing the financial sector and enhancing security.",
-        href: "#",
-        author: "John Smith",
-        date: "May 20, 2024",
-        tags: ["AI", "Finance"],
-        imgSrc: "https://via.placeholder.com/300",
-        hearts: 98
-    }
-];
