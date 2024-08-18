@@ -398,8 +398,26 @@ router.get('/author/:author', async (request, response) => {
     if (!user) {
         return response.status(404).json({ message: "user not found" })
     }
-    const articles = await Article.find({ author: user._id }).sort({ likes: -1 });
-    return response.status(200).json(articles);
+    const articles = await Article.find({ author: user._id }).sort({ likes: -1 }).limit(5);
+    const token = request.cookies.token;
+    if (token) {
+        jwt.verify(token, process.env.TOKEN_KEY, async (err, data) => {
+            if (err) {
+                return response.status(200).json(articles);
+            } else {
+                const userRequesting = await User.findById(data.id);
+                articles.forEach(article => {
+                    if (userRequesting.articlesLiked.includes(article._id)) {
+                        article.liked = true;
+                    }
+                })
+                return response.status(200).json(articles);
+            }
+        })
+    }
+    else {
+        return response.status(200).json(articles);
+    }
 })
 
 export default router
