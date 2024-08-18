@@ -420,4 +420,23 @@ router.get('/author/:author', async (request, response) => {
     }
 })
 
+router.get('/related/:title', async (request, response) => {
+    try {
+        const { title } = request.params;
+        const article = await Article.findOne({ title: title });
+        if (!article) {
+            return response.status(404).json({ message: "article not found" });
+        }
+        const tags = article.tags;
+        const relatedArticles = await Article.find({ tags: { $in: tags }, _id: { $ne: article._id } },
+            // { _id: 0, image: 0, subtitle: 0, main: 0, author: 0, author_name: 0, likes: 0, date: 0, __v: 0 }
+        ).sort({ likes: -1 }).limit(5);
+        return response.status(200).json(relatedArticles);
+    }
+    catch (error) {
+        console.log(error);
+        return response.status(500).json({ message: error });
+    }
+});
+
 export default router
