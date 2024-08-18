@@ -429,7 +429,7 @@ router.get('/related/:title', async (request, response) => {
     const tags = article.tags;
     const relatedArticles = await Article.find({ tags: { $in: tags }, _id: { $ne: article._id } },
         // { _id: 0, image: 0, subtitle: 0, main: 0, author: 0, author_name: 0, likes: 0, date: 0, __v: 0 }
-    ).sort({ likes: -1 }).limit(5);
+    ).sort({ likes: -1 }).limit(4);
     const token = request.cookies.token;
     if (token) {
         jwt.verify(token, process.env.TOKEN_KEY, async (err, data) => {
