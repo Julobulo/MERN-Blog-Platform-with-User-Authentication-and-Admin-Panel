@@ -1,6 +1,5 @@
 Backend:
-    create delete route for articles in BlogRoute.js
 
 Frontend:
-    make sure all axios requests checks for 401s, and if they do get one, navigate to /login
     Put new articles changes in localStorage
+    change tab title to article's title
