@@ -85,7 +85,7 @@ const Author = () => {
                     isAdmin={authorData.isAdmin}
                     isSuperAdmin={authorData.isSuperAdmin}
                 />
-                {authorArticles.length > 0 && (
+                {authorArticles.length > 0 ? (
                     <>
                         <hr className='mt-6' />
                         <h1 className="text-2xl font-bold mt-7 mb-1">By {authorData.username}:</h1>
@@ -107,6 +107,10 @@ const Author = () => {
                             ))}
                         </div>
                     </>
+                ) : (
+                    <div className="text-center mt-6">
+                        <span className='text-red-400'>No articles by {authorData.username} were found</span>
+                    </div>
                 )}
             </div>
         </div>
