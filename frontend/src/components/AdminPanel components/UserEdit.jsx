@@ -130,13 +130,21 @@ const UserEdit = () => {
                     <>
                         <div className="mb-4">
                             <label htmlFor="profilePicture" className="block text-sm font-medium mb-1">Profile Picture (you can use <a href="https://getavataaars.com" className='underline'>getavataaars</a> to generate one)</label>
-                            <input
-                                id="profilePicture"
-                                type="file"
-                                accept="image/*"
-                                onChange={handleProfilePictureChange}
-                                className="w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 bg-gray-900 text-white"
-                            />
+
+                            <div className='flex flex-row items-center'>
+                                <div className="basis-1/4">
+                                    <img src={userData.profilePicture} alt={userData.username} height={64} width={64} className="mx-auto" />
+                                </div>
+                                <div className='basis-3/4'>
+                                    <input
+                                        id="profilePicture"
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={handleProfilePictureChange}
+                                        className="w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 bg-gray-900 text-white"
+                                    />
+                                </div>
+                            </div>
                         </div>
                         <div className="mb-4">
                             <label className="block text-sm font-medium mb-1" htmlFor="username">Username</label>
