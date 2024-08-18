@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema({
   bio: {
     type: String,
     required: [true, "Your bio is required"],
-    default: '',
+    default: ' ',
   },
   isAdmin: { type: Boolean, default: false },
   isSuperAdmin: { type: Boolean, default: false },
