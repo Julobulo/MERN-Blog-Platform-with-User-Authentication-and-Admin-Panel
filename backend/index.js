@@ -76,37 +76,29 @@ mongoose
         app.listen(PORT, () => {
             console.log(`App is listening on port: ${PORT}`);
         });
-        updateArticlesWithAuthorName();
-        checkUsers();
+        await checkUsers();
+        await checkArticles();
     })
     .catch((error) => {
         console.log(error)
     })
 
-async function updateArticlesWithAuthorName() {
-    // Find all articles that do not have the author_name field
-    const articlesWithoutAuthorName = await Article.find({ author_name: { $exists: false } });
-
-    for (let article of articlesWithoutAuthorName) {
-        const authorId = article.author;
-
-        // Find the user with the given author ID
-        const user = await User.findById(authorId);
-
-        if (user) {
-            // Update the article with the author's username
-            article.author_name = user.username;
+async function checkArticles() {
+    try {
+        const articles = await Article.find();
+        for (let article of articles) {
+            // creating author_name field in each article
+            const author = await User.findById(article.author); // Find the user by _id
+            if (author) {
+                article.author_name = author.username;
+            } else {
+                article.author_name = "Unknown";
+            }
             await article.save();
-            console.log(`Updated article ${article._id} with author_name ${user.username}`);
-        } else {
-            console.warn(`User with ID ${authorId} not found for article ${article._id}`);
         }
-    }
-    if (articlesWithoutAuthorName.length) {
-        console.log('Update completed');
-    }
-    else {
-        console.log('No articles without author_name fields')
+        console.log('All article documents are correct');
+    } catch (error) {
+        console.error('Error checking articles:', error);
     }
 }
 
