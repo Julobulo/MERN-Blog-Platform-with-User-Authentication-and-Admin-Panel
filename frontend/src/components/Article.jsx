@@ -247,7 +247,7 @@ const App = () => {
                                     {articleData.main.slice(1).map(block => renderBlock(block, false))}
                                 </div>
                             </>)}
-                        {relatedArticles.length && (
+                        {relatedArticles.length > 0 && (
                             <>
                                 <hr className="my-6 border-t border-gray-700" />
                                 <h2 className="text-2xl font-bold mb-4 text-green-400">Suggested Articles</h2>
