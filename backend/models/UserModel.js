@@ -39,6 +39,11 @@ const userSchema = new mongoose.Schema({
       },
     ],
   },
+  createdAt: {
+    type: Date,
+    required: [true, "createdAt is required"],
+    default: Date.now,
+  },
 }, { timestamps: true });
 
 
