@@ -228,6 +228,13 @@ const App = () => {
                                         <span className='text-red-500'>{articleData.likes}</span>
                                     </div>
                                 </div>
+                                <div className="flex mb-4 mx-8 flex-wrap max-w-full overflow-auto space-x-2">
+                                    {articleData.tags.map(tag => (
+                                        <div key={tag} className="flex rounded-full border border-gray-700 bg-gray-800 px-3 py-1 my-1 badge">
+                                            {<span className="text-xs uppercase leading-none text-green-400 text-center my-2" dangerouslySetInnerHTML={{ __html: tag }}></span>}
+                                        </div>
+                                    ))}
+                                </div>
                                 <div className="mx-8">
                                     <img
                                         alt={articleData.title}
