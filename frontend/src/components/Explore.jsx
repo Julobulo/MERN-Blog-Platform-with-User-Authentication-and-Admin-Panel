@@ -114,7 +114,7 @@ const App = () => {
                             title={article.title}
                             title_highlighted={article.title_highlighted}
                             subtitle={article.subtitle}
-                            author={article.author}
+                            author={article.author_name}
                             author_highlighted={article.author_highlighted}
                             date={article.date}
                             tags={article.tags}
