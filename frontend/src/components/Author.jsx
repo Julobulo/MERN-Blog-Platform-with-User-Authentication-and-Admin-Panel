@@ -6,49 +6,12 @@ import ArticleCard from './ArticleCard';
 import AuthorCard from './AuthorCard';
 import Spinner from "./Spinner";
 
-const authorArticles = [
-    {
-        title: "The Rise of Artificial Intelligence in Modern Society",
-        description: "Explore how AI is transforming the healthcare industry, from diagnostics to treatment.",
-        href: "#",
-        author: "john_doe",
-        date: "June 1, 2024",
-        tags: ["AI", "Healthcare"],
-        imgSrc: "https://via.placeholder.com/300",
-        hearts: 120
-    },
-    {
-        title: "AI and Financial Services",
-        description: "Discover the ways AI is revolutionizing the financial sector and enhancing security.",
-        href: "#",
-        author: "john_doe",
-        date: "May 20, 2024",
-        tags: ["AI", "Finance"],
-        imgSrc: "https://via.placeholder.com/300",
-        hearts: 98
-    },
-    {
-        title: "The Impact of Machine Learning on Big Data",
-        description: "An in-depth look at how machine learning algorithms are used to analyze and interpret big data.",
-        href: "#",
-        author: "john_doe",
-        date: "April 15, 2024",
-        tags: ["Machine Learning", "Big Data"],
-        imgSrc: "https://via.placeholder.com/300",
-        hearts: 85
-    }
-];
-
 const Author = () => {
     const { author } = useParams(); // gets the author from the url
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
-    const [authorData, setAuthorData] = useState({
-        imgSrc: 'https://via.placeholder.com/64',
-        username: 'john_doe',
-        date: 'January 1, 2020',
-        bio: 'I am a tech enthusiast and a blogger. I write about AI, machine learning, and data science.',
-    });
+    const [authorData, setAuthorData] = useState({});
+    const [authorArticles, setAuthorArticles] = useState([]);
 
     useEffect(() => {
         setLoading(true);
@@ -77,6 +40,18 @@ const Author = () => {
                 toast.error(error.response.data.message);
             }
             )
+    }, []);
+
+    useEffect(() => {
+        axios.get(`http://localhost:5555/blog/author/${author}`,
+            { withCredentials: true }
+        )
+            .then((response) => {
+                setAuthorArticles(response.data);
+            })
+            .catch((error) => {
+                console.log(error.response.data.message);
+            })
     }, []);
 
     if (loading) {
@@ -119,13 +94,15 @@ const Author = () => {
                                 <ArticleCard
                                     key={index}
                                     title={article.title}
-                                    description={article.description}
-                                    href={article.href}
+                                    title_highlighted={article.title_highlighted}
+                                    subtitle={article.subtitle}
                                     author={article.author}
+                                    author_highlighted={article.author_highlighted}
                                     date={article.date}
                                     tags={article.tags}
-                                    imgSrc={article.imgSrc}
-                                    hearts={article.hearts}
+                                    imgSrc={article.image}
+                                    likes={article.likes}
+                                    liked={article.liked}
                                 />
                             ))}
                         </div>
