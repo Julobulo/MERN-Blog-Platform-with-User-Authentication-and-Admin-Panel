@@ -421,21 +421,33 @@ router.get('/author/:author', async (request, response) => {
 })
 
 router.get('/related/:title', async (request, response) => {
-    try {
-        const { title } = request.params;
-        const article = await Article.findOne({ title: title });
-        if (!article) {
-            return response.status(404).json({ message: "article not found" });
-        }
-        const tags = article.tags;
-        const relatedArticles = await Article.find({ tags: { $in: tags }, _id: { $ne: article._id } },
-            // { _id: 0, image: 0, subtitle: 0, main: 0, author: 0, author_name: 0, likes: 0, date: 0, __v: 0 }
-        ).sort({ likes: -1 }).limit(5);
-        return response.status(200).json(relatedArticles);
+    const { title } = request.params;
+    const article = await Article.findOne({ title: title });
+    if (!article) {
+        return response.status(404).json({ message: "article not found" });
     }
-    catch (error) {
-        console.log(error);
-        return response.status(500).json({ message: error });
+    const tags = article.tags;
+    const relatedArticles = await Article.find({ tags: { $in: tags }, _id: { $ne: article._id } },
+        // { _id: 0, image: 0, subtitle: 0, main: 0, author: 0, author_name: 0, likes: 0, date: 0, __v: 0 }
+    ).sort({ likes: -1 }).limit(5);
+    const token = request.cookies.token;
+    if (token) {
+        jwt.verify(token, process.env.TOKEN_KEY, async (err, data) => {
+            if (err) {
+                return response.status(200).json(relatedArticles);
+            } else {
+                const userRequesting = await User.findById(data.id);
+                relatedArticles.forEach(article => {
+                    if (userRequesting.articlesLiked.includes(article._id)) {
+                        article.liked = true;
+                    }
+                })
+                return response.status(200).json(relatedArticles);
+            }
+        })
+    }
+    else {
+        return response.status(200).json(relatedArticles);
     }
 });
 
