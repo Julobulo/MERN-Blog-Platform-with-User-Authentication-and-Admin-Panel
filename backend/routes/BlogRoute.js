@@ -17,12 +17,6 @@ router.get('/most-liked', async (request, response) => {
             return response.status(404).json({ message: "no articles found" })
         }
         try {
-            const user = await User.findById(mostLovedArticle.author); // Find the user by _id
-            if (user) {
-                mostLovedArticle.author = user.username; // Replace author with the username
-            } else {
-                mostLovedArticle.author = "Unknown"; // If user not found, set author to "Unknown" or handle it as needed
-            }
             // send "liked" field
             const token = request.cookies.token;
             if (token) {
@@ -63,12 +57,6 @@ router.get('/most-recent', async (request, response) => {
             return response.status(404).json({ message: "no articles found" })
         }
         try {
-            const user = await User.findById(mostRecentArticle.author); // Find the user by _id
-            if (user) {
-                mostRecentArticle.author = user.username; // Replace author with the username
-            } else {
-                mostRecentArticle.author = "Unknown"; // If user not found, set author to "Unknown" or handle it as needed
-            }
             // send "liked" field
             const token = request.cookies.token;
             if (token) {
