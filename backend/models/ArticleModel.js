@@ -98,6 +98,10 @@ const ArticleSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
+    liked: {
+        type: Boolean,
+        required: false,
+    },
     date: {
         type: Date,
         default: Date.now, // Sets the default value to the current date and time
