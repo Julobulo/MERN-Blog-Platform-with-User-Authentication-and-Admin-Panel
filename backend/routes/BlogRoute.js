@@ -392,4 +392,14 @@ router.delete('/delete/:title', async (request, response) => {
     })
 })
 
+router.get('/author/:author', async (request, response) => {
+    const { author } = request.params;
+    const user = await User.findOne({ username: author });
+    if (!user) {
+        return response.status(404).json({ message: "user not found" })
+    }
+    const articles = await Article.find({ author: user._id }).sort({ likes: -1 });
+    return response.status(200).json(articles);
+})
+
 export default router
