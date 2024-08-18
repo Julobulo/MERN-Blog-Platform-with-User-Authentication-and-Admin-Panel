@@ -50,11 +50,11 @@ const CreateForm = ({ pageTitle, articleData }) => {
             // if (block.content.length < 2) { // makes the field content a single element instead of a list of elements
             //     block.content = block.content[0]
             // }
-            // // Check for children and recursively call addMissingStyles
-            // if (block.children && block.children.length > 0) {
-            //     console.log(`hit children: ${JSON.stringify(block.children)}`);
-            //     block.children = addMissingStyles(block.children);
-            // }
+            // Check for children and recursively call addMissingStyles
+            if (block.children && block.children.length > 0) {
+                console.log(`hit children: ${JSON.stringify(block.children)}`);
+                block.children = addMissingStyles(block.children);
+            }
             return block;
         });
     };
