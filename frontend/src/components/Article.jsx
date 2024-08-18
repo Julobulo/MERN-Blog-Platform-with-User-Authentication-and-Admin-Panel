@@ -247,7 +247,7 @@ const App = () => {
                                     {articleData.main.slice(1).map(block => renderBlock(block, false))}
                                 </div>
                             </>)}
-                        {relatedArticles && (
+                        {relatedArticles.length && (
                             <>
                                 <hr className="my-6 border-t border-gray-700" />
                                 <h2 className="text-2xl font-bold mb-4 text-green-400">Suggested Articles</h2>
@@ -258,7 +258,7 @@ const App = () => {
                                             title={article.title}
                                             title_highlighted={article.title_highlighted}
                                             subtitle={article.subtitle}
-                                            author={article.author}
+                                            author={article.author_name}
                                             author_highlighted={article.author_highlighted}
                                             date={article.date}
                                             tags={article.tags}
