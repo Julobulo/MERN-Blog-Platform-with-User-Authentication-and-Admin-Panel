@@ -260,6 +260,7 @@ const App = () => {
                                             subtitle={article.subtitle}
                                             author={article.author_name}
                                             author_highlighted={article.author_highlighted}
+                                            author_profilePicture={article.author_profilePicture}
                                             date={article.date}
                                             tags={article.tags}
                                             imgSrc={article.image}

@@ -86,6 +86,7 @@ const ArticleDelete = () => {
                     subtitle={articleData.subtitle}
                     href={articleData.href}
                     author={articleData.author}
+                    author_profilePicture={articleData.author_profilePicture}
                     date={articleData.date}
                     tags={articleData.tags}
                     imgSrc={articleData.image}

@@ -57,6 +57,7 @@ const HomePage = () => {
                             subtitle={mostLikedArticle.subtitle}
                             href={`http://localhost:5173/blog/article/${mostLikedArticle.title}`}
                             author={mostLikedArticle.author_name}
+                            author_profilePicture={mostLikedArticle.author_profilePicture}
                             date={mostLikedArticle.date}
                             tags={mostLikedArticle.tags}
                             imgSrc={mostLikedArticle.image}
@@ -70,6 +71,7 @@ const HomePage = () => {
                                 subtitle={mostRecentArticle.subtitle}
                                 href={`http://localhost:5173/blog/article/${mostRecentArticle.title}`}
                                 author={mostRecentArticle.author_name}
+                                author_profilePicture={mostRecentArticle.author_profilePicture}
                                 date={mostRecentArticle.date}
                                 tags={mostRecentArticle.tags}
                                 imgSrc={mostRecentArticle.image}
