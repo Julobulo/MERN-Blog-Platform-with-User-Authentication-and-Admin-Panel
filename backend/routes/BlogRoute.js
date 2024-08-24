@@ -439,4 +439,36 @@ router.get('/related/:title', async (request, response) => {
     }
 });
 
+router.patch('/edit/:id', async (request, response) => {
+    console.log(`going to edit an article`);
+    const { id } = request.params;
+    if (!id) {
+        return response.status(400).json({ message: "id param is required" });
+    }
+    const article = await Article.findById(id);
+    if (!article) {
+        return response.status(400).json({ message: "article not found" })
+    }
+    const { image, blocks, tags } = request.body;
+    const token = request.cookies.token;
+    if (!token) {
+        return response.status(401).json({ message: "you need to be logged in" })
+    }
+    jwt.verify(token, process.env.TOKEN_KEY, async (err, data) => {
+        if (err) {
+            return response.status(401).json({ message: "bad cookie" })
+        } else {
+            const user = await User.findById(data.id);
+            if (!user.isAdmin) {
+                return response.status(401).json({ message: "you need to be an admin to perform this action" })
+            }
+            article.image = image;
+            article.blocks = blocks;
+            article.tags = tags;
+            article.save();
+            return response.status(200).json({ message: "article successfully edited" });
+        }
+    })
+})
+
 export default router
