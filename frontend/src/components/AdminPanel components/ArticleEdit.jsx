@@ -25,7 +25,11 @@ const ArticleEdit = () => {
         console.log(`Article data after axios: ${JSON.stringify(articleData)}`)
     }, []);
     if (loading || !articleData) {
-        return <Spinner />
+        return <div className="flex-grow bg-black p-12 text-white">
+            <div className="max-w-3xl mx-auto bg-gray-800 p-6 rounded-lg shadow-lg">
+                <Spinner />
+            </div>
+        </div>
     }
     return (
         <CreateForm
