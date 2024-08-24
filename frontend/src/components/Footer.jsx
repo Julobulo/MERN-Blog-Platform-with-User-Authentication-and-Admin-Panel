@@ -13,17 +13,6 @@ const Footer = () => {
       .catch((error) => {
         toast.error(error);
         console.error(error);
-        setLatestPosts([
-          {
-            title: "example post 1"
-          },
-          {
-            title: "example post 2"
-          },
-          {
-            title: "example post 3"
-          },
-        ])
       })
   }, [])
   return (
@@ -37,7 +26,7 @@ const Footer = () => {
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis odio vitae purus commodo lacinia.
               </p>
             </div>
-            <div className="mb-4 sm:mb-0">
+            {latestPosts.length > 0 && <div className="mb-4 sm:mb-0">
               <h2 className="text-lg font-semibold mb-2 text-gray-200">Latest Posts</h2>
               <ul>
                 {latestPosts.map((post, index) => (
@@ -52,7 +41,7 @@ const Footer = () => {
                   </div>
                 ))}
               </ul>
-            </div>
+            </div>}
             <div>
               <h2 className="text-lg font-semibold mb-2 text-gray-200">Contact Us</h2>
               <p className="text-gray-400">Email: info@example.com</p>
