@@ -3,4 +3,3 @@ Backend:
 Frontend:
     Put new articles changes in localStorage
     change tab title to article's title
-    Have actual author's image in articleCards
