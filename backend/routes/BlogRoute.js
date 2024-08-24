@@ -308,6 +308,7 @@ router.post('/new', async (request, response) => {
                     main: blocks,
                     author: data.id,
                     author_name: (await User.findById(data.id)).username,
+                    author_profilePicture: (await User.findById(data.id)).profilePicture,
                 });
                 (await newArticle).save();
                 response.status(201).json({ message: "successfully posted article!" });
