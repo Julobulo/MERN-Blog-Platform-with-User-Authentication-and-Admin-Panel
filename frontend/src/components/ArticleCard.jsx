@@ -6,7 +6,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-const ArticleCard = ({ title, title_highlighted, subtitle, href, author, author_highlighted, date, tags, imgSrc, likes, liked }) => {
+const ArticleCard = ({ title, title_highlighted, subtitle, href, author, author_highlighted, author_profilePicture, date, tags, imgSrc, likes, liked }) => {
     const [wasLiked, setWasLiked] = useState(liked);
     const [likesNumber, setLikesNumber] = useState(likes);
     const navigate = useNavigate();
@@ -58,7 +58,7 @@ const ArticleCard = ({ title, title_highlighted, subtitle, href, author, author_
                     <div className="flex items-center space-x-2">
                         <img
                             alt={author}
-                            src="https://via.placeholder.com/32"
+                            src={author_profilePicture}
                             className="w-8 h-8 rounded-full"
                         />
                         <div className="flex flex-col">
