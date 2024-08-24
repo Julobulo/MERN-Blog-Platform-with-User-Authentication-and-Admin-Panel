@@ -149,7 +149,7 @@ const CreateForm = ({ pageTitle, articleData }) => {
             tags,
         };
 
-        try {
+        if (pageTitle === "Post") {
             const response = await axios.post('http://localhost:5555/blog/new', articleData, {
                 headers: {
                     'Content-Type': 'application/json'
@@ -160,12 +160,22 @@ const CreateForm = ({ pageTitle, articleData }) => {
             navigate(`/blog/article/${blocks[0].content[0].text}`);
             toast.success(response.data.message);
             console.log(response.data.message);
-        } catch (error) {
-            toast.error(error.response.data.message);
-            console.error(error);
         }
-    };
-    
+        else if (pageTitle === "Edit") {
+            console.log(`articleData before saving: ${JSON.stringify(articleData)}`);
+            const response = await axios.patch(`http://localhost:5555/blog/edit/${articleData._id}`, articleData, {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                withCredentials: true,
+            });
+            console.log(`Title will be "${blocks[0].content[0].text}"`)
+            navigate(`/blog/article/${blocks[0].content[0].text}`);
+            toast.success(response.data.message);
+            console.log(response.data.message);
+        };
+    }
+
     // Creates a new editor instance.
     const editor = useCreateBlockNote({
         initialContent: pageTitle === 'Edit' ? articleData.main : [
