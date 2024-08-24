@@ -24,20 +24,20 @@ const AuthorCard = ({ imgSrc, username, username_highlighted, date, bio, email, 
                         <p className="text-sm text-gray-400">Email: <span dangerouslySetInnerHTML={{ __html: email }} /></p>
                     )}
                     {isAdmin && (
-                            <div className="flex items-center mt-2 align-center text-green-400">
-                                <MdOutlineAdminPanelSettings
-                                    className="w-5 h-5 mr-2"
-                                />
-                                <p className="text-sm text-green-500 font-semibold">Administrator</p>
-                            </div>
+                        <div className="flex items-center mt-2 align-center text-green-400">
+                            <MdOutlineAdminPanelSettings
+                                className="w-5 h-5 mr-2"
+                            />
+                            <p className="text-sm text-green-500 font-semibold">Administrator</p>
+                        </div>
                     )}
                     {isSuperAdmin && (
-                            <div className="flex items-center mt-2 align-center text-green-400">
-                                <GrUserAdmin
-                                    className="w-5 h-5 mr-2"
-                                />
-                                <p className="text-sm text-green-500 font-semibold">Super Admin</p>
-                            </div>
+                        <div className="flex items-center mt-2 align-center text-green-400">
+                            <GrUserAdmin
+                                className="w-5 h-5 mr-2"
+                            />
+                            <p className="text-sm text-green-500 font-semibold">Super Admin</p>
+                        </div>
                     )}
                 </div>
             </a>
