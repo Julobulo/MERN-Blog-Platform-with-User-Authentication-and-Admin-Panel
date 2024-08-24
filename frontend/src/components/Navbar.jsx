@@ -34,7 +34,7 @@ const NavigationBar = () => {
     return (
         <nav className="bg-gray-900 shadow-md">
             <div className="container mx-auto px-4 py-2 flex justify-between items-center">
-                <Link to="/" className="flex items-center">
+                <Link to="/" className="flex items-center" key={"home"}>
                     <img src="https://via.placeholder.com/40" alt="Logo" className="mr-3 hidden sm:block" />
                     <span className="text-2xl font-bold text-green-400">{import.meta.env.VITE_BLOG_NAME}</span>
                 </Link>
@@ -107,11 +107,11 @@ const NavigationBar = () => {
                     </div>
                 </div>
             )}
-            <Modal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)}>
+            <Modal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} key={"signup modal"}>
                 <Login onSignupLinkClick={handleSignupLinkClick} popup={true} />
             </Modal>
 
-            <Modal isOpen={isSignupOpen} onClose={() => setIsSignupOpen(false)}>
+            <Modal isOpen={isSignupOpen} onClose={() => setIsSignupOpen(false)} key={"login modal"}>
                 <Signup onLoginLinkClick={handleLoginLinkClick} popup={true} />
             </Modal>
         </nav>
