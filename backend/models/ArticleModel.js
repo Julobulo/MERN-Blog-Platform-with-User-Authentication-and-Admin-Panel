@@ -112,7 +112,11 @@ const ArticleSchema = new mongoose.Schema({
     },
     author_name: {
         type: String,
-    }
+    },
+    author_profilePicture: {
+      type: String,
+      default: `/default.png`,
+    },
 })
 
 const Article = mongoose.model('Article', ArticleSchema);
