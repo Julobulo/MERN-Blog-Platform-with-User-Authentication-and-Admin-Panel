@@ -143,7 +143,8 @@ const CreateForm = ({ pageTitle, articleData }) => {
             toast.error(`Title can't be more than 200 characters and less than 10!`);
             return;
         }
-        const articleData = {
+        articleData = {
+            ...articleData,
             image,
             blocks,
             tags,
@@ -808,13 +809,13 @@ const CreateForm = ({ pageTitle, articleData }) => {
                         }}
                         className="mb-5"
                     />
-                    {blocks && (
+                    {/* {blocks && (
                         <div>
                             <pre>
                                 {JSON.stringify(blocks, null, "\t")}
                             </pre>
                         </div>
-                    )}
+                    )} */}
                 </div>
                 <div className="mb-4">
                     <label htmlFor="tags" className="block text-sm font-medium mb-1">Tags (up to 4)</label>
