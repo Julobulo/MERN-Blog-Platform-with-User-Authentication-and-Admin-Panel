@@ -35,7 +35,7 @@ const NavigationBar = () => {
         <nav className="bg-gray-900 shadow-md">
             <div className="container mx-auto px-4 py-2 flex justify-between items-center">
                 <Link to="/" className="flex items-center" key={"home"}>
-                    <img src="https://via.placeholder.com/40" alt="Logo" className="mr-3 hidden sm:block" />
+                    <img src={import.meta.env.VITE_BLOG_LOGO} alt="Logo" className="mr-3 hidden sm:block" />
                     <span className="text-2xl font-bold text-green-400">{import.meta.env.VITE_BLOG_NAME}</span>
                 </Link>
                 <div className="hidden lg:flex space-x-6 flex-grow justify-end">
