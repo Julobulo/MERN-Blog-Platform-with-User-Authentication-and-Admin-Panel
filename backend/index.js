@@ -91,6 +91,7 @@ async function checkArticles() {
             const author = await User.findById(article.author); // Find the user by _id
             if (author) {
                 article.author_name = author.username;
+                article.author_profilePicture = author.profilePicture;
             } else {
                 article.author_name = "Unknown";
             }
