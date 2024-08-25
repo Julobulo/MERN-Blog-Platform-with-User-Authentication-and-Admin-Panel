@@ -68,7 +68,7 @@ const CreateForm = ({ pageTitle, articleData }) => {
         }
     }
     const [tagInput, setTagInput] = useState('');
-    const [image, setImage] = useState(pageTitle === 'Edit' ? articleData.image : null);
+    const [image, setImage] = useState(pageTitle === 'Edit' ? articleData.image : localStorage.getItem('image'));
     const [tags, setTags] = useState(pageTitle === 'Edit' ? articleData.tags : []);
     const [blocks, setBlocks] = useState(pageTitle === 'Edit' ? articleData.main : []);
 
@@ -77,6 +77,7 @@ const CreateForm = ({ pageTitle, articleData }) => {
         const maxSize = 1 * 1024 * 1024; // 1MB
         if (file) {
             // Check image
+            localStorage.setItem(image, null);
             if (!file.type.startsWith('image/')) {
                 setImage('');
                 event.target.value = '';
@@ -97,13 +98,19 @@ const CreateForm = ({ pageTitle, articleData }) => {
                     useWebWorker: true,    // Use web worker for compression
                 });
                 const reader = new FileReader();
-                reader.onloadend = () => setImage(reader.result);
+                reader.onloadend = () => {
+                    setImage(reader.result);
+                    if (pageTitle === "Create") { localStorage.setItem('image', reader.result) }
+                };
                 reader.readAsDataURL(compressedFile);
             }
             else {
                 // no need to compress image in that case
                 const reader = new FileReader();
-                reader.onloadend = () => setImage(reader.result);
+                reader.onloadend = () => {
+                    setImage(reader.result);
+                    if (pageTitle === "Create") { localStorage.setItem('image', reader.result) }
+                };
                 reader.readAsDataURL(file);
             }
         }
@@ -150,7 +157,7 @@ const CreateForm = ({ pageTitle, articleData }) => {
             tags,
         };
 
-        if (pageTitle === "Post") {
+        if (pageTitle === "Create") {
             const response = await axios.post('http://localhost:5555/blog/new', articleData, {
                 headers: {
                     'Content-Type': 'application/json'
@@ -791,13 +798,20 @@ const CreateForm = ({ pageTitle, articleData }) => {
                 <h1 className="text-2xl font-bold mb-6 text-center">{pageTitle} Post</h1>
                 <div className="mb-4">
                     <label htmlFor="image" className="block text-sm font-medium mb-1">Image (it will appear on the article display)</label>
-                    <input
-                        id="image"
-                        type="file"
-                        accept="image/*"
-                        onChange={handleImageChange}
-                        className="w-full px-3 py-2 border border-gray-700 rounded-md bg-gray-800 text-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500"
-                    />
+                    <div className='flex flex-row items-center'>
+                        {image && <div className="basis-1/2">
+                            <img src={image} alt={"image selected"} className="mx-auto p-2" />
+                        </div>}
+                        <div className={`${image ? 'basis-1/2' : 'basis-full'}`}>
+                            <input
+                                id="image"
+                                type="file"
+                                accept="image/*"
+                                onChange={handleImageChange}
+                                className="w-full px-3 py-2 border border-gray-700 rounded-md bg-gray-800 text-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500"
+                            />
+                        </div>
+                    </div>
                 </div>
                 <div>
                     <label htmlFor="editor" className="block text-sm font-medium mb-1">Article (this is the actual article, including the title)</label>
