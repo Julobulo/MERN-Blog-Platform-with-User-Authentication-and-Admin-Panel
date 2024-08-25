@@ -211,7 +211,7 @@ const App = () => {
                                         <div className="flex items-center space-x-2">
                                             <img
                                                 alt={articleData.author}
-                                                src="https://via.placeholder.com/32"
+                                                src={articleData.author_profilePicture}
                                                 className="w-8 h-8 rounded-full"
                                             />
                                             <div className="flex flex-col">
