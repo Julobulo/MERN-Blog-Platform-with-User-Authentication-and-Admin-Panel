@@ -12,6 +12,9 @@ import Cookies from "js-cookie";
 
 const App = () => {
     const { title } = useParams();
+    useEffect(() => {
+        document.title = `Blog - ${title}`;
+    }, [title]);
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [articleData, setArticleData] = useState({});
