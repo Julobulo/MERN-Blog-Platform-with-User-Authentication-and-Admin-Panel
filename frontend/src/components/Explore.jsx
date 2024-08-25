@@ -6,6 +6,9 @@ import Spinner from './Spinner';
 import SkeletonLoader from './SkeletonLoader';
 
 const App = () => {
+    useEffect(() => {
+        document.title = `Explore`;
+    }, []);
     const [searchQuery, setSearchQuery] = useState('');
     const [articles, setArticles] = useState([]);
     const [highlightedArticles, setHighlightedArticles] = useState([]);
