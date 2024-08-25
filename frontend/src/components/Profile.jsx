@@ -8,6 +8,9 @@ import Cookies from "js-cookie";
 
 
 const Profile = () => {
+    useEffect(() => {
+        document.title = `Profile`;
+    }, []);
     const navigate = useNavigate();
     useEffect(() => {
         if (!Cookies.get('token')) {
