@@ -5,6 +5,9 @@ import { toast } from 'react-toastify';
 import Spinner from './Spinner';
 
 const ProfileEdit = () => {
+    useEffect(() => {
+        document.title = `Profile - Edit`;
+    }, []);
     // To be able to navigate to other pages
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
