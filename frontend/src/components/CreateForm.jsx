@@ -69,7 +69,7 @@ const CreateForm = ({ pageTitle, articleData }) => {
     }
     const [tagInput, setTagInput] = useState('');
     const [image, setImage] = useState(pageTitle === 'Edit' ? articleData.image : localStorage.getItem('image'));
-    const [tags, setTags] = useState(pageTitle === 'Edit' ? articleData.tags : []);
+    const [tags, setTags] = useState(pageTitle === 'Edit' ? articleData.tags : localStorage.getItem('tags').split(','));
     const [blocks, setBlocks] = useState(pageTitle === 'Edit' ? articleData.main : []);
 
     const handleImageChange = async (event) => {
@@ -125,12 +125,14 @@ const CreateForm = ({ pageTitle, articleData }) => {
                 return; // Exit early if the tag is invalid
             }
             setTags([...tags, newTag]);
+            localStorage.setItem('tags', [...tags, newTag]);
             setTagInput('');
         }
     };
 
     const handleTagRemove = (index) => {
         setTags(tags.filter((_, i) => i !== index));
+        localStorage.setItem('tags', tags.filter((_, i) => i !== index));
     };
 
     const handlePost = async () => {
