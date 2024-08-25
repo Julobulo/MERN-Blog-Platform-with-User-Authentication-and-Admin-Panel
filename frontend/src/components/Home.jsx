@@ -5,6 +5,9 @@ import { toast } from 'react-toastify';
 import ArticleCardSkeleton from './SkeletonLoader';
 
 const HomePage = () => {
+    useEffect(() => {
+        document.title = `${import.meta.env.VITE_BLOG_NAME}`;
+    }, []);
     const [mostLikedArticle, setMostLikedArticle] = useState({});
     const [mostRecentArticle, setMostRecentArticle] = useState({});
     const [likedLoading, setLikedLoading] = useState(true);
