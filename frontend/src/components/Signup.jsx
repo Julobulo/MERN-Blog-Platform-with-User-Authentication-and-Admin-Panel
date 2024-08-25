@@ -4,6 +4,11 @@ import { toast } from "react-toastify";
 import axios from "axios";
 
 const Signup = ({ onLoginLinkClick, popup = false }) => {
+    useEffect(() => {
+        if (!popup) {
+            document.title = `${import.meta.env.VITE_BLOG_NAME} - Signup`;
+        }
+    }, []);
     const navigate = useNavigate();
     const [inputValue, setInputValue] = useState({
         email: "",
