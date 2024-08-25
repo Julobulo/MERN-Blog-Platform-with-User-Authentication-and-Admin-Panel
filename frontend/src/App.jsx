@@ -23,6 +23,15 @@ import Signup from "./components/Signup";
 import UserPassword from "./components/AdminPanel components/UserPassword";
 
 const App = () => {
+  const faviconLink = import.meta.env.VITE_BLOG_LOGO;
+  console.log(`faviconLink: ${faviconLink}`);
+  var link = document.querySelector("link[rel~='icon']");
+  if (!link) {
+    link = document.createElement('link');
+    link.rel = 'icon';
+    document.head.appendChild(link);
+  }
+  link.href = faviconLink || '/default.png';
   return (
     <main className="bg-black min-h-screen flex flex-col justify-between">
       <ToastContainer
