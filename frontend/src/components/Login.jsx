@@ -1,10 +1,15 @@
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 
 const Login = ({ onSignupLinkClick, popup = false }) => {
+    useEffect(() => {
+        if (!popup) {
+            document.title = `${import.meta.env.VITE_BLOG_NAME} - Login`;
+        }
+    }, []);
     const navigate = useNavigate();
     const [inputValue, setInputValue] = useState({
         email: "",
