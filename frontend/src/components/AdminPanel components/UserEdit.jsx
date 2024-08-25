@@ -6,6 +6,9 @@ import { toast } from "react-toastify";
 
 const UserEdit = () => {
     const { author } = useParams();
+    useEffect(() => {
+        document.title = `AdminPanel - Edit User - ${author}`;
+    }, [author]);
     // To be able to navigate to other pages
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);

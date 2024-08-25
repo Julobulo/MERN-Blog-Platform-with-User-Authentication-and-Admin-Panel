@@ -7,6 +7,9 @@ import Spinner from "../Spinner";
 
 const ArticleDelete = () => {
     const { title } = useParams();
+    useEffect(() => {
+        document.title = `AdminPanel - Delete Article - ${title}`;
+    }, [title]);
     const [isDeleted, setIsDeleted] = useState(false);
     const [isConfirming, setIsConfirming] = useState(false);
     const [error, setError] = useState(null);

@@ -10,6 +10,9 @@ import { toast } from 'react-toastify';
 import Cookies from "js-cookie";
 
 const Users = () => {
+    useEffect(() => {
+        document.title = `AdminPanel - Users`;
+    }, []);
     const navigate = useNavigate();
     useEffect(() => {
         if (!Cookies.get('token')) {

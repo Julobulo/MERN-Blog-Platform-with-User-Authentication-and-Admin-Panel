@@ -9,6 +9,9 @@ import Spinner from '../Spinner';
 import { toast } from 'react-toastify';
 
 const Articles = () => {
+    useEffect(() => {
+        document.title = `AdminPanel - Articles`;
+    }, []);
     const navigate = useNavigate();
     useEffect(() => {
         if (!Cookies.get('token')) {

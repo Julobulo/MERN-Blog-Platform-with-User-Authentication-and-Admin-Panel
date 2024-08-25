@@ -16,6 +16,9 @@ import { toast } from "react-toastify";
 
 const UserDelete = () => {
     const { author } = useParams();
+    useEffect(() => {
+        document.title = `AdminPanel - Delete User - ${author}`;
+    }, [author]);
     // To be able to navigate to other pages
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);

@@ -6,6 +6,9 @@ import { useParams } from 'react-router-dom';
 
 const ArticleEdit = () => {
     const { title } = useParams();
+    useEffect(() => {
+        document.title = `AdminPanel - Edit Article - ${title}`;
+    }, [title]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [articleData, setArticleData] = useState();

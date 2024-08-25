@@ -7,6 +7,9 @@ import { toast } from "react-toastify";
 
 const UserPassword = () => {
     const { author } = useParams();
+    useEffect(() => {
+        document.title = `AdminPanel - Change Password - ${author}`;
+    }, [author]);
     // To be able to navigate to other pages
     const navigate = useNavigate();
     const [newPassword, setNewPassword] = useState('');
