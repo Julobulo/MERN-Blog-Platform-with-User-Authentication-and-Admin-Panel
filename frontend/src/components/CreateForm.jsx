@@ -77,7 +77,7 @@ const CreateForm = ({ pageTitle, articleData }) => {
         const maxSize = 1 * 1024 * 1024; // 1MB
         if (file) {
             // Check image
-            localStorage.setItem(image, null);
+            localStorage.setItem('image', '');
             if (!file.type.startsWith('image/')) {
                 setImage('');
                 event.target.value = '';
