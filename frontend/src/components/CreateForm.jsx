@@ -166,7 +166,10 @@ const CreateForm = ({ pageTitle, articleData }) => {
                 },
                 withCredentials: true,
             });
-            console.log(`Title will be "${blocks[0].content[0].text}"`)
+            console.log(`Title will be "${blocks[0].content[0].text}"`);
+            localStorage.removeItem('image');
+            localStorage.removeItem('tags');
+            localStorage.removeItem('blocks');
             navigate(`/blog/article/${blocks[0].content[0].text}`);
             toast.success(response.data.message);
             console.log(response.data.message);
