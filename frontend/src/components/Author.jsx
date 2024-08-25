@@ -7,7 +7,10 @@ import AuthorCard from './AuthorCard';
 import Spinner from "./Spinner";
 
 const Author = () => {
-    const { author } = useParams(); // gets the author from the url
+    const { author } = useParams();
+    useEffect(() => {
+        document.title = `Author - ${author}`;
+    }, [author]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [authorData, setAuthorData] = useState({});
