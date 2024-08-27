@@ -160,7 +160,7 @@ const CreateForm = ({ pageTitle, articleData }) => {
         };
 
         if (pageTitle === "Create") {
-            const response = await axios.post('http://localhost:5555/blog/new', articleData, {
+            const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/blog/new`, articleData, {
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -176,7 +176,7 @@ const CreateForm = ({ pageTitle, articleData }) => {
         }
         else if (pageTitle === "Edit") {
             console.log(`articleData before saving: ${JSON.stringify(articleData)}`);
-            const response = await axios.patch(`http://localhost:5555/blog/edit/${articleData._id}`, articleData, {
+            const response = await axios.patch(`${import.meta.env.VITE_API_BASE_URL}/blog/edit/${articleData._id}`, articleData, {
                 headers: {
                     'Content-Type': 'application/json'
                 },

@@ -15,7 +15,7 @@ const ArticleEdit = () => {
     useEffect(() => {
         console.log(`going to request article`);
         setLoading(true);
-        axios.get(`http://localhost:5555/blog/article/${title}`,
+        axios.get(`${import.meta.env.VITE_API_BASE_URL}/blog/article/${title}`,
             { withCredentials: true })
             .then((response) => {
                 setArticleData(response.data);

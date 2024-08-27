@@ -23,7 +23,7 @@ const App = () => {
     let numberedListIteration = 0;
     useEffect(() => {
         setLoading(true);
-        axios.get(`http://localhost:5555/blog/article/${title}`,
+        axios.get(`${import.meta.env.VITE_API_BASE_URL}/blog/article/${title}`,
             { withCredentials: true })
             .then((response) => {
                 setArticleData(response.data);
@@ -37,7 +37,7 @@ const App = () => {
     }, []);
 
     useEffect(() => {
-        axios.get(`http://localhost:5555/blog/related/${title}`,
+        axios.get(`${import.meta.env.VITE_API_BASE_URL}/blog/related/${title}`,
             { withCredentials: true })
             .then((response) => {
                 setRelatedArticles(response.data);
@@ -52,7 +52,7 @@ const App = () => {
             navigate('/login');
         }
         else {
-            axios.post(`http://localhost:5555/blog/article/${title}`, {},
+            axios.post(`${import.meta.env.VITE_API_BASE_URL}/blog/article/${title}`, {},
                 { withCredentials: true })
                 .then((response) => {
                     setLiked(!liked);

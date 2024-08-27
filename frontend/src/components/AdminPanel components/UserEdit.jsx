@@ -17,7 +17,7 @@ const UserEdit = () => {
     useEffect(() => {
         setLoading(true);
         axios.get(
-            `http://localhost:5555/user/${author}`,
+            `${import.meta.env.VITE_API_BASE_URL}/user/${author}`,
             { withCredentials: true }
         )
             .then((response) => {
@@ -104,7 +104,7 @@ const UserEdit = () => {
 
     const handleSave = async () => {
         try {
-            const response = await axios.post('http://localhost:5555/user/update',
+            const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/user/update`,
                 userData,
                 {
                     headers: {

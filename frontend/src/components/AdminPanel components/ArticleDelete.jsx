@@ -18,7 +18,7 @@ const ArticleDelete = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get(`http://localhost:5555/blog/article/${title}`,
+        axios.get(`${import.meta.env.VITE_API_BASE_URL}/blog/article/${title}`,
             { withCredentials: true })
             .then((response) => {
                 setArticleData(response.data);
@@ -32,7 +32,7 @@ const ArticleDelete = () => {
     }, [])
 
     const handleDelete = async () => {
-        axios.delete(`http://localhost:5555/blog/delete/${title}`,
+        axios.delete(`${import.meta.env.VITE_API_BASE_URL}/blog/delete/${title}`,
             { withCredentials: true })
             .then((response) => {
                 setIsDeleted(true);

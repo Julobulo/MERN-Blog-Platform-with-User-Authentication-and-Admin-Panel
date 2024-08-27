@@ -59,7 +59,7 @@ const Users = () => {
     const fetchUsers = (skip, search) => {
         if (skip > 0) { setLoadingMore(true) } else { setLoading(true); setUsers([]) }
         axios.get(
-            `http://localhost:5555/user/adminpanel?skip=${skip}&search=${search}`,
+            `${import.meta.env.VITE_API_BASE_URL}/user/adminpanel?skip=${skip}&search=${search}`,
             { withCredentials: true }
         )
             .then((response) => {

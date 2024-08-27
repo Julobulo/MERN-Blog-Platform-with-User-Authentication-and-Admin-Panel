@@ -19,7 +19,7 @@ const Author = () => {
     useEffect(() => {
         setLoading(true);
         axios.get(
-            `http://localhost:5555/user/${author}`,
+            `${import.meta.env.VITE_API_BASE_URL}/user/${author}`,
             { withCredentials: true } // not needed as we don't need to authenticate
         )
             .then((response) => {
@@ -46,7 +46,7 @@ const Author = () => {
     }, []);
 
     useEffect(() => {
-        axios.get(`http://localhost:5555/blog/author/${author}`,
+        axios.get(`${import.meta.env.VITE_API_BASE_URL}/blog/author/${author}`,
             { withCredentials: true }
         )
             .then((response) => {

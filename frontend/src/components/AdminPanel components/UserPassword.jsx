@@ -21,7 +21,7 @@ const UserPassword = () => {
     useEffect(() => {
         setLoading(true);
         axios.get(
-            `http://localhost:5555/user/${author}`,
+            `${import.meta.env.VITE_API_BASE_URL}/user/${author}`,
             { withCredentials: true }
         )
             .then((response) => {
@@ -47,7 +47,7 @@ const UserPassword = () => {
     }, [setUserData]);
 
     const handleChange = async () => {
-        axios.put(`http://localhost:5555/user/password/${author}`,
+        axios.put(`${import.meta.env.VITE_API_BASE_URL}/user/password/${author}`,
             { newPassword: newPassword },
             {
                 withCredentials: true

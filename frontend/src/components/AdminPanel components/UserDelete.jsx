@@ -29,7 +29,7 @@ const UserDelete = () => {
     useEffect(() => {
         setLoading(true);
         axios.get(
-            `http://localhost:5555/user/${author}`,
+            `${import.meta.env.VITE_API_BASE_URL}/user/${author}`,
             { withCredentials: true }
         )
             .then((response) => {
@@ -56,7 +56,7 @@ const UserDelete = () => {
 
     const handleDelete = async () => {
         try {
-            const response = await axios.delete(`http://localhost:5555/user/delete`,
+            const response = await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/user/delete`,
                 {
                     data: userData,
                     withCredentials: true

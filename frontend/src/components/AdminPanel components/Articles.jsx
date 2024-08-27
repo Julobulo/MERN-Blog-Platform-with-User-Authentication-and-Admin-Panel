@@ -57,7 +57,7 @@ const Articles = () => {
     const fetchArticles = (skip, search) => {
         if (skip > 0) { setLoadingMore(true) } else { setLoading(true); setArticles([]) }
         axios.get(
-            `http://localhost:5555/blog/adminpanel?skip=${skip}&search=${search}`,
+            `${import.meta.env.VITE_API_BASE_URL}/blog/adminpanel?skip=${skip}&search=${search}`,
             { withCredentials: true }
         )
             .then((response) => {

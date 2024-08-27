@@ -28,7 +28,7 @@ const Login = ({ onSignupLinkClick, popup = false }) => {
         e.preventDefault();
         try {
             const { data } = await axios.post(
-                "http://localhost:5555/login",
+                `${import.meta.env.VITE_API_BASE_URL}/login`,
                 {
                     ...inputValue,
                 },
@@ -55,7 +55,7 @@ const Login = ({ onSignupLinkClick, popup = false }) => {
         });
     };
     const handleGoogleLogin = () => {
-        window.location.href = "http://localhost:5555/oauth/google";
+        window.location.href = `${import.meta.env.VITE_API_BASE_URL}/oauth/google`;
     };
     return (
         <div className={`flex items-center ${!popup ? 'min-h-screen' : ''} justify-center`}>

@@ -21,7 +21,7 @@ const Profile = () => {
     useEffect(() => {
         setLoading(true);
         axios.get(
-            `http://localhost:5555/user/`,
+            `${import.meta.env.VITE_API_BASE_URL}/user/`,
             { withCredentials: true }
         )
             .then((response) => {

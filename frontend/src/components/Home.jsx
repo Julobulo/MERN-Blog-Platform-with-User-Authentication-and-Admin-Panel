@@ -16,7 +16,7 @@ const HomePage = () => {
     useEffect(() => {
         setLikedLoading(true);
         setRecentLoading(true);
-        axios.get(`http://localhost:5555/blog/most-liked`,
+        axios.get(`${import.meta.env.VITE_API_BASE_URL}/blog/most-liked`,
             { withCredentials: true })
             .then((response) => {
                 setMostLikedArticle(response.data);
@@ -28,7 +28,7 @@ const HomePage = () => {
                 setLikedLoading(false);
                 setError(true);
             });
-        axios.get(`http://localhost:5555/blog/most-recent`,
+        axios.get(`${import.meta.env.VITE_API_BASE_URL}/blog/most-recent`,
             { withCredentials: true })
             .then((response) => {
                 setMostRecentArticle(response.data);

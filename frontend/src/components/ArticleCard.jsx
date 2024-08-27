@@ -15,7 +15,7 @@ const ArticleCard = ({ title, title_highlighted, subtitle, href, author, author_
             navigate('/login');
         }
         else {
-            axios.post(`http://localhost:5555/blog/article/${title}`, {},
+            axios.post(`${import.meta.env.VITE_API_BASE_URL}/blog/article/${title}`, {},
                 { withCredentials: true })
                 .then((response) => {
                     setWasLiked(!wasLiked);
