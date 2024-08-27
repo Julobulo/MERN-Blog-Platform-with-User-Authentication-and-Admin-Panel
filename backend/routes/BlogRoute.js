@@ -10,8 +10,8 @@ const verifyToken = util.promisify(jwt.verify);
 // gets most liked article
 router.get('/most-liked', async (request, response) => {
     try {
-        const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
-        await delay(1000);
+        // const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+        // await delay(1000);
         let mostLovedArticle = await Article.findOne({}).sort({ likes: -1 });
         if (!mostLovedArticle) {
             return response.status(404).json({ message: "no articles found" })
@@ -94,8 +94,8 @@ router.get('/3-latest', async (request, response) => {
 
 router.get('/articles', async (request, response) => {
     try {
-        const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
-        await delay(1000);
+        // const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+        // await delay(1000);
         const skip = parseInt(request.query.skip) || 0;
         const limit = 4;
         const searchQuery = request.query.search;
@@ -156,8 +156,8 @@ router.get('/articles', async (request, response) => {
 
 router.get('/article/:title', async (request, response) => {
     try {
-        const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
-        await delay(1000);
+        // const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+        // await delay(1000);
         const { title } = request.params;
         let article = await Article.findOne({ title: title });
         if (!article) {
@@ -322,8 +322,8 @@ router.post('/new', async (request, response) => {
 })
 
 router.get('/adminpanel', async (request, response) => {
-    const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
-    await delay(1000);
+    // const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+    // await delay(1000);
     const token = request.cookies.token;
     if (!token) {
         return response.status(400).json({ message: "cookie missing" })

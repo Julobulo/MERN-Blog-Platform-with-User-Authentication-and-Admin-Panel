@@ -8,8 +8,8 @@ const router = express.Router();
 
 router.get('/', async (request, response) => {
     try {
-        const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
-        await delay(1000);
+        // const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+        // await delay(1000);
         const token = request.cookies.token;
         if (!token) {
             return response.status(400).json({ message: "cookie missing" })
@@ -201,8 +201,8 @@ router.delete('/delete', async (request, response) => {
 
 router.get('/adminpanel', async (request, response) => {
     try {
-        const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
-        await delay(1000);
+        // const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+        // await delay(1000);
         const token = request.cookies.token;
         if (!token) {
             return response.status(400).json({ message: "cookie missing" })
@@ -292,8 +292,8 @@ router.put('/password/:author', async (request, response) => {
 
 router.get('/:author', async (request, response) => {
     try {
-        const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
-        await delay(1000);
+        // const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+        // await delay(1000);
         const { author } = request.params;
         const wantedUser = await User.findOne({ username: author });
         if (!wantedUser) {
