@@ -58,7 +58,7 @@ const HomePage = () => {
                         {likedLoading ? (<ArticleCardSkeleton />) : (<ArticleCard
                             title={mostLikedArticle.title}
                             subtitle={mostLikedArticle.subtitle}
-                            href={`http://localhost:5173/blog/article/${mostLikedArticle.title}`}
+                            href={`${import.meta.env.VITE_FRONTEND_URL}/blog/article/${mostLikedArticle.title}`}
                             author={mostLikedArticle.author_name}
                             author_profilePicture={mostLikedArticle.author_profilePicture}
                             date={mostLikedArticle.date}
@@ -72,7 +72,7 @@ const HomePage = () => {
                             {recentLoading ? (<ArticleCardSkeleton />) : (<ArticleCard
                                 title={mostRecentArticle.title}
                                 subtitle={mostRecentArticle.subtitle}
-                                href={`http://localhost:5173/blog/article/${mostRecentArticle.title}`}
+                                href={`${import.meta.env.VITE_FRONTEND_URL}/blog/article/${mostRecentArticle.title}`}
                                 author={mostRecentArticle.author_name}
                                 author_profilePicture={mostRecentArticle.author_profilePicture}
                                 date={mostRecentArticle.date}

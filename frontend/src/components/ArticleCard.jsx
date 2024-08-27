@@ -35,7 +35,7 @@ const ArticleCard = ({ title, title_highlighted, subtitle, href, author, author_
     }
     return (
         <div className="p-6 mb-8 bg-gray-900 rounded-xl shadow-md">
-            <a href={`http://localhost:5173/blog/article/${title}`}>
+            <a href={`${import.meta.env.VITE_FRONTEND_URL}/blog/article/${title}`}>
                 <img
                     alt={title}
                     src={imgSrc}
