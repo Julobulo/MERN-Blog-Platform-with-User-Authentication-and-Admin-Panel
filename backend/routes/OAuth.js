@@ -72,7 +72,8 @@ router.get('/google/callback',
             withCredentials: true,
             httpOnly: false,
         });
-        res.redirect(`http://localhost:5173`);
+        // res.redirect(`http://localhost:5173`);
+        res.redirect(`https://blog.jules.tf`);
     }
 );
 
