@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ limit: '1mb', extended: true }));
 // app.use(cors());
 // Option 2:
 app.use(cors({
-    origin: ['http://localhost:5173', 'https://blog.jules.tf'],
+    origin: ['http://localhost:5173', 'https://blog.jules.tf', 'https://mern-blog-platform-with-user-authentication-and-admin-panel.vercel.app'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     credentials: true,
     allowedHeaders: ['Content-type'],
