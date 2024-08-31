@@ -69,11 +69,13 @@ router.get('/google/callback',
         res.cookie("token", token, {
             withCredentials: true,
             httpOnly: false,
+            path: 'https://blog.jules.tf',
         });
         const isAdmin = req.user.isAdmin;
         res.cookie("isAdmin", isAdmin, {
             withCredentials: true,
             httpOnly: false,
+            path: 'https://blog.jules.tf',
         });
         // res.redirect(`http://localhost:5173`);
         res.redirect(`https://blog.jules.tf`);
