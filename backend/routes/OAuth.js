@@ -62,9 +62,10 @@ router.get('/google',
 router.get('/google/callback',
     passport.authenticate('google', { failureRedirect: '/' }),
     (req, res) => {
-        console.log(`got callback from url: ${req.url}, for user: ${req.user}`);
+        console.log(`got callback from url: ${req.url}, for user: ${JSON.stringify(req.user)}`);
         // Successful authentication, redirect home with the token
         const token = req.user.token;
+        console.log(`setting cookie to: ${token}`);
         res.cookie("token", token, {
             withCredentials: true,
             httpOnly: false,
