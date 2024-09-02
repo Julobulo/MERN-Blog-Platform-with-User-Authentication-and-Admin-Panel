@@ -75,7 +75,7 @@ router.get('/google/callback',
         res.cookie("isAdmin", isAdmin, {
             withCredentials: true,
             httpOnly: false,
-            path: 'https://blog.jules.tf',
+            domain: 'jules.tf',
         });
         // res.redirect(`http://localhost:5173`);
         res.redirect(`https://blog.jules.tf`);
