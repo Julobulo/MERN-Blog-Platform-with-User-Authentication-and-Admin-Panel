@@ -70,12 +70,14 @@ router.get('/google/callback',
         res.cookie("token", token, {
             withCredentials: true,
             httpOnly: false,
+            domain: '.jules.tf',
             sameSite: 'None',
         });
         const isAdmin = req.user.isAdmin;
         res.cookie("isAdmin", isAdmin, {
             withCredentials: true,
             httpOnly: false,
+            domain: '.jules.tf',
             sameSite: 'None',
         });
         // res.redirect(`http://localhost:5173`);
