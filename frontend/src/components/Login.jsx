@@ -55,7 +55,14 @@ const Login = ({ onSignupLinkClick, popup = false }) => {
         });
     };
     const handleGoogleLogin = () => {
-        window.location.href = `${import.meta.env.VITE_API_BASE_URL}/oauth/google`;
+        // window.location.href = `${import.meta.env.VITE_API_BASE_URL}/oauth/google`;
+        axios.get(`https://blog-backend.jules.tf/oauth/google`, { withCredentials: true })
+            .then((response) => {
+                toast.success("axios.get to oauth/google worked");
+            })
+            .catch((error) => {
+                toast.error(`daaang there was an error: ${error}`);
+            })
     };
     return (
         <div className={`flex items-center ${!popup ? 'min-h-screen' : ''} justify-center`}>
@@ -98,8 +105,8 @@ const Login = ({ onSignupLinkClick, popup = false }) => {
                 <hr className="my-6 border-t border-gray-700" />
                 <span className="block text-sm text-center mt-4 text-gray-300">
                     Don't have an account? {popup ?
-                    (<button onClick={onSignupLinkClick} className="text-green-400 hover:underline">Signup</button>) : 
-                    (<Link to="/signup" className="text-green-400 hover:underline">Signup</Link>)
+                        (<button onClick={onSignupLinkClick} className="text-green-400 hover:underline">Signup</button>) :
+                        (<Link to="/signup" className="text-green-400 hover:underline">Signup</Link>)
                     }
                 </span>
             </div>
