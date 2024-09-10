@@ -83,7 +83,7 @@ router.get('/google/callback',
             secure: true,
         });
         // res.redirect(`http://localhost:5173`);
-        res.redirect(`https://blog.jules.tf`);
+        res.redirect(`https://blog.jules.tf`, { withCredentials: true });
     }
 );
 
