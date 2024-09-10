@@ -70,15 +70,17 @@ router.get('/google/callback',
         res.cookie("token", token, {
             withCredentials: true,
             httpOnly: false,
-            domain: ['https://blog.jules.tf', 'https://blog-backend.jules.tf'],
+            domain: 'blog.jules.tf',
             sameSite: 'None',
+            secure: true,
         });
         const isAdmin = req.user.isAdmin;
         res.cookie("isAdmin", isAdmin, {
             withCredentials: true,
             httpOnly: false,
-            domain: ['blog.jules.tf', 'blog-backend.jules.tf'],
+            domain: 'blog.jules.tf',
             sameSite: 'None',
+            secure: true,
         });
         // res.redirect(`http://localhost:5173`);
         res.redirect(`https://blog.jules.tf`);
