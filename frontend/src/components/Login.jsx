@@ -55,7 +55,7 @@ const Login = ({ onSignupLinkClick, popup = false }) => {
         });
     };
     const handleGoogleLogin = () => {
-        window.location.href = `${import.meta.env.VITE_API_BASE_URL}/oauth/google`;
+        navigate(`${import.meta.env.VITE_API_BASE_URL}/oauth/google`);
     };
     return (
         <div className={`flex items-center ${!popup ? 'min-h-screen' : ''} justify-center`}>
