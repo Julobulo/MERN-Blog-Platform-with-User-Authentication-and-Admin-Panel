@@ -56,10 +56,9 @@ passport.deserializeUser((obj, done) => {
 
 
 
-router.get('/google', (req, res, next) => {
-    console.log('going to authenticate user using google oauth and passport library');
-    passport.authenticate('google', { scope: ['profile', 'email'] });
-}
+// console.log('going to authenticate user using google oauth and passport library');
+router.get('/google', 
+    passport.authenticate('google', { scope: ['profile', 'email'] })
 );
 
 router.get('/google/callback',
