@@ -28,7 +28,8 @@ app.use(cors({
         'https://jules.tf',
         'https://blog.jules.tf',
         'https://blog-backend.jules.tf',
-        'https://accounts.google.com'
+        'https://accounts.google.com',
+        'https://accounts.google.com/o/oauth2/v2/auth',
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     credentials: true,
