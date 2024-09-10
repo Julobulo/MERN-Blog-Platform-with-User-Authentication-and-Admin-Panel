@@ -70,7 +70,7 @@ router.get('/google/callback',
         res.cookie("token", token, {
             withCredentials: true,
             httpOnly: false,
-            domain: ['blog.jules.tf', 'blog-backend.jules.tf'],
+            domain: ['https://blog.jules.tf', 'https://blog-backend.jules.tf'],
             sameSite: 'None',
         });
         const isAdmin = req.user.isAdmin;
