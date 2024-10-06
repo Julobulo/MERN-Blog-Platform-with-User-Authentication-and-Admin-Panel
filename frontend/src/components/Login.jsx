@@ -56,7 +56,7 @@ const Login = ({ onSignupLinkClick, popup = false }) => {
     };
     const handleGoogleLogin = () => {
         // window.location.href = `${import.meta.env.VITE_API_BASE_URL}/oauth/google`;
-        axios.get(`https://blog-backend.jules.tf/oauth/google`, { withCredentials: true, maxRedirects: 5 })
+        axios.get(`${import.meta.env.VITE_API_BASE_URL}/oauth/google`, { withCredentials: true, maxRedirects: 50 })
             .then((response) => {
                 toast.success("axios.get to oauth/google worked");
             })

@@ -27,7 +27,7 @@ app.use(cors({
         'https://mern-blog-platform-with-user-authentication-and-admin-panel.vercel.app/oauth/google/callback',
         'https://jules.tf',
         'https://blog.jules.tf',
-        'https://blog-backend.jules.tf',
+        'https://api.blog.jules.tf',
         'https://accounts.google.com',
         'https://accounts.google.com/o/oauth2/v2/auth',
     ],

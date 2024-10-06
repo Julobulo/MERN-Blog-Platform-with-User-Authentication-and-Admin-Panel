@@ -22,7 +22,7 @@ passport.use(new GoogleStrategy({
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     // callbackURL: "http://localhost:5555/oauth/google/callback"
     // callbackURL: "https://mern-blog-platform-with-user-authentication-and-admin-panel.vercel.app/oauth/google/callback",
-    callbackURL: "https://blog-backend.jules.tf/oauth/google/callback",
+    callbackURL: "https://api.blog.jules.tf/oauth/google/callback",
 },
     async (accessToken, refreshToken, profile, done) => {
         try {
