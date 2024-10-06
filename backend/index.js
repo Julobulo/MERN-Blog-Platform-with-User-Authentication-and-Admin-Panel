@@ -28,6 +28,7 @@ app.use(cors({
         'https://jules.tf',
         'https://blog.jules.tf',
         'https://api.blog.jules.tf',
+        'https://api.blog.jules.tf/oauth/google/callback',
         'https://accounts.google.com',
         'https://accounts.google.com/o/oauth2/v2/auth',
     ],
