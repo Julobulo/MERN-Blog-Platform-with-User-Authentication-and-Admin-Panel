@@ -55,14 +55,14 @@ const Login = ({ onSignupLinkClick, popup = false }) => {
         });
     };
     const handleGoogleLogin = () => {
-        // window.location.href = `${import.meta.env.VITE_API_BASE_URL}/oauth/google`;
-        axios.get(`${import.meta.env.VITE_API_BASE_URL}/oauth/google`, { withCredentials: true, maxRedirects: 50 })
-            .then((response) => {
-                toast.success("axios.get to oauth/google worked");
-            })
-            .catch((error) => {
-                toast.error(`daaang there was an error: ${error}`);
-            })
+        window.location.href = `${import.meta.env.VITE_API_BASE_URL}/oauth/google`;
+        // axios.get(`${import.meta.env.VITE_API_BASE_URL}/oauth/google`, { withCredentials: true, maxRedirects: 50 })
+        //     .then((response) => {
+        //         toast.success("axios.get to oauth/google worked");
+        //     })
+        //     .catch((error) => {
+        //         toast.error(`daaang there was an error: ${error}`);
+        //     })
     };
     return (
         <div className={`flex items-center ${!popup ? 'min-h-screen' : ''} justify-center`}>
