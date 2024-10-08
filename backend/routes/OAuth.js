@@ -71,7 +71,7 @@ router.get('/google/callback',
         res.cookie("token", token, {
             withCredentials: true,
             httpOnly: false,
-            domain: 'jules.tf',
+            domain: 'blog.jules.tf',
             sameSite: 'None',
             secure: true,
         });
