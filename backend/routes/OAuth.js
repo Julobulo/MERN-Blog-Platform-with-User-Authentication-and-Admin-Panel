@@ -79,7 +79,7 @@ router.get('/google/callback',
         res.cookie("isAdmin", isAdmin, {
             withCredentials: true,
             httpOnly: false,
-            domain: 'jules.tf',
+            domain: 'blog.jules.tf',
             sameSite: 'None',
             secure: true,
         });
