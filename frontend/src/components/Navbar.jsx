@@ -86,7 +86,7 @@ const NavigationBar = () => {
                                 <button
                                     className="btn btn-ghost text-green-400 flex items-center"
                                     onClick={() => {
-                                        Cookies.remove('token', { domain: '.jules.tf' });
+                                        Cookies.remove('token');
                                         localStorage.clear();
                                         navigate('/');
                                         toast.success('Successfully logged out!', { position: 'bottom-right' });
