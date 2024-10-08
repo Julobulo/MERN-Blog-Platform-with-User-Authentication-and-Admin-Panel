@@ -71,7 +71,7 @@ router.get('/google/callback',
         res.cookie("token", token, {
             withCredentials: true,
             httpOnly: false,
-            domain: 'https://blog.jules.tf',
+            domain: ['jules.tf', 'blog.jules.tf'],
             sameSite: 'None',
             secure: true,
         });
@@ -79,7 +79,7 @@ router.get('/google/callback',
         res.cookie("isAdmin", isAdmin, {
             withCredentials: true,
             httpOnly: false,
-            domain: 'https://blog.jules.tf',
+            domain: ['jules.tf', 'blog.jules.tf'],
             sameSite: 'None',
             secure: true,
         });
