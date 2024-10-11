@@ -44,7 +44,7 @@ const NavigationBar = () => {
                         <Link to="/create" className="btn btn-ghost text-green-400" key={"new post"}><MdOutlinePostAdd className='inline align-middle' /> <span className='align-middle'>New Post</span></Link>
                         <Link to="/profile" className="btn btn-ghost text-green-400" key={"profile"}><CgProfile className='inline align-middle' /> <span className='align-middle'>Profile</span></Link>
                         {Cookies.get('isAdmin') === "true" ? (<Link to="/AdminPanel/Articles" className="btn btn-ghost text-green-400" key={"admin panel"}><MdOutlineAdminPanelSettings className='inline align-middle' /> <span className='align-middle'>Admin Panel</span></Link>) : null}
-                        <button className="btn btn-ghost text-green-400" onClick={() => { toast.success(`token: ${Cookies.get('token')}`); Cookies.remove('token', { path: '/', domain: '.blog.jules.tf' }); console.log('removing cookie token with path / and domain .blog.jules.tf'); localStorage.clear(); navigate('/'); toast.success('Successfully logged out!', { position: 'bottom-right' }) }} key={"logout"}><MdOutlineAdminPanelSettings className='inline align-middle' /> <span className='align-middle'>Logout</span></button>
+                        <button className="btn btn-ghost text-green-400" onClick={() => { Cookies.remove('token', { path: '/', domain: '.blog.jules.tf' }); Cookies.remove('isAdmin', { path: '/', domain: '.blog.jules.tf' }); localStorage.clear(); navigate('/'); toast.success('Successfully logged out!', { position: 'bottom-right' }) }} key={"logout"}><MdOutlineAdminPanelSettings className='inline align-middle' /> <span className='align-middle'>Logout</span></button>
                     </>) :
                         <button onClick={() => setIsLoginOpen(true)} className="btn btn-ghost text-green-400" key={"login"}><SlLogin className='inline align-middle' /> <span className='align-middle'>Login</span></button>
                     }
@@ -86,8 +86,8 @@ const NavigationBar = () => {
                                 <button
                                     className="btn btn-ghost text-green-400 flex items-center"
                                     onClick={() => {
-                                        toast.success(`token: ${Cookies.get('token')}`);
-                                        // Cookies.set('token', '');
+                                        Cookies.remove('token', { path: '/', domain: '.blog.jules.tf' });
+                                        Cookies.remove('isAdmin', { path: '/', domain: '.blog.jules.tf' });
                                         localStorage.clear();
                                         navigate('/');
                                         toast.success('Successfully logged out!', { position: 'bottom-right' });
