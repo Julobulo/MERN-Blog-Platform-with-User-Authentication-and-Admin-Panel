@@ -86,7 +86,8 @@ const NavigationBar = () => {
                                 <button
                                     className="btn btn-ghost text-green-400 flex items-center"
                                     onClick={() => {
-                                        Cookies.set('token', '');
+                                        toast.success(`token: ${Cookies.get('token')}`);
+                                        // Cookies.set('token', '');
                                         localStorage.clear();
                                         navigate('/');
                                         toast.success('Successfully logged out!', { position: 'bottom-right' });
