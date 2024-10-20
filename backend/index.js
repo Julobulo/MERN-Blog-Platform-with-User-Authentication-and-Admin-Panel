@@ -125,6 +125,11 @@ async function checkUsers() {
     }
 }
 
+app.post('/webhook/game/result', (request, response) => {
+    console.log(`request looks like this: ${request.body}`);k
+    return response.status(200);
+})
+
 app.use('/', AuthRoute)
 app.use('/user', UserRoute)
 app.use('/blog', BlogRoute)
