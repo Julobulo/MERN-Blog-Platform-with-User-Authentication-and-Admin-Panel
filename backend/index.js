@@ -126,7 +126,7 @@ async function checkUsers() {
 }
 
 app.post('/webhook/game/result', (request, response) => {
-    console.log(`request looks like this: ${request.body}`);k
+    console.log(`request looks like this: ${request.body}`);
     return response.status(200);
 })
 
