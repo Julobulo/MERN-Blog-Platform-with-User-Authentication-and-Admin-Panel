@@ -127,7 +127,7 @@ async function checkUsers() {
 
 app.post('/webhook/game/result', (request, response) => {
     console.log(`request looks like this: ${JSON.stringify(request.body)}`);
-    return response.status(200);
+    return response.status(200).json({ message: "successfully got request" });
 })
 
 app.use('/', AuthRoute)
