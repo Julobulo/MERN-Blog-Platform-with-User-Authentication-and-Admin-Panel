@@ -22,7 +22,7 @@ passport.use(new GoogleStrategy({
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     // callbackURL: "http://localhost:5555/oauth/google/callback"
     // callbackURL: "https://mern-blog-platform-with-user-authentication-and-admin-panel.vercel.app/oauth/google/callback",
-    callbackURL: "https://api.blog.jules.tf/oauth/google/callback",
+    callbackURL: "https://api.blog.jules.tools/oauth/google/callback",
 },
     async (accessToken, refreshToken, profile, done) => {
         try {
@@ -71,7 +71,7 @@ router.get('/google/callback',
         res.cookie("token", token, {
             withCredentials: true,
             httpOnly: false,
-            domain: 'blog.jules.tf',
+            domain: 'blog.jules.tools',
             sameSite: 'None',
             secure: true,
         });
@@ -79,12 +79,12 @@ router.get('/google/callback',
         res.cookie("isAdmin", isAdmin, {
             withCredentials: true,
             httpOnly: false,
-            domain: 'blog.jules.tf',
+            domain: 'blog.jules.tools',
             sameSite: 'None',
             secure: true,
         });
         // res.redirect(`http://localhost:5173`);
-        res.redirect(`https://blog.jules.tf`);
+        res.redirect(`https://blog.jules.tools`);
         // res.status(200).json({ message: 'successfully authenticated with google' })
     }
 );
